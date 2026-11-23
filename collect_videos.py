@@ -10,6 +10,10 @@ CHANNELS = {
     'HYBE LABELS': 'UC3IZKseVpdzPSBaWxBxundA',
     'SMTOWN': 'UCEf_Bc-KVd7onSeifS3py9g',
     'JYP Entertainment': 'UCaO6TYtlC8U5ttz62hTrZgg',
+    'YG ENTERTAINMENT': 'UCQi67q4kGdmnJaRzX81uK5g',
+    'STARSHIP': 'UCYDmx2Sfpnaxg488yBpZIGg',
+    'Mnet K-POP': 'UCbD8EppRX3ZwJSou-TVo90A',
+    'KBS Kpop': 'UCeLPm9yH_a_QH8n6445G-Ow',
 }
 ATOM = '{http://www.w3.org/2005/Atom}'
 YT = '{http://www.youtube.com/xml/schemas/2015}'
@@ -45,7 +49,22 @@ for v in sorted(videos, key=lambda x: x['published'], reverse=True):
         unique.append(v)
         seen.add(v['id'])
 if unique:
-    OUT.write_text(json.dumps({'updated_at': now.isoformat(), 'videos': unique[:120]}, ensure_ascii=False, indent=2), encoding='utf-8')
+    # Keep recent entries from earlier successful runs if one channel is temporarily unavailable.
+    try:
+        prior = json.loads(OUT.read_text(encoding='utf-8')).get('videos', []) if OUT.exists() else []
+    except (OSError, json.JSONDecodeError):
+        prior = []
+    for old in prior:
+        if isinstance(old, dict) and old.get('id') not in seen:
+            try:
+                date = datetime.fromisoformat(old.get('published','').replace('Z','+00:00'))
+                if date >= now - timedelta(days=14):
+                    unique.append(old)
+                    seen.add(old['id'])
+            except (ValueError, TypeError):
+                pass
+    unique.sort(key=lambda x:x['published'], reverse=True)
+    OUT.write_text(json.dumps({'updated_at': now.isoformat(), 'videos': unique[:180]}, ensure_ascii=False, indent=2), encoding='utf-8')
     print('saved', len(unique), 'videos')
 elif not OUT.exists():
     OUT.write_text(json.dumps({'updated_at': now.isoformat(), 'videos': []}, ensure_ascii=False, indent=2), encoding='utf-8')

@@ -70,7 +70,7 @@ def main() -> None:
         if any(near_duplicate(article['title'], old['title']) for old in retained):
             continue
         retained.append(article)
-        if len(retained) >= 100:
+        if len(retained) >= 250:
             break
     # Safety: keep the source list if an aggressive rule would erase everything.
     if original and not retained:
