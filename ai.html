@@ -54,6 +54,28 @@ function followPreview(){const type=$('contentType').value,follow=$('followMode'
 try{const options=JSON.parse(localStorage.getItem(PREFKEY)||'null');if(options?.type&&[...$('contentType').options].some(x=>x.value===options.type))$('contentType').value=options.type;if(options?.follow&&[...$('followMode').options].some(x=>x.value===options.follow))$('followMode').value=options.follow}catch(e){};
 $('contentType').addEventListener('change',followPreview);$('followMode').addEventListener('change',followPreview);followPreview();
 function switchMode(next){mode=next;$('freeFields').hidden=next!=='free';$('articleFields').hidden=next!=='article';$('freeMode').setAttribute('aria-pressed',String(next==='free'));$('articleMode').setAttribute('aria-pressed',String(next==='article'));$('status').textContent=''}$('freeMode').onclick=()=>switchMode('free');$('articleMode').onclick=()=>switchMode('article');
+// 연예 뉴스에서 넘어온 기사 정보 자동 채우기: 제목·출처·링크만 사전 입력, 본문 사실은 추측하지 않음.
+try {
+  const incoming=new URLSearchParams(window.location.search);
+  if(incoming.get('mode')==='article') {
+    const title=(incoming.get('title')||'').slice(0,300);
+    const source=(incoming.get('source')||'').slice(0,100);
+    const url=(incoming.get('url')||'').slice(0,2500);
+    if(title) {
+      switchMode('article');
+      $('title').value=title;
+      $('source').value=source;
+      if(/^https?:\/\//i.test(url))$('url').value=url;
+      const category=incoming.get('category')||'';
+      // 카테고리는 단지 추천값이므로 사용자가 화면에서 변경할 수 있음.
+      const suggested=category==='actor'?'news':category==='issue'?'sensitive':category==='variety'?'fan':'editorial';
+      $('contentType').value=suggested;
+      followPreview();
+      $('status').textContent='연예 뉴스에서 제목과 출처, 링크를 가져왔어. 원문을 확인하고 핵심 사실을 적어 줘.';
+    }
+  }
+} catch(e) { /* 직접 열었을 때 기존 자유 글쓰기 유지 */ }
+
 function build(){const topic=$('topic').value.trim(),title=$('title').value.trim();if(mode==='free'&&!topic){$('status').textContent='먼저 글 주제를 입력해 줘.';$('topic').focus();return null}if(mode==='article'&&!title){$('status').textContent='먼저 기사 제목을 입력해 줘.';$('title').focus();return null}const t=getTone(),material=mode==='free'?`[글 주제]\n${topic}\n\n[넣고 싶은 내용]\n${$('notes').value.trim()||'별도 정보 없음. 주제에 필요한 사실을 지어내지 마.'}`:`[기사 제목]\n${title}\n\n[출처]\n${$('source').value.trim()||'미입력'}\n\n[기사 링크]\n${$('url').value.trim()||'미입력'}\n\n[확인된 핵심 사실]\n${$('details').value.trim()||'제공되지 않음. 제목 외 사실은 추가하지 마.'}`;const type=$('contentType').value,follow=$('followMode').value;
 const toneGuide={editorial:'감각적인 에디토리얼 문체. 컴백·화보의 콘셉트와 분위기를 구체적으로 표현하고, 이모지는 글 전체 1~2개.',news:'객관적이고 자연스러운 중립형 뉴스 문체. 확인된 사실을 먼저 쓰고 이모지는 0~1개.',sensitive:'논란·사건·공식 입장 관련 신중한 중립 문체. 당사자의 주장과 확인된 사실을 구분하고 이모지는 사용하지 않는다.',fan:'팬친화형 문체. 무대·인터뷰·영상의 인상적인 실제 장면을 친근하게 풀고, 이모지는 글 전체 2~4개 이내.'};
 const followExamples={editorial:['✨ 더 많은 K-POP 소식은 @77magazine_ 에서 만나보세요.','새로운 음악과 화보 소식은 @77magazine_ 에서.','💿 지금 주목할 순간들, @77magazine_ 에서 확인하세요.'],news:['더 많은 연예계 소식은 @77magazine_ 에서 확인하세요.','연예계의 새로운 소식을 @77magazine_ 에서 전합니다.','새로운 작품과 캐스팅 소식은 @77magazine_ 에서 만나보세요.'],sensitive:[],fan:['🎤 더 많은 케이팝 모먼트는 @77magazine_ 에서!','무대 밖 이야기까지, @77magazine_ 에서 함께해요 🫶','🎶 또 다른 화제의 순간은 @77magazine_ 에서 만나보세요!']};
