@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#111318" />
-  <title>77 Template Studio v1.8.4 — 접이식 편집 패널</title>
+  <title>77 Magazine Studio v1.8.4 — 접이식 편집 패널</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
@@ -98,10 +98,17 @@
     .studio-nav a[aria-current="page"]{background:#353c50;border-color:#859fe2;color:#fff}
     .studio-nav a:focus-visible{outline:2px solid #b4c9ff;outline-offset:2px}
     @media(max-width:600px){header{flex-wrap:wrap}.studio-nav{width:100%;display:grid;grid-template-columns:1fr 1fr}.studio-nav a{width:100%;min-height:42px}}
+
+    /* 편집기 헤더: 자동저장 배지는 원래처럼 오른쪽 위, 메뉴는 아래쪽 */
+    header{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;row-gap:12px;align-items:center}
+    header>.brand{grid-column:1;grid-row:1;min-width:0}
+    header>.tag{grid-column:2;grid-row:1;justify-self:end;white-space:nowrap}
+    header>.studio-nav{grid-column:1/-1;grid-row:2;justify-self:center;width:auto}
+    @media(max-width:600px){header>.studio-nav{width:100%;justify-self:stretch}header>.tag{font-size:10px;padding:6px 8px}}
   </style>
 </head>
 <body>
-  <header><div class="brand">77 TEMPLATE STUDIO <small>Feed & Reels & Logo thumbnail maker</small></div><nav class="studio-nav" aria-label="페이지 메뉴"><a href="./index.html" aria-current="page">사진 편집기</a><a href="./news.html">연예 뉴스</a></nav><div class="tag">브라우저 편집 · 자동 저장</div></header>
+  <header><div class="brand">77 MAGAZINE STUDIO <small>Feed & Reels & Logo thumbnail maker</small></div><nav class="studio-nav" aria-label="페이지 메뉴"><a href="./index.html" aria-current="page">사진 편집기</a><a href="./news.html">연예 뉴스</a></nav><div class="tag">브라우저 편집 · 자동 저장</div></header>
   <dialog id="resetConfirmDialog" class="reset-dialog" aria-labelledby="resetDialogTitle">
     <h2 id="resetDialogTitle">현재 템플릿을 초기화할까요?</h2>
     <p>현재 템플릿의 사진(콜라주 포함), 제목, 스티커와 설정이 모두 삭제됩니다.<br>다른 템플릿은 그대로 유지됩니다.</p>
