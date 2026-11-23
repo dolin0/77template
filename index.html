@@ -91,10 +91,17 @@
     .tool-accordion-body .control{margin-bottom:10px}
     @media(max-width:850px){main{display:flex;flex-direction:column} aside{max-height:none;overflow:visible;border-right:0;border-bottom:1px solid var(--border)}.workspace{padding:22px 15px 48px}header{padding:17px}.brand{font-size:17px}.brand small{display:none}}
     @media(max-width:850px){.workspace{order:-1;padding:16px 14px 22px}.canvaswrap{width:min(100%,390px)}.mobile-photo-tools{max-width:390px}aside{padding:19px 18px 36px}.previewbar{max-width:390px}.bottomnote{margin-top:8px}}
+  
+    /* 공통 상단 메뉴: 기존 편집 기능과 독립적 */
+    .studio-nav{display:flex;align-items:center;gap:7px;flex-shrink:0}
+    .studio-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 13px;border:1px solid #424650;border-radius:9px;background:#25272e;color:#cbd0de;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap}
+    .studio-nav a[aria-current="page"]{background:#353c50;border-color:#859fe2;color:#fff}
+    .studio-nav a:focus-visible{outline:2px solid #b4c9ff;outline-offset:2px}
+    @media(max-width:600px){header{flex-wrap:wrap}.studio-nav{width:100%;display:grid;grid-template-columns:1fr 1fr}.studio-nav a{width:100%;min-height:42px}}
   </style>
 </head>
 <body>
-  <header><div class="brand">77 TEMPLATE STUDIO <small>Feed & Reels & Logo thumbnail maker</small></div><div class="tag">브라우저 편집 · 자동 저장</div></header>
+  <header><div class="brand">77 TEMPLATE STUDIO <small>Feed & Reels & Logo thumbnail maker</small></div><nav class="studio-nav" aria-label="페이지 메뉴"><a href="./index.html" aria-current="page">사진 편집기</a><a href="./news.html">연예 뉴스</a></nav><div class="tag">브라우저 편집 · 자동 저장</div></header>
   <dialog id="resetConfirmDialog" class="reset-dialog" aria-labelledby="resetDialogTitle">
     <h2 id="resetDialogTitle">현재 템플릿을 초기화할까요?</h2>
     <p>현재 템플릿의 사진(콜라주 포함), 제목, 스티커와 설정이 모두 삭제됩니다.<br>다른 템플릿은 그대로 유지됩니다.</p>
