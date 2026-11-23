@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111318">
+  <title>오늘의 연예 뉴스 | 77 TEMPLATE STUDIO</title>
+  <style>
+    :root{color-scheme:dark;font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;--bg:#0c0d10;--panel:#17191f;--border:#30333b;--muted:#a9adbb;--blue:#b4c9ff}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f8fb}button,input{font:inherit}button{cursor:pointer}a{color:inherit}
+    header{padding:20px max(18px,calc((100vw - 1040px)/2));border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;font-size:17px;letter-spacing:-.5px;text-decoration:none}.brand small{font-size:12px;color:var(--muted);font-weight:500;margin-left:8px}
+    .back{font-size:13px;color:#d3d8e9;text-decoration:none;padding:9px 12px;border:1px solid var(--border);border-radius:9px}
+    main{max-width:1040px;margin:auto;padding:30px 18px 80px}.eyebrow{font-size:12px;color:var(--blue);font-weight:700;margin-bottom:8px}h1{margin:0;font-size:clamp(25px,5vw,36px);letter-spacing:-1px}p.subtitle{color:var(--muted);line-height:1.7;margin:9px 0 22px;font-size:14px}
+    .toolbar{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:15px;margin-bottom:16px}.toolbar-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.updated{font-size:12px;color:var(--muted)}
+    .refresh{background:#31394a;border:1px solid #586a8d;color:#e6edff;border-radius:8px;padding:9px 13px;font-size:13px;font-weight:700}
+    .filters{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.filter{background:#25272e;color:#c4c8d2;border:1px solid #3b3f4a;border-radius:30px;padding:8px 11px;font-size:13px}.filter.active{background:#36425f;border-color:#8ea7e7;color:white}
+    .search{width:100%;margin-top:13px;padding:12px;background:#22252c;border:1px solid #424650;border-radius:9px;outline:none;color:white}.search:focus{border-color:#a3b9fb}
+    .count{color:#aeb5c8;font-size:12px;margin:16px 2px 10px}.news-list{display:grid;gap:11px}.article{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:17px}.row{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:9px}.tag{font-size:11px;border-radius:5px;padding:4px 7px;background:#33405b;color:#e2eaff}.article h2{font-size:16px;line-height:1.5;font-weight:700;margin:0 0 9px;word-break:keep-all}.article h2 a{text-decoration:none}.article h2 a:hover{text-decoration:underline}.meta{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}.empty{padding:45px 18px;text-align:center;border:1px dashed #454b59;border-radius:14px;color:#d8deeb;background:#161920;line-height:1.8}.empty strong{font-size:16px}.empty p{color:var(--muted);font-size:13px;margin:10px 0 0}.notice{font-size:12px;color:var(--muted);line-height:1.7;margin-top:22px}
+    [hidden]{display:none!important}@media(max-width:540px){header{padding:15px}.brand small{display:none}main{padding-top:24px}}
+  </style>
+</head>
+<body>
+<header><a class="brand" href="./index.html">77 TEMPLATE STUDIO <small>Entertainment News</small></a><a class="back" href="./index.html">← 편집기로 돌아가기</a></header>
+<main>
+  <div class="eyebrow">77 MAGAZINE · NEWS DESK</div>
+  <h1>오늘의 연예 뉴스</h1>
+  <p class="subtitle">아이돌을 중심으로 배우, 드라마·영화, 방송·예능, 주요 연예계 소식을 모아보는 공간입니다.</p>
+  <section class="toolbar" aria-label="뉴스 검색 및 필터">
+    <div class="toolbar-top"><span class="updated" id="updated">뉴스 데이터 확인 중…</span><button class="refresh" id="refresh" type="button">↻ 새로고침</button></div>
+    <div class="filters" id="filters"></div>
+    <input class="search" type="search" id="search" placeholder="아이돌·배우 이름, 기사 제목 검색" aria-label="뉴스 검색">
+  </section>
+  <div id="count" class="count" aria-live="polite"></div>
+  <div id="newsList" class="news-list" aria-live="polite"></div>
+  <p class="notice">기사 제목을 누르면 원문으로 이동합니다. 뉴스는 언론사와 Google 뉴스 검색 결과를 바탕으로 수집할 예정이며, 실제 기사 발행 시간과 자동 수집 시간은 다를 수 있습니다. 동일 사건의 기사나 분류가 일부 중복될 수 있습니다.</p>
+</main>
+<script>
+(()=>{
+  'use strict';
+  const categories=[['all','전체'],['idol','아이돌'],['actor','배우'],['drama','드라마·영화'],['variety','방송·예능'],['issue','주요 이슈']];
+  let data=[],category='all',problem='',updatedAt='';
+  const $=id=>document.getElementById(id);
+  const f=$('filters');
+  categories.forEach(([id,name])=>{const b=document.createElement('button');b.type='button';b.className='filter'+(id==='all'?' active':'');b.textContent=name;b.dataset.cat=id;b.addEventListener('click',()=>{category=id;[...f.children].forEach(x=>x.classList.toggle('active',x.dataset.cat===id));render()});f.appendChild(b)});
+  $('search').addEventListener('input',render);$('refresh').addEventListener('click',load);
+  const validUrl=u=>{try{const x=new URL(u);return ['https:','http:'].includes(x.protocol)}catch{return false}};
+  function fmt(s){if(!s)return '시간 정보 없음';const d=new Date(s);if(!Number.isFinite(d.getTime()))return '시간 정보 없음';return new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(d)}
+  function render(){
+    const term=$('search').value.trim().toLocaleLowerCase('ko');
+    const shown=data.filter(a=>(category==='all'||a.category===category)&&(!term||[a.title,a.source,a.category].join(' ').toLocaleLowerCase('ko').includes(term)));
+    $('count').textContent=`기사 ${shown.length}건${data.length?` · 전체 ${data.length}건`:''}`;
+    $('newsList').replaceChildren();
+    if(!shown.length){const e=document.createElement('div');e.className='empty';const strong=document.createElement('strong');strong.textContent=problem||(!data.length?'아직 수집된 기사가 없습니다.':'조건에 맞는 기사가 없습니다.');const p=document.createElement('p');p.textContent=!data.length?'뉴스 자동 수집 기능을 연결하는 다음 단계에서 실제 기사들이 표시됩니다.':'검색어 또는 카테고리를 변경해 보세요.';e.append(strong,p);$('newsList').append(e);return}
+    shown.forEach(a=>{if(!a.title||!validUrl(a.url))return;const item=document.createElement('article');item.className='article';const row=document.createElement('div');row.className='row';const tag=document.createElement('span');tag.className='tag';tag.textContent=categories.find(x=>x[0]===a.category)?.[1]||'연예 뉴스';row.append(tag);const h=document.createElement('h2');const link=document.createElement('a');link.href=a.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent=a.title;h.append(link);const meta=document.createElement('div');meta.className='meta';const source=document.createElement('span');source.textContent=a.source||'출처 미상';const time=document.createElement('span');time.textContent=fmt(a.published);meta.append(source,time);item.append(row,h,meta);$('newsList').append(item)})
+  }
+  async function load(){const button=$('refresh');button.disabled=true;button.textContent='불러오는 중…';problem='';try{const r=await fetch('./news.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('파일 없음');const j=await r.json();if(!Array.isArray(j.articles))throw new Error('데이터 형식 오류');data=j.articles.filter(a=>a&&typeof a.title==='string'&&validUrl(a.url));updatedAt=j.updated_at||'';$('updated').textContent=updatedAt?`마지막 수집: ${fmt(updatedAt)} (한국시간)`:'뉴스 수집 대기 중'}catch(e){data=[];problem='뉴스 자동 수집이 아직 연결되지 않았습니다.';$('updated').textContent='뉴스 데이터 연결 전'}finally{button.disabled=false;button.textContent='↻ 새로고침';render()}}
+  load();
+})();
+</script>
+</body>
+</html>
