@@ -1,114 +1,29 @@
-
 name: Update entertainment news
 
 on:
   workflow_dispatch:
   schedule:
-    # Every 2 hours; UTC times (KST = UTC + 9)
     - cron: '23 */2 * * *'
 
 permissions:
   contents: write
 
 concurrency:
-  group: entertainment-news-pages
+  group: entertainment-news-data
   cancel-in-progress: false
 
 jobs:
-  update-and-deploy:
+  collect:
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fetch Google News RSS and build news.json
-        run: |
-          python - <<'PY'
-          import json
-          import os
-          import re
-          import urllib.parse
-          import urllib.request
-          import xml.etree.ElementTree as ET
-          from datetime import datetime, timedelta, timezone
-          from email.utils import parsedate_to_datetime
-          from html import unescape
-
-          KST = timezone(timedelta(hours=9))
-          NOW = datetime.now(timezone.utc)
-          TERMS = {
-              'idol': '(아이돌 OR K팝 OR 컴백 OR 걸그룹 OR 보이그룹) when:2d',
-              'actor': '(배우 OR 소속사 OR 캐스팅 OR 차기작) (드라마 OR 영화 OR 연예) when:2d',
-              'drama': '(드라마 OR 영화) (개봉 OR 제작발표 OR 출연 OR 시청률) when:2d',
-              'variety': '(예능 OR 음악방송 OR 방송 출연) (아이돌 OR 배우 OR 연예인) when:2d',
-              'issue': '(연예계 OR 연예인 OR 아이돌) (공식입장 OR 논란 OR 수상 OR 발표) when:2d',
-          }
-          articles = []
-          seen = set()
-          failures = []
-          for category, query in TERMS.items():
-              url = 'https://news.google.com/rss/search?' + urllib.parse.urlencode({
-                  'q': query, 'hl': 'ko', 'gl': 'KR', 'ceid': 'KR:ko'
-              })
-              try:
-                  request = urllib.request.Request(url, headers={
-                      'User-Agent': 'Mozilla/5.0 (compatible; 77MagazineNews/1.0)'
-                  })
-                  with urllib.request.urlopen(request, timeout=18) as response:
-                      xml_bytes = response.read(2_000_000)
-                  root = ET.fromstring(xml_bytes)
-                  count = 0
-                  for item in root.findall('./channel/item'):
-                      title = unescape((item.findtext('title') or '').strip())
-                      link = (item.findtext('link') or '').strip()
-                      source_node = item.find('source')
-                      source = (source_node.text or '').strip() if source_node is not None else ''
-                      pub_raw = (item.findtext('pubDate') or '').strip()
-                      try:
-                          published = parsedate_to_datetime(pub_raw).astimezone(timezone.utc)
-                      except Exception:
-                          continue
-                      if not title or not link.startswith('https://'):
-                          continue
-                      if published < NOW - timedelta(hours=48) or published > NOW + timedelta(hours=1):
-                          continue
-                      base_title = re.sub(r'\s*[-|]\s*[^-|]+$', '', title).strip()
-                      key = re.sub(r'\W+', '', base_title).lower()
-                      if key in seen:
-                          continue
-                      seen.add(key)
-                      articles.append({
-                          'title': base_title[:220], 'url': link, 'category': category,
-                          'source': source[:100] or 'Google 뉴스',
-                          'published': published.isoformat(),
-                      })
-                      count += 1
-                      if count >= 25:
-                          break
-                  print(f'{category}: {count} articles')
-              except Exception as error:
-                  failures.append(f'{category}: {error}')
-                  print(f'RSS error: {category}: {error}')
-          articles.sort(key=lambda a: a['published'], reverse=True)
-          if not articles:
-              print('No articles retrieved; keep existing news.json if it exists.')
-              if not os.path.exists('news.json'):
-                  with open('news.json', 'w', encoding='utf-8') as file:
-                      json.dump({'updated_at': NOW.isoformat(), 'articles': []}, file,
-                                ensure_ascii=False, indent=2)
-          else:
-              with open('news.json', 'w', encoding='utf-8') as file:
-                  json.dump({'updated_at': NOW.isoformat(), 'articles': articles[:100]},
-                            file, ensure_ascii=False, indent=2)
-          if failures:
-              print('Some feeds failed: ' + '; '.join(failures))
-          PY
-
-      - name: Filter entertainment news
+      - name: Collect news
+        run: python collect_news.py
+      - name: Filter unrelated and duplicate articles
         run: python filter_news.py
-
       - name: Save news to GitHub
         run: |
           git config user.name "github-actions[bot]"
@@ -116,7 +31,8 @@ jobs:
           git add news.json
           if ! git diff --cached --quiet; then
             git commit -m "Update entertainment news data"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           else
             echo "No news changes"
           fi
