@@ -105,7 +105,10 @@ jobs:
           if failures:
               print('Some feeds failed: ' + '; '.join(failures))
           PY
-  
+
+      - name: Filter entertainment news
+        run: python filter_news.py
+
       - name: Save news to GitHub
         run: |
           git config user.name "github-actions[bot]"
