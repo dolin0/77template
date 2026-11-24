@@ -1,0 +1,35 @@
+name: Update magazine Instagram watch
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 */6 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: magazine-instagram-watch
+  cancel-in-progress: false
+jobs:
+  fetch-instagram:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch public indexed references and optional official API posts
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python collect_instagram.py
+      - name: Save data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add instagram.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Instagram monitor data"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "No Instagram changes"
+          fi
