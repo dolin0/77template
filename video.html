@@ -41,10 +41,10 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 
 /* 77 CLIP headline mode – shared preview/export geometry */
 .screen.clip-mode{background:#000}
-.screen.clip-mode video{position:absolute;left:0;top:24%;width:100%;height:54%;object-fit:cover}
+.screen.clip-mode video{position:absolute;left:0;top:27%;width:100%;height:52%;object-fit:cover;object-position:center;transform-origin:center center}
 .clip-layout-options{margin:6px 0 15px;padding:12px;background:#22252c;border:1px solid #3b414c;border-radius:10px}
 .clip-layout-options label:first-child{margin-top:0}
-#clipAlignOptions{margin-top:10px}
+#clipAlignOptions{margin-top:10px}.clip-range-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.clip-range-grid input[type=range]{width:100%;accent-color:#92afff}.clip-range-grid output{display:block;text-align:right;color:#aab8d5;font-size:11px}.clip-note{margin:8px 0 0}.clip-subheading{font-size:12px;color:#e2e8f6;font-weight:800;margin:13px 0 4px}@media(max-width:420px){.clip-range-grid{grid-template-columns:1fr}}
 </style></head><body>
 <header><div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 원본 프레임 타이밍 유지</small></div><nav><a href="./index.html">사진 편집기</a><a href="./news.html">연예 뉴스</a><a href="./ai.html">글쓰기</a><a href="./video.html" aria-current="page">영상 편집기</a></nav></header>
 <main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 · 가로 영상</span></div><div class="layout"><section class="panel preview-section"><h2>영상 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas><button id="previewPlay" type="button" aria-label="전체 영상 재생" class="preview-play">▶</button></div></div><div class="editor-toolbar" style="justify-content:center;margin-top:8px"><button type="button" class="btn" id="soundOn">🔊 원본 영상 소리 켜기</button></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 전체 영상 처음부터 설정한 시간 유지 후 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>여러 원본 파일에서 선택한 프레임을 차례로 읽고, 템플릿 이미지를 합성한 뒤 하나의 MP4로 인코딩해. 재생 화면을 녹화하지 않으며 30fps로 강제 변경하지 않아. 엔진과 폰트가 이 HTML에 포함돼 있어.</div></div></details></div><section id="sequenceEditor" class="sequence-editor" aria-label="영상 타임라인 편집기">
@@ -72,7 +72,20 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 <div id="clipAlignOptions" style="display:none">
   <div class="row"><div><label for="labelAlign">라벨 정렬</label><select id="labelAlign"><option value="center">중앙 (추천)</option><option value="left">왼쪽</option></select></div>
   <div><label for="headlineAlign">제목 정렬</label><select id="headlineAlign"><option value="center">중앙 (추천)</option><option value="left">왼쪽</option></select></div></div>
-  <p class="small">상단 검정 영역에 라벨과 제목을 배치하고, 영상은 중앙에 보여줘. 원본 77 로고는 영상 아래에 표시돼. 이 설정은 미리보기·MP4·썸네일에 동일하게 적용돼.</p>
+  <div class="clip-subheading">상단 라벨·제목 배치</div>
+  <div class="clip-range-grid">
+   <div><label for="clipHeaderY">라벨·제목 아래로 이동</label><input id="clipHeaderY" type="range" min="105" max="230" step="1" value="172"><output id="clipHeaderYVal">172px</output></div>
+   <div><label for="clipLabelSize">라벨 글씨 크기</label><input id="clipLabelSize" type="range" min="30" max="58" step="1" value="44"><output id="clipLabelSizeVal">44px</output></div>
+   <div><label for="clipTextGap">라벨과 제목 간격 (1·2줄 동일)</label><input id="clipTextGap" type="range" min="12" max="80" step="1" value="35"><output id="clipTextGapVal">35px</output></div>
+   <div><label for="clipLogoY">하단 로고 위치</label><input id="clipLogoY" type="range" min="1520" max="1840" step="5" value="1650"><output id="clipLogoYVal">1650px</output></div>
+  </div>
+  <div class="clip-subheading">영상 화면 조절</div>
+  <div class="clip-range-grid">
+   <div><label for="clipVideoTop">영상 시작 위치</label><input id="clipVideoTop" type="range" min="20" max="38" step="1" value="27"><output id="clipVideoTopVal">27%</output></div>
+   <div><label for="clipVideoHeight">영상 영역 높이</label><input id="clipVideoHeight" type="range" min="38" max="67" step="1" value="52"><output id="clipVideoHeightVal">52%</output></div>
+   <div><label for="clipVideoZoom">영상 확대 (크롭)</label><input id="clipVideoZoom" type="range" min="100" max="180" step="5" value="100"><output id="clipVideoZoomVal">100%</output></div>
+  </div>
+  <p class="small clip-note">77 CLIP은 영상이 끝날 때까지 상단 타이틀과 77 로고를 유지해. 두 줄 제목도 라벨과 첫 줄의 간격을 동일하게 계산해. 미리보기·MP4·썸네일에 같은 값이 반영돼. 오른쪽 인스타 버튼과 겹치는지 게시 전 확인해줘.</p>
 </div></div>
 <div class="categories" id="categories"></div>
 <label for="title">제목</label><textarea id="title"></textarea><label for="subtitle">부제목</label><textarea id="subtitle"></textarea>
@@ -84,10 +97,10 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 <div id="calendarEditor" style="display:none"><h3>캘린더 오른쪽 일정표</h3><div class="calrows" id="calrows"></div></div>
 </div></details>
 <details class="fold"><summary>04 · 선택 클립 자르기와 페이드 <span>선택 클립 구간 · 전체 타이틀</span></summary><div class="fold-body">
-<p class="small">타임라인에서 선택한 클립의 시작·종료 시간을 조절해. 제목·로고 페이드는 완성 영상의 처음부터 한 번 적용돼. 원본 파일은 바뀌지 않아.</p>
+<p class="small">타임라인에서 선택한 클립의 시작·종료 시간을 조절해. 기본 릴스는 첫 3.5초 이후 제목·로고가 사라지고, 77 CLIP 상단 헤드라인형은 영상 끝까지 유지돼. 원본 파일은 바뀌지 않아.</p>
 <div class="trimrow"><div><label for="trimStart">시작 (초)</label><input type="number" id="trimStart" min="0" value="0" step="0.1" inputmode="decimal"></div><div><label for="trimEnd">종료 (초)</label><input type="number" id="trimEnd" min="0" value="0" step="0.1" inputmode="decimal"></div></div>
 <div class="editor-toolbar"><button class="btn" id="setStart" type="button">현재 위치 → 시작</button><button class="btn" id="setEnd" type="button">현재 위치 → 종료</button><button class="btn" id="playTrim" type="button">▶ 선택 구간</button></div><p class="hintline" id="trimSummary">영상을 업로드하면 구간을 선택할 수 있어.</p>
-<h3>전체 영상 타이틀 표시 시간</h3><div class="row"><div><label for="hold">타이틀 유지</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
+<h3>기본 릴스 타이틀 표시 시간 (77 CLIP에는 적용 안 됨)</h3><div class="row"><div><label for="hold">타이틀 유지</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
 </div></details>
 <details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
 <label for="filenameMode">영상 파일 이름</label><select id="filenameMode"><option value="source" selected>원본 파일명 + _studio77edit (기본)</option><option value="custom">직접 입력</option><option value="title">03. 제목 + _studio77edit</option></select><div id="customNameField" hidden><label for="customFilename">직접 입력할 영상 이름</label><input type="text" id="customFilename" placeholder="원하는 파일 이름" maxlength="180"><p class="small">.mp4 확장자는 자동으로 붙어.</p></div><p class="small">여러 영상이면 타임라인 첫 번째 영상의 원본명을 사용해. 제목이 비어 있으면 원본명으로 저장해.</p><div class="notes" id="filenamePreview" aria-live="polite">video_studio77edit.mp4</div><label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
@@ -50460,10 +50473,10 @@ window.MediabunnyAacEncoder={registerAacEncoder};
 const $=id=>document.getElementById(id),video=$('video'),canvas=$('overlay'),ctx=canvas.getContext('2d');
 const font=(weight,size)=>`${weight} ${size}px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`;
 const defs={news:['77 NEWS','#315bff'],issue:['77 ISSUE','#f04452'],pick:['77 PICK','#b1f522'],calendar:['77 CALENDAR','#956dff'],classic:['기본 릴스','#e53232']};
-const state={title:'',subtitle:'',cat:'news',titleSize:83,subSize:39,titleColor:'#fff',subColor:'#fff',labelEnabled:true,arrow:true,rule:true,logo:true,gradient:65,meta:false,issue:'',calendarRows:'',legacyLabel:'',legacyColor:'#e53232',legacyTextColor:'#fff',legacySize:32,colors:{},hold:3.5,fade:0.6,layoutStyle:'standard',labelAlign:'center',headlineAlign:'center',editorVersion:3};
+const state={title:'',subtitle:'',cat:'news',titleSize:83,subSize:39,titleColor:'#fff',subColor:'#fff',labelEnabled:true,arrow:true,rule:true,logo:true,gradient:65,meta:false,issue:'',calendarRows:'',legacyLabel:'',legacyColor:'#e53232',legacyTextColor:'#fff',legacySize:32,colors:{},hold:3.5,fade:0.6,layoutStyle:'standard',labelAlign:'center',headlineAlign:'center',clipHeaderY:172,clipLabelSize:44,clipTextGap:35,clipLogoY:1650,clipVideoTop:27,clipVideoHeight:52,clipVideoZoom:100,editorVersion:4};
 const VIDEO_SYNC_KEY='studio77-video-settings';
 function persistVideo(){try{localStorage.setItem(VIDEO_SYNC_KEY,JSON.stringify({...state,savedAt:Date.now()}))}catch(e){status('영상 편집기 설정 저장에 실패했어.')}}
-function restoreVideo(){try{const data=JSON.parse(localStorage.getItem(VIDEO_SYNC_KEY)||'null');if(!data||!data.savedAt)return false;Object.assign(state,data);if((data.editorVersion||0)<2)state.logo=true;if(!['standard','clip'].includes(state.layoutStyle))state.layoutStyle='standard';if(!['center','left'].includes(state.labelAlign))state.labelAlign='center';if(!['center','left'].includes(state.headlineAlign))state.headlineAlign='center';state.editorVersion=3;return true}catch(e){return false}}
+function restoreVideo(){try{const data=JSON.parse(localStorage.getItem(VIDEO_SYNC_KEY)||'null');if(!data||!data.savedAt)return false;Object.assign(state,data);if((data.editorVersion||0)<2)state.logo=true;if(!['standard','clip'].includes(state.layoutStyle))state.layoutStyle='standard';if(!['center','left'].includes(state.labelAlign))state.labelAlign='center';if(!['center','left'].includes(state.headlineAlign))state.headlineAlign='center';for(const [key,fallback,lo,hi] of [['clipHeaderY',172,105,230],['clipLabelSize',44,30,58],['clipTextGap',35,12,80],['clipLogoY',1650,1520,1840],['clipVideoTop',27,20,38],['clipVideoHeight',52,38,67],['clipVideoZoom',100,100,180]]){state[key]=Math.max(lo,Math.min(hi,Number(state[key])||fallback));}state.editorVersion=4;return true}catch(e){return false}}
 let videoUrl=null;const logo=new Image();
 logo.onload=()=>{$('logoStatus').textContent='77 로고 준비됨';draw()};
 logo.onerror=()=>{$('logoStatus').textContent='로고가 없어. 원본 로고 PNG를 선택하거나 로고 표시를 꺼줘.';};
@@ -50481,7 +50494,7 @@ function status(t){$('status').textContent=t}
 function catColor(){return state.colors?.[state.cat]||defs[state.cat]?.[1]||'#315bff'}
 function catName(){return defs[state.cat]?.[0]||'77 NEWS'}
 function syncForm(){
- $('layoutStyle').value=state.layoutStyle||'standard';$('labelAlign').value=state.labelAlign||'center';$('headlineAlign').value=state.headlineAlign||'center';refreshClipLayout();
+ $('layoutStyle').value=state.layoutStyle||'standard';$('labelAlign').value=state.labelAlign||'center';$('headlineAlign').value=state.headlineAlign||'center';for(const [id,unit] of [['clipHeaderY','px'],['clipLabelSize','px'],['clipTextGap','px'],['clipLogoY','px'],['clipVideoTop','%'],['clipVideoHeight','%'],['clipVideoZoom','%']]){$(id).value=state[id];$(id+'Val').textContent=state[id]+unit;}refreshClipLayout();
  $('title').value=state.title;$('subtitle').value=state.subtitle;$('titleSize').value=state.titleSize;$('subSize').value=state.subSize;
  $('titleSizeVal').textContent=state.titleSize+'px';$('subSizeVal').textContent=state.subSize+'px';
  $('showLogo').checked=state.logo;$('showLabel').checked=state.labelEnabled;$('showArrow').checked=state.arrow;$('showRule').checked=state.rule;
@@ -50582,44 +50595,50 @@ function verifyTimeline(expected,actual,label){
 }
 
 // The same 77 CLIP artwork is rendered for preview, PNG and encoded frames.
-const CLIP_RECT={x:0,y:461,w:1080,h:1037}; // 24–78% of the 9:16 canvas
+// Geometry is shared across HTML preview, cover PNG and final MP4 composition.
+function clipRectangle(w=1080,h=1920){
+ const top=(Number(state.clipVideoTop)||27)/100;
+ const height=(Number(state.clipVideoHeight)||52)/100;
+ return {x:0,y:h*top,w,h:h*height};
+}
 function clipActive(){return aspect==='portrait'&&state.layoutStyle==='clip'}
 function refreshClipLayout(){
  const active=clipActive();
  $('clipAlignOptions').style.display=state.layoutStyle==='clip'?'':'none';
  const screen=video.closest('.screen');if(screen)screen.classList.toggle('clip-mode',active);
-}
-function textLineCentered(text,cy,maxWidth,size,weight=800){
- ctx.save();ctx.font=font(weight,size);while(size>26&&ctx.measureText(text).width>maxWidth){size-=2;ctx.font=font(weight,size)}
- ctx.fillText(text,cy,0);ctx.restore();
+ if(active){const r=clipRectangle();video.style.top=(r.y/1920*100)+'%';video.style.height=(r.h/1920*100)+'%';video.style.left='0';video.style.width='100%';video.style.transform='scale('+((Number(state.clipVideoZoom)||100)/100)+')';}
+ else{video.style.top='';video.style.height='';video.style.left='';video.style.width='';video.style.transform='';}
 }
 function drawClipPortrait(forcedTime){
  ctx.clearRect(0,0,1080,1920);
- const t=Number.isFinite(forcedTime)?forcedTime:clipElapsed(),opacity=t<=state.hold?1:t>=state.hold+state.fade?0:Math.max(0,1-(t-state.hold)/state.fade);
- if(opacity<=0)return;
- ctx.save();ctx.globalAlpha=opacity;
- // Header and footer are intentionally black; both sit outside the video area.
- ctx.fillStyle='#000';ctx.fillRect(0,0,1080,CLIP_RECT.y);
- ctx.fillRect(0,CLIP_RECT.y+CLIP_RECT.h,1080,1920-(CLIP_RECT.y+CLIP_RECT.h));
+ ctx.save();
+ // CLIP titles are intentionally persistent. The standard Reels template keeps its fade.
+ const rect=clipRectangle();
+ ctx.fillStyle='#000';ctx.fillRect(0,0,1080,rect.y);
+ ctx.fillRect(0,rect.y+rect.h,1080,1920-(rect.y+rect.h));
  const left=72,center=540,color=catColor();
  const label=state.cat==='classic'?(state.legacyLabel||'77 CLIP'):catName();
+ const labelY=Number(state.clipHeaderY)||172,labelSize=Number(state.clipLabelSize)||44;
+ const boxH=labelSize+24;
  if(state.labelEnabled){
-   ctx.font='italic 800 38px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
-   const width=Math.min(700,ctx.measureText(label).width+46),lx=state.labelAlign==='left'?left:center-width/2;
-   ctx.fillStyle=state.cat==='classic'?state.legacyColor:color;ctx.fillRect(lx,152,width,57);
-   ctx.fillStyle=state.cat==='pick'?'#111':'#fff';ctx.textAlign='left';ctx.fillText(label,lx+23,192);
+   ctx.font='italic 800 '+labelSize+'px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
+   const width=Math.min(750,ctx.measureText(label).width+48),lx=state.labelAlign==='left'?left:center-width/2;
+   ctx.fillStyle=state.cat==='classic'?state.legacyColor:color;ctx.fillRect(lx,labelY,width,boxH);
+   ctx.fillStyle=state.cat==='pick'?'#111':'#fff';ctx.textAlign='left';ctx.fillText(label,lx+24,labelY+labelSize+5);
  }
- const baseSize=Math.min(82,Math.max(38,Number(state.titleSize||70))),maxW=940;
- ctx.font=font(800,baseSize);const lines=wrap(state.title,maxW,2),lineH=baseSize*1.15;
- const firstY=lines.length<=1?335:288;
+ const maxW=936,baseSize=Math.min(83,Math.max(36,Number(state.titleSize||70)));
+ const boxEnd=state.labelEnabled?labelY+boxH:labelY;
+ const baseline=boxEnd+(Number(state.clipTextGap)||35)+baseSize*.82;
+ ctx.font=font(800,baseSize);
+ const lines=wrap(state.title,maxW,2),lineH=baseSize*1.2;
  ctx.fillStyle=state.titleColor||'#fff';ctx.textAlign=state.headlineAlign==='left'?'left':'center';
  const tx=state.headlineAlign==='left'?left:center;
  lines.forEach((line,i)=>{
    let sz=baseSize;ctx.font=font(800,sz);
    while(sz>26&&ctx.measureText(line).width>maxW){sz-=2;ctx.font=font(800,sz)}
-   ctx.fillText(line,tx,firstY+i*lineH);
+   ctx.fillText(line,tx,baseline+i*lineH);
  });
- if(state.logo&&logo.complete&&logo.naturalWidth){const lw=92,lh=lw*logo.naturalHeight/logo.naturalWidth;ctx.drawImage(logo,center-lw/2,1580-lh/2,lw,lh)}
+ if(state.logo&&logo.complete&&logo.naturalWidth){const lw=104,lh=lw*logo.naturalHeight/logo.naturalWidth;const cy=Number(state.clipLogoY)||1650;ctx.drawImage(logo,center-lw/2,cy-lh/2,lw,lh)}
  ctx.restore();
 }
 function drawPortrait(forcedTime){if(!ctx)return;if(clipActive())return drawClipPortrait(forcedTime);ctx.clearRect(0,0,1080,1920);const t=Number.isFinite(forcedTime)?forcedTime:clipElapsed(),hold=state.hold,fade=state.fade;
@@ -50651,6 +50670,9 @@ function drawPortrait(forcedTime){if(!ctx)return;if(clipActive())return drawClip
 }
 for(const id of ['layoutStyle','labelAlign','headlineAlign']){
  $(id).addEventListener('change',e=>{state[id]=e.target.value;refreshClipLayout();persistVideo();draw();});
+}
+for(const [id,unit] of [['clipHeaderY','px'],['clipLabelSize','px'],['clipTextGap','px'],['clipLogoY','px'],['clipVideoTop','%'],['clipVideoHeight','%'],['clipVideoZoom','%']]){
+ $(id).addEventListener('input',e=>{state[id]=Number(e.target.value);$(id+'Val').textContent=state[id]+unit;refreshClipLayout();persistVideo();draw();});
 }
 for(const [key,label] of Object.entries(defs)){const b=document.createElement('button');b.type='button';b.className='category';b.dataset.category=key;b.innerHTML=`<i style="background:${label[1]}"></i>${label[0]}`;b.onclick=()=>{state.cat=key;syncForm();draw()};$('categories').appendChild(b)}
 $('import').onclick=()=>importReels();
@@ -50829,9 +50851,9 @@ function updateFilename(){$('customNameField').hidden=$('filenameMode').value!==
 $('filenameMode').onchange=()=>{if($('filenameMode').value==='custom'&&!$('customFilename').value)$('customFilename').value=safeName(clips[0]?.file.name||'video')+'_studio77edit';updateFilename()};$('customFilename').oninput=updateFilename;
 $('title').addEventListener('input',updateFilename);
 function coverVideo(g,w,h){
- const r=clipActive()?{x:0,y:h*.24,w,h:h*.54}:{x:0,y:0,w,h};
+ const r=clipActive()?clipRectangle(w,h):{x:0,y:0,w,h};
  g.fillStyle='#000';g.fillRect(0,0,w,h);
- const vw=video.videoWidth||w,vh=video.videoHeight||h,s=Math.max(r.w/vw,r.h/vh),sw=r.w/s,sh=r.h/s;
+ const vw=video.videoWidth||w,vh=video.videoHeight||h,s=Math.max(r.w/vw,r.h/vh)*(clipActive()?(Number(state.clipVideoZoom)||100)/100:1),sw=r.w/s,sh=r.h/s;
  g.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,r.x,r.y,r.w,r.h);
 }
 function saveBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;a.textContent='다운로드: '+filename;const box=$('downloadLinks'),kind=blob.type==='video/mp4'?'video':'cover';box.querySelector('[data-kind='+kind+']')?.remove();a.dataset.kind=kind;box.append(a);a.click();return u;}
@@ -50951,11 +50973,11 @@ $('exportVideo').onclick=async()=>{
       const t=plan.offset+begin-plan.a,d=end-begin,s=Math.max(w/sample.displayWidth,h/sample.displayHeight);
       g.globalAlpha=1;g.fillStyle='#000';g.fillRect(0,0,w,h);
       if(clipActive()){
-        const rect={x:0,y:h*.24,w,h:h*.54},ss=Math.max(rect.w/sample.displayWidth,rect.h/sample.displayHeight);
+        const rect=clipRectangle(w,h),ss=Math.max(rect.w/sample.displayWidth,rect.h/sample.displayHeight)*((Number(state.clipVideoZoom)||100)/100);
         g.save();g.beginPath();g.rect(rect.x,rect.y,rect.w,rect.h);g.clip();
         sample.draw(g,rect.x+(rect.w-sample.displayWidth*ss)/2,rect.y+(rect.h-sample.displayHeight*ss)/2,sample.displayWidth*ss,sample.displayHeight*ss);g.restore();
       }else sample.draw(g,(w-sample.displayWidth*s)/2,(h-sample.displayHeight*s)/2,sample.displayWidth*s,sample.displayHeight*s);
-      const alpha=t<=hold?1:t>=hold+fade?0:1-(t-hold)/fade;if(alpha>0){g.globalAlpha=alpha;g.drawImage(template,0,0);g.globalAlpha=1;}
+      const alpha=clipActive()?1:(t<=hold?1:t>=hold+fade?0:1-(t-hold)/fade);if(alpha>0){g.globalAlpha=alpha;g.drawImage(template,0,0);g.globalAlpha=1;}
       const rendered=new M.VideoSample(composite,{timestamp:t,duration:d});try{await videoSource.add(rendered,first?{keyFrame:true}:undefined)}finally{rendered.close()}first=false;processed.push({t,d});
       if(performance.now()-uiTime>100){uiTime=performance.now();$('exportProgress').textContent=`${index+1}/${plans.length} 영상 · ${processed.length.toLocaleString()} / ${expected.length.toLocaleString()} 프레임`;$('exportMeter').value=processed.length/expected.length*.94;await nextTurn();}
       await synchronizePumps(job,'videoTime',t+d);
