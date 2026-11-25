@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#111318" />
-  <title>77 MAGAZINE STUDIO v1.9.2 — COMEBACK LINEUP</title>
+  <title>77 Magazine Studio — 가독성 그라데이션·화살표 설정</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
   <style>
@@ -127,18 +127,6 @@
     header>.tag{grid-column:2;grid-row:1;justify-self:end;white-space:nowrap}
     header>.studio-nav{grid-column:1/-1;grid-row:2;justify-self:center;width:auto}
     @media(max-width:600px){header>.studio-nav{width:100%;justify-self:stretch}header>.tag{font-size:10px;padding:6px 8px}}
-  
-    /* COMEBACK LINEUP: new independent four-photo template only */
-    #lineupPanel{display:none}
-    #lineupPanel .lineup-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-    #lineupPanel .lineup-tile{border:1px solid #40434c;border-radius:10px;background:#20242c;padding:10px;min-width:0}
-    #lineupPanel .lineup-tile.active{border-color:#9cb6f5;background:#303749}
-    #lineupPanel .lineup-tile .upload{font-size:12px;padding:10px 5px;min-height:43px;text-align:center}
-    #lineupPanel .lineup-tile button{background:#343944;border:1px solid #515968;color:#e2e5ee;border-radius:7px;padding:7px 4px;font-size:11px;width:100%;margin-top:6px}
-    #lineupPanel .lineup-tile .lineup-select{font-weight:800}
-    #lineupPanel .lineup-tile b{font-size:12px}
-    #lineupMode{grid-column:1 / -1}
-    #versionNumber{font-size:10px;color:#989eac;font-weight:600;white-space:nowrap;margin-left:8px}
   </style>
 </head>
 <body>
@@ -153,10 +141,10 @@
   </dialog>
   <main>
     <aside>
-      <div class="toptools"><span id="versionNumber" title="COMEBACK LINEUP 4분할 추가">v1.9.2</span><button id="resetCurrentWork" type="button" class="reset-button">현재 템플릿 초기화</button></div>
+      <div class="toptools"><button id="resetCurrentWork" type="button" class="reset-button">현재 템플릿 초기화</button></div>
       <section class="section">
         <h2>01 · 템플릿 선택</h2>
-        <div class="seg"><button id="feedMode" class="active" type="button">피드 · 4:5</button><button id="reelsMode" type="button">릴스 · 9:16</button><button id="logoMode" type="button">로고 전용 · 4:5</button><button id="fit45Mode" type="button">원본 유지 · 4:5</button><button id="lineupMode" type="button">COMEBACK LINEUP · 4분할</button></div>
+        <div class="seg"><button id="feedMode" class="active" type="button">피드 · 4:5</button><button id="reelsMode" type="button">릴스 · 9:16</button><button id="logoMode" type="button">로고 전용 · 4:5</button><button id="fit45Mode" type="button">원본 유지 · 4:5</button></div>
         <p class="hint" id="sizeHint">피드 썸네일 · 1080 × 1350 px</p>
         <details class="tool-accordion" id="framePanel">
           <summary>4:5 맞춤 · 원본 유지</summary>
@@ -255,19 +243,6 @@
           </div>
           </div>
         </details>
-        <section class="panelbox" id="lineupPanel" aria-label="컴백 라인업 4분할 사진 편집">
-          <b>COMEBACK LINEUP · 사진 편집</b>
-          <p class="hint">1080×1350 · 정확히 2×2 (각 540×675) · 간격 0px.<br>칸을 선택한 다음 사진 위를 한 손가락으로 이동하고 두 손가락으로 확대하세요.</p>
-          <div class="lineup-grid" id="lineupPhotoGrid">
-            <div class="lineup-tile" data-lineup-side="left"><b>사진 1 · 왼쪽 위</b><label class="upload" for="lineupFile1">＋ 업로드 / 교체</label><input type="file" id="lineupFile1" accept="image/jpeg,image/png,image/webp,image/avif"><button type="button" class="lineup-select" data-lineup-select="left">사진 1 선택</button><button type="button" data-lineup-reset="left">위치·확대 초기화</button></div>
-            <div class="lineup-tile" data-lineup-side="right"><b>사진 2 · 오른쪽 위</b><label class="upload" for="lineupFile2">＋ 업로드 / 교체</label><input type="file" id="lineupFile2" accept="image/jpeg,image/png,image/webp,image/avif"><button type="button" class="lineup-select" data-lineup-select="right">사진 2 선택</button><button type="button" data-lineup-reset="right">위치·확대 초기화</button></div>
-            <div class="lineup-tile" data-lineup-side="third"><b>사진 3 · 왼쪽 아래</b><label class="upload" for="lineupFile3">＋ 업로드 / 교체</label><input type="file" id="lineupFile3" accept="image/jpeg,image/png,image/webp,image/avif"><button type="button" class="lineup-select" data-lineup-select="third">사진 3 선택</button><button type="button" data-lineup-reset="third">위치·확대 초기화</button></div>
-            <div class="lineup-tile" data-lineup-side="fourth"><b>사진 4 · 오른쪽 아래</b><label class="upload" for="lineupFile4">＋ 업로드 / 교체</label><input type="file" id="lineupFile4" accept="image/jpeg,image/png,image/webp,image/avif"><button type="button" class="lineup-select" data-lineup-select="fourth">사진 4 선택</button><button type="button" data-lineup-reset="fourth">위치·확대 초기화</button></div>
-          </div>
-          <label class="checkbox"><input type="checkbox" id="lineupSubtitleVisible" checked> COMEBACK LINEUP 부제 표시</label>
-          <button type="button" class="secondary" id="lineupResetAll">4장 사진 위치·확대 전체 초기화</button>
-          <p class="hint">사진은 빈 공간이 생기지 않게 자동으로 채웁니다. 선택한 사진의 설정만 바뀌며 다른 템플릿에는 영향을 주지 않아요.</p>
-        </section>
         <details class="tool-accordion filter-panel" id="filterPanel">
           <summary>사진 보정 · 필터 / 밝기 / 대비 / 채도 / 블러</summary>
           <div class="tool-accordion-body">
@@ -374,10 +349,8 @@
     labelEnabled:true,labelText:'',labelSize:32,labelBg:'#e53232',labelColor:'#ffffff',stickers:[],textGradient:65,feedArrowEnabled:true,editorialCategory:'classic',editorialLabelEnabled:true,editorialColors:{},editorialIssue:'',editorialMetaEnabled:false,editorialRuleEnabled:true,calendarRows:'',
     collageEnabled:false,collageLayout:'single',rightZoom:100,rightOffsetX:0,rightOffsetY:0,thirdZoom:100,thirdOffsetX:0,thirdOffsetY:0,fourthZoom:100,fourthOffsetX:0,fourthOffsetY:0,photoFilters:{},photoFrames:{}
   });
-  const LINEUP_VERSION='1.9.2';
-  const lineupDefaults=()=>({...defaults(),title:'다음 주 컴백,\n누가 돌아올까?',feedSubtitle:'11.30 — 12.06 | K-POP COMEBACK',lineupSubtitleVisible:true,editorialCategory:'calendar',collageEnabled:true,collageLayout:'four',photoFrames:{}});
-  let mode='feed'; const states={feed:defaults(),reels:{...defaults(),titleSize:83},logo:defaults(),fit45:{...defaults(),fitLogoEnabled:false,photoFrames:{left:{fit:'contain',color:'#ffffff'}}},lineup:lineupDefaults()};
-  let photos={feed:null,reels:null,logo:null,fit45:null,lineup:null}, rightPhotos={feed:null,reels:null,logo:null,fit45:null,lineup:null}, extraPhotos={third:{feed:null,reels:null,logo:null,fit45:null,lineup:null},fourth:{feed:null,reels:null,logo:null,fit45:null,lineup:null}}, selectedPhotoSide="left", logo=null, dragging=false,dragX=0,dragY=0, dragStickerId=null, selectedStickerId=null;
+  let mode='feed'; const states={feed:defaults(),reels:{...defaults(),titleSize:83},logo:defaults(),fit45:{...defaults(),fitLogoEnabled:false,photoFrames:{left:{fit:'contain',color:'#ffffff'}}}};
+  let photos={feed:null,reels:null,logo:null,fit45:null}, rightPhotos={feed:null,reels:null,logo:null,fit45:null}, extraPhotos={third:{feed:null,reels:null,logo:null,fit45:null},fourth:{feed:null,reels:null,logo:null,fit45:null}}, selectedPhotoSide="left", logo=null, dragging=false,dragX=0,dragY=0, dragStickerId=null, selectedStickerId=null;
   const stickerImages=new Map();
   const COLOR_WHITE='#ffffff';
   function font(weight,size){return `${weight} ${size}px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`}
@@ -389,7 +362,7 @@
   function editorial(){return EDITORIAL[current().editorialCategory]||null}
   function editorialColor(){const category=current().editorialCategory;return current().editorialColors?.[category]||EDITORIAL[category]?.color||'#315bff'}
   function updateEditorialUI(){
-    const active=mode==='feed'||mode==='reels'||mode==='lineup';$('editorialCategorySection').style.display=active?'':'none';
+    const active=mode==='feed'||mode==='reels';$('editorialCategorySection').style.display=active?'':'none';
     $('videoSyncToReels').style.display=mode==='reels'?'':'none';
     const cat=current().editorialCategory||'classic',on=active&&cat!=='classic';
     document.querySelectorAll('[data-editorial]').forEach(b=>b.classList.toggle('active',b.dataset.editorial===cat));
@@ -406,13 +379,13 @@
   function sync(){const s=current();$('textGradient').value=s.textGradient??65;$('textGradientValue').textContent=(s.textGradient??65)+'%';$('feedArrowEnabled').checked=s.feedArrowEnabled!==false;fields.forEach(id=>setField($(id),s[id])); for(const id of ['zoom','titleSize','feedSubtitleSize','reelsSubtitleSize','labelSize'])$(id+'Value').textContent=s[id]+(id==='zoom'?'%':'px');for(const id of ['titleColor','feedSubtitleColor','reelsSubtitleColor'])$(id+'Value').textContent=s[id].toUpperCase();$('labelControls').style.opacity=s.labelEnabled?'1':'.45';$('labelControls').style.pointerEvents=s.labelEnabled?'auto':'none'}
   const slotNames={left:'첫 번째',right:'두 번째',third:'세 번째',fourth:'네 번째'};
   const slotsForLayout={single:['left'],two:['left','right'],horizontal:['left','right'],three:['left','right','third'],four:['left','right','third','fourth']};
-  function layout(){const s=current();return mode==='lineup'?'four':(s.collageLayout&&slotsForLayout[s.collageLayout]?s.collageLayout:(s.collageEnabled?'two':'single'))}
+  function layout(){const s=current();return s.collageLayout&&slotsForLayout[s.collageLayout]?s.collageLayout:(s.collageEnabled?'two':'single')}
   function activeSlots(){return slotsForLayout[layout()]}
   function isCollage(){return layout()!=='single'}
   function photoFor(side){return side==='left'?photos[mode]:side==='right'?rightPhotos[mode]:extraPhotos[side][mode]}
   function photoProps(side=selectedPhotoSide){const prefix=side==='left'?'':side;return {img:photoFor(side),zoom:side==='left'?'zoom':prefix+'Zoom',x:side==='left'?'offsetX':prefix+'OffsetX',y:side==='left'?'offsetY':prefix+'OffsetY'}}
   const frameDefaults=()=>({fit:'cover',color:'#f3f3f3'});
-  function selectedFrame(side=selectedPhotoSide){if(mode==='lineup')return {fit:'cover',color:'#000'};const s=current();if(!s.photoFrames||typeof s.photoFrames!=='object')s.photoFrames={};if(!s.photoFrames[side])s.photoFrames[side]=frameDefaults();return s.photoFrames[side]}
+  function selectedFrame(side=selectedPhotoSide){const s=current();if(!s.photoFrames||typeof s.photoFrames!=='object')s.photoFrames={};if(!s.photoFrames[side])s.photoFrames[side]=frameDefaults();return s.photoFrames[side]}
   function updateFrameUI(){const f=selectedFrame();$('fitMode').value=f.fit||'cover';$('frameBgColor').value=f.color||'#f3f3f3';$('frameBgColorValue').textContent=String(f.color||'#f3f3f3').toUpperCase();$('frameBgWrap').style.display=$('fitMode').value==='contain'?'':'none'}
   function slotRect(side){const w=canvas.width,h=canvas.height,kind=layout();
     if(kind==='single')return {x:0,y:0,w,h};
@@ -423,7 +396,7 @@
   }
   function sideAt(pt){for(const side of activeSlots()){const r=slotRect(side);if(pt.x>=r.x&&pt.x<=r.x+r.w&&pt.y>=r.y&&pt.y<=r.y+r.h)return side}return 'left'}
   function clampSide(side){const p=photoProps(side),img=p.img;if(!img)return;const s=current(),r=slotRect(side),fit=selectedFrame(side).fit||'cover',baseScale=(fit==='cover'?Math.max(r.w/img.width,r.h/img.height):Math.min(r.w/img.width,r.h/img.height)),scale=baseScale*s[p.zoom]/100;
-    const maxX=fit==='cover'?Math.max(0,(img.width*scale-r.w)/2):Math.abs(img.width*scale-r.w)/2,maxY=fit==='cover'?Math.max(0,(img.height*scale-r.h)/2):Math.abs(img.height*scale-r.h)/2;
+    const maxX=Math.abs(img.width*scale-r.w)/2,maxY=Math.abs(img.height*scale-r.h)/2;
     s[p.x]=Math.max(-maxX,Math.min(maxX,s[p.x]));s[p.y]=Math.max(-maxY,Math.min(maxY,s[p.y]));
   }
   function clampBoth(){for(const side of activeSlots())clampSide(side)}
@@ -438,7 +411,6 @@
     updateQuickImportHint();
     updateFilterUI();
     updateFrameUI();
-    if(mode==='lineup')document.querySelectorAll('[data-lineup-side]').forEach(tile=>tile.classList.toggle('active',tile.dataset.lineupSide===selectedPhotoSide));
   }
   function chooseSide(side){if(!activeSlots().includes(side))return;selectedPhotoSide=side;updateCollageUI();paint()}
   const filterDefaults=()=>({brightness:100,contrast:100,saturate:100,warmth:0,vignette:0,blur:0});
@@ -537,16 +509,16 @@
     ctx.restore();
   }
     function switchMode(m){
-     if(!['feed','reels','logo','fit45','lineup'].includes(m))m='feed';
+     if(!['feed','reels','logo','fit45'].includes(m))m='feed';
      mode=m;
-     const feed=m==='feed'||m==='lineup', reels=m==='reels', logoOnly=m==='logo', fitOnly=m==='fit45', isLineup=m==='lineup';
+     const feed=m==='feed', reels=m==='reels', logoOnly=m==='logo', fitOnly=m==='fit45';
      $('feedMode').classList.toggle('active',feed);
      $('reelsMode').classList.toggle('active',reels);
      $('logoMode').classList.toggle('active',logoOnly);
-     $('fit45Mode').classList.toggle('active',fitOnly);$('lineupMode').classList.toggle('active',isLineup);$('lineupPanel').style.display=isLineup?'':'none';$('lineupSubtitleVisible').checked=current().lineupSubtitleVisible!==false;
+     $('fit45Mode').classList.toggle('active',fitOnly);
      $('framePanel').style.display=fitOnly?'':'none';
      $('framePanel').open=fitOnly;
-     $('collagePanel').style.display=(fitOnly||isLineup)?'none':'';
+     $('collagePanel').style.display=fitOnly?'none':'';
      if(fitOnly){current().collageLayout='single';current().collageEnabled=false;}
      $('titleSection').hidden=logoOnly||fitOnly;
      $('titleSection').style.display=(logoOnly||fitOnly)?'none':'';
@@ -557,15 +529,15 @@
      $('stickerSection').hidden=logoOnly||fitOnly;
      $('stickerSection').style.display=(logoOnly||fitOnly)?'none':'';
      canvas.width=1080;canvas.height=reels?1920:1350;
-     $('sizeHint').textContent=isLineup?'COMEBACK LINEUP · 4분할 · 1080 × 1350 px':reels?'릴스 썸네일 · 1080 × 1920 px':logoOnly?'로고 전용 · 1080 × 1350 px':fitOnly?'원본 유지 · 1080 × 1350 px (사진 잘림 없음)':'피드 썸네일 · 1080 × 1350 px';
-     $('previewName').textContent=isLineup?'COMEBACK LINEUP 미리보기':reels?'릴스 미리보기':logoOnly?'로고 전용 미리보기':fitOnly?'원본 유지 4:5 미리보기':'피드 미리보기';
+     $('sizeHint').textContent=reels?'릴스 썸네일 · 1080 × 1920 px':logoOnly?'로고 전용 · 1080 × 1350 px':fitOnly?'원본 유지 · 1080 × 1350 px (사진 잘림 없음)':'피드 썸네일 · 1080 × 1350 px';
+     $('previewName').textContent=reels?'릴스 미리보기':logoOnly?'로고 전용 미리보기':fitOnly?'원본 유지 4:5 미리보기':'피드 미리보기';
      $('previewSize').textContent=reels?'1080 × 1920 px':'1080 × 1350 px';
      selectedStickerId=null;selectedPhotoSide='left';sync();updateEditorialUI();$('fitLogoEnabled').checked=!!current().fitLogoEnabled;updateCollageUI();updateStickerControls();paint();
      try{localStorage.setItem('studio77-mode',mode)}catch(e){}
    }
   function setStatus(t){$('status').textContent=t}
   function persist(){try{localStorage.setItem('studio77-values',JSON.stringify(states))}catch(e){setStatus('설정 자동 저장 공간이 부족합니다.')}}
-  try{const saved=JSON.parse(localStorage.getItem('studio77-values')||'null');if(saved)for(const key of ['feed','reels','logo','fit45','lineup'])if(saved[key]){Object.assign(states[key],saved[key]);if(!Array.isArray(states[key].stickers))states[key].stickers=[];if(!saved[key].collageLayout)states[key].collageLayout=states[key].collageEnabled?'two':'single';if(!states[key].photoFilters)states[key].photoFilters={};if(!states[key].photoFrames)states[key].photoFrames={};}}catch(e){}
+  try{const saved=JSON.parse(localStorage.getItem('studio77-values')||'null');if(saved)for(const key of ['feed','reels','logo','fit45'])if(saved[key]){Object.assign(states[key],saved[key]);if(!Array.isArray(states[key].stickers))states[key].stickers=[];if(!saved[key].collageLayout)states[key].collageLayout=states[key].collageEnabled?'two':'single';if(!states[key].photoFilters)states[key].photoFilters={};if(!states[key].photoFrames)states[key].photoFrames={};}}catch(e){}
   // Photos are saved in IndexedDB (not a shared server).
   function openDB(){return new Promise((resolve,reject)=>{if(!('indexedDB' in window))return reject(new Error('not available'));const req=indexedDB.open('studio77-photos',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('images'))req.result.createObjectStore('images')};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
   const VIDEO_SYNC_KEY='studio77-video-settings';
@@ -705,7 +677,7 @@
     }
     throw new Error('unsupported');
   }
-  async function restorePhotos(){for(const k of ['feed','reels','logo','fit45','lineup']){const blob=await getPhoto(k);if(blob)try{photos[k]=await blobToImage(blob)}catch(e){}const right=await getPhoto(k+'-right');if(right)try{rightPhotos[k]=await blobToImage(right)}catch(e){}for(const side of ['third','fourth']){const extra=await getPhoto(k+'-'+side);if(extra)try{extraPhotos[side][k]=await blobToImage(extra)}catch(e){}}}paint()}
+  async function restorePhotos(){for(const k of ['feed','reels','logo','fit45']){const blob=await getPhoto(k);if(blob)try{photos[k]=await blobToImage(blob)}catch(e){}const right=await getPhoto(k+'-right');if(right)try{rightPhotos[k]=await blobToImage(right)}catch(e){}for(const side of ['third','fourth']){const extra=await getPhoto(k+'-'+side);if(extra)try{extraPhotos[side][k]=await blobToImage(extra)}catch(e){}}}paint()}
   function clampPhotoOffset(){clampSide('left')}
   async function deleteStickerBlob(id){try{const db=await openDB();await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').delete('sticker-'+id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});db.close()}catch(e){}}
   function stickerById(id){return current().stickers.find(s=>s.id===id)}
@@ -742,7 +714,7 @@
     const img=st.kind==='image'?stickerImages.get(st.id):null,h=img?st.size*img.height/img.width:st.size;
     if(Math.abs(x)<st.size/2+15&&Math.abs(y)<h/2+15)return st;
   }return null}
-  async function restoreStickers(){for(const k of ['feed','reels','logo','fit45','lineup'])for(const st of states[k].stickers){if(st.kind!=='image')continue;const blob=await getPhoto('sticker-'+st.id);if(blob)try{stickerImages.set(st.id,await blobToImage(blob))}catch(e){}}updateStickerControls();paint()}
+  async function restoreStickers(){for(const k of ['feed','reels','logo','fit45'])for(const st of states[k].stickers){if(st.kind!=='image')continue;const blob=await getPhoto('sticker-'+st.id);if(blob)try{stickerImages.set(st.id,await blobToImage(blob))}catch(e){}}updateStickerControls();paint()}
   function drawPhoto(){if(isCollage()){for(const side of activeSlots())drawSlot(side);return}const w=canvas.width,h=canvas.height,img=photos[mode];if(!img){const grd=ctx.createLinearGradient(0,0,w,h);grd.addColorStop(0,'#596575');grd.addColorStop(.53,'#303947');grd.addColorStop(1,'#111820');ctx.fillStyle=grd;ctx.fillRect(0,0,w,h);ctx.fillStyle='#d2d8e0';ctx.textAlign='center';ctx.font=font(500,31);ctx.fillText('사진을 업로드해주세요',w/2,h*.42);ctx.textAlign='left';return}
     ctx.save();drawFittedPhoto('left',{x:0,y:0,w,h});ctx.restore();
   }
@@ -766,7 +738,7 @@
     ctx.fillText(text,x,y);return sz;
   }
   function drawEditorial(){
-    const s=current(),cat=s.editorialCategory,definition=EDITORIAL[cat],color=editorialColor(),isCal=cat==='calendar'&&mode!=='lineup',isReels=mode==='reels',verticalShift=isReels?455:0;
+    const s=current(),cat=s.editorialCategory,definition=EDITORIAL[cat],color=editorialColor(),isCal=cat==='calendar',isReels=mode==='reels',verticalShift=isReels?455:0;
     ctx.save();ctx.textBaseline='alphabetic';ctx.textAlign='left';
     if(logo)drawLogo(100,85,104);
     else {ctx.fillStyle='#fff';ctx.font='italic 800 82px Georgia, serif';ctx.fillText('77',53,107)}
@@ -815,7 +787,7 @@
     lines.forEach((line,i)=>fillFittedLine(line,titleX,titleY+i*lineHeight,titleW,headlineSize,35,800));
     const lastY=titleY+Math.max(0,lines.length-1)*lineHeight;
     const sub=isReels?s.reelsSubtitle:s.feedSubtitle;
-    if(sub?.trim()&&(mode!=='lineup'||s.lineupSubtitleVisible!==false)){
+    if(sub?.trim()){
       const subSize=isReels?Number(s.reelsSubtitleSize||39):Number(s.feedSubtitleSize||46);
       ctx.fillStyle=(isReels?s.reelsSubtitleColor:s.feedSubtitleColor)||'#fff';ctx.font=font(500,Math.min(42,subSize));
       const subtitleWidth=isCal?420:930;
@@ -832,7 +804,7 @@
       titleLines.forEach((line,i)=>ctx.fillText(line,84,firstBase+i*lineH));
       lastTitleBase=firstBase+(Math.max(titleLines.length,1)-1)*lineH;
     }
-    if(s.feedSubtitle.trim()&&(mode!=='lineup'||s.lineupSubtitleVisible!==false)){
+    if(s.feedSubtitle.trim()){
       const size=fitSingle(s.feedSubtitle,910,s.feedSubtitleSize,20);ctx.font=font(400,size);ctx.fillStyle=s.feedSubtitleColor;
       const subtitleBase=titleLines.length?Math.round(lastTitleBase+84):1165;ctx.fillText(s.feedSubtitle,85,subtitleBase)
     }
@@ -850,7 +822,7 @@
     drawLogo(540,1815,68);
     if(s.feedArrowEnabled!==false){ctx.strokeStyle='#fff';ctx.lineWidth=4.5;ctx.lineCap='square';ctx.lineJoin='miter';ctx.beginPath();ctx.moveTo(895,1810);ctx.lineTo(1011,1810);ctx.moveTo(994,1793);ctx.lineTo(1011,1810);ctx.lineTo(994,1827);ctx.stroke()}
   }
-  function paint(showSelection=true){ctx.clearRect(0,0,canvas.width,canvas.height);drawPhoto();if(mode==='logo'){drawLogo(540,1288,65);return}if(mode==='fit45'){if(current().fitLogoEnabled)drawLogo(540,1288,65);return}drawOverlay();if(mode==='feed'||mode==='lineup')drawFeed();else if(mode==='reels'&&editorial())drawEditorial();else drawReels();drawStickers(showSelection)}
+  function paint(showSelection=true){ctx.clearRect(0,0,canvas.width,canvas.height);drawPhoto();if(mode==='logo'){drawLogo(540,1288,65);return}if(mode==='fit45'){if(current().fitLogoEnabled)drawLogo(540,1288,65);return}drawOverlay();if(mode==='feed')drawFeed();else if(mode==='reels'&&editorial())drawEditorial();else drawReels();drawStickers(showSelection)}
   fields.forEach(id=>{const el=$(id);const event=el.type==='checkbox'||el.type==='color'?'change':'input';const update=()=>{if(id==='zoom'){current()[photoProps().zoom]=getField(el)}else{current()[id]=getField(el)};if(id==='zoom'){clampPhotoOffset();updateCollageUI()}if(id.endsWith('Size'))$(id+'Value').textContent=current()[id]+'px';if(['titleColor','feedSubtitleColor','reelsSubtitleColor'].includes(id))$(id+'Value').textContent=current()[id].toUpperCase();if(id==='labelEnabled'){$('labelControls').style.opacity=el.checked?'1':'.45';$('labelControls').style.pointerEvents=el.checked?'auto':'none'}persist();paint()};el.addEventListener(event,update);if(event==='change'&&el.type==='color')el.addEventListener('input',update)});
   $('textGradient').addEventListener('input',e=>{current().textGradient=Number(e.target.value);$('textGradientValue').textContent=e.target.value+'%';persist();paint()});
   $('feedArrowEnabled').addEventListener('change',e=>{current().feedArrowEnabled=e.target.checked;persist();paint()});
@@ -860,7 +832,7 @@
     if(btn.dataset.editorial==='calendar'&&!current().title.trim())current().title='K-POP\n주요 일정';
     const f=selectedFilters('left');
     const neutral=JSON.stringify(f)===JSON.stringify(filterDefaults());
-    if(mode!=='lineup'&&btn.dataset.editorial!=='classic'&&neutral){current().photoFilters.left={...FILTER_PRESETS.magazine};}
+    if(btn.dataset.editorial!=='classic'&&neutral){current().photoFilters.left={...FILTER_PRESETS.magazine};}
     sync();updateEditorialUI();updateFilterUI();persist();paint();
   });
   $('editorialLabelEnabled').addEventListener('change',e=>{current().editorialLabelEnabled=e.target.checked;persist();paint()});
@@ -869,26 +841,7 @@
   $('editorialMetaEnabled').addEventListener('change',e=>{current().editorialMetaEnabled=e.target.checked;persist();paint()});
   $('editorialRuleEnabled').addEventListener('change',e=>{current().editorialRuleEnabled=e.target.checked;persist();paint()});
   $('calendarRows').addEventListener('input',e=>{current().calendarRows=e.target.value;persist();paint()});
-  $('feedMode').onclick=()=>switchMode('feed');$('reelsMode').onclick=()=>switchMode('reels');$('logoMode').onclick=()=>switchMode('logo');$('fit45Mode').onclick=()=>switchMode('fit45');$('lineupMode').onclick=()=>switchMode('lineup');
-  // Dedicated photo controls: stored per lineup, never change existing feed data.
-  for(const [i,side] of ['left','right','third','fourth'].entries()){
-    const file=$('lineupFile'+(i+1));
-    file.addEventListener('change',async e=>{
-      const blob=e.target.files?.[0];if(!blob)return;
-      if(mode!=='lineup')switchMode('lineup');
-      selectedPhotoSide=side;
-      await applyPhotoBlob(blob,side,`COMEBACK LINEUP 사진 ${i+1}`,true);
-      e.target.value='';
-    });
-  }
-  $('lineupPhotoGrid').addEventListener('click',e=>{
-    const selected=e.target.closest('[data-lineup-select]');
-    if(selected){chooseSide(selected.dataset.lineupSelect);return;}
-    const reset=e.target.closest('[data-lineup-reset]');
-    if(reset){const side=reset.dataset.lineupReset,p=photoProps(side);current()[p.x]=0;current()[p.y]=0;current()[p.zoom]=100;clampSide(side);updateCollageUI();persist();paint();setStatus('선택한 사진 위치와 확대를 초기화했어요.');}
-  });
-  $('lineupSubtitleVisible').addEventListener('change',e=>{if(mode!=='lineup')return;current().lineupSubtitleVisible=e.target.checked;persist();paint()});
-  $('lineupResetAll').onclick=()=>{for(const side of slotsForLayout.four){const p=photoProps(side);current()[p.x]=0;current()[p.y]=0;current()[p.zoom]=100;clampSide(side);}updateCollageUI();persist();paint();setStatus('4장 사진의 위치와 확대를 초기화했어요.')};
+  $('feedMode').onclick=()=>switchMode('feed');$('reelsMode').onclick=()=>switchMode('reels');$('logoMode').onclick=()=>switchMode('logo');$('fit45Mode').onclick=()=>switchMode('fit45');
   $('layoutButtons').addEventListener('click',e=>{const b=e.target.closest('[data-layout]');if(!b)return;current().collageLayout=b.dataset.layout;current().collageEnabled=b.dataset.layout!=='single';selectedPhotoSide='left';clampBoth();updateCollageUI();persist();paint()});
   $('uploadExtra').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;await applyPhotoBlob(file,selectedPhotoSide,slotNames[selectedPhotoSide]+' 업로드 사진',true);e.target.value=''});
   for(const [name,unit] of [['Brightness','%'],['Contrast','%'],['Saturate','%'],['Warmth',''],['Vignette',''],['Blur','px']])$('filter'+name).addEventListener('input',e=>{selectedFilters()[name.toLowerCase()]=Number(e.target.value);$('filter'+name+'Value').textContent=e.target.value+unit;persist();paint()});
@@ -946,12 +899,12 @@
     const blob=imageItem.getAsFile();
     if(blob)await applyPhotoBlob(blob,importTargetSide(),'붙여넣은 사진',true);
   });
-  $('upload').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;await applyPhotoBlob(file,mode==='lineup'?selectedPhotoSide:'left','대표 업로드 사진',true);e.target.value=''});
+  $('upload').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;await applyPhotoBlob(file,'left','대표 업로드 사진',true);e.target.value=''});
   $('resetPhoto').onclick=()=>{const s=current();{const p=photoProps();s[p.x]=0;s[p.y]=0;s[p.zoom]=100}clampPhotoOffset();sync();updateCollageUI();persist();paint()};
   // 브라우저의 기본 확인창이 차단되는 환경에서도 작동하는 페이지 내 확인창.
   const resetDialog=$('resetConfirmDialog');
   $('resetCurrentWork').addEventListener('click',()=>{
-    const name=mode==='lineup'?'COMEBACK LINEUP':mode==='feed'?'피드':mode==='reels'?'릴스':mode==='fit45'?'원본 유지 4:5':'로고 전용';
+    const name=mode==='feed'?'피드':mode==='reels'?'릴스':mode==='fit45'?'원본 유지 4:5':'로고 전용';
     $('resetDialogTitle').textContent=`${name} 작업을 초기화할까요?`;
     if(typeof resetDialog.showModal==='function')resetDialog.showModal();
     else if(window.confirm(`${name} 작업을 초기화할까요? 다른 템플릿은 유지됩니다.`))resetCurrentTemplate();
@@ -960,9 +913,9 @@
   $('resetConfirmApply').addEventListener('click',()=>{resetDialog.close();resetCurrentTemplate()});
   async function resetCurrentTemplate(){
     const target=mode;
-    const targetName=target==='lineup'?'COMEBACK LINEUP':target==='feed'?'피드':target==='reels'?'릴스':target==='fit45'?'원본 유지 4:5':'로고 전용';
+    const targetName=target==='feed'?'피드':target==='reels'?'릴스':target==='fit45'?'원본 유지 4:5':'로고 전용';
     const oldStickers=[...(states[target].stickers||[])];
-    states[target]=target==='lineup'?lineupDefaults():target==='reels'?{...defaults(),titleSize:83}:target==='fit45'?{...defaults(),photoFrames:{left:{fit:'contain',color:'#ffffff'}}}:defaults();
+    states[target]=target==='reels'?{...defaults(),titleSize:83}:target==='fit45'?{...defaults(),photoFrames:{left:{fit:'contain',color:'#ffffff'}}}:defaults();
     photos[target]=null;
     rightPhotos[target]=null;extraPhotos.third[target]=null;extraPhotos.fourth[target]=null;
     selectedPhotoSide='left';
