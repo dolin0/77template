@@ -54,7 +54,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 <div id="calendarEditor" style="display:none"><h3>캘린더 오른쪽 일정표</h3><div class="calrows" id="calrows"></div></div>
 </div></details>
 <details class="fold"><summary>04 · 영상 자르기와 페이드 <span>앞뒤 자르기 · 3.5초 타이틀</span></summary><div class="fold-body">
-<p class="small">시작·종료 시간을 초 단위로 지정해. 원본 영상은 바뀌지 않아.</p>
+<p class="small">시작·종료 시간을 정하면 그 구간의 첫 장면부터 77 템플릿이 시작돼. 원본 영상은 바뀌지 않아.</p>
 <div class="trimrow"><div><label for="trimStart">시작 (초)</label><input type="number" id="trimStart" min="0" value="0" step="0.1" inputmode="decimal"></div><div><label for="trimEnd">종료 (초)</label><input type="number" id="trimEnd" min="0" value="0" step="0.1" inputmode="decimal"></div></div>
 <div class="editor-toolbar"><button class="btn" id="setStart" type="button">현재 위치 → 시작</button><button class="btn" id="setEnd" type="button">현재 위치 → 종료</button><button class="btn" id="playTrim" type="button">▶ 선택 구간</button></div><p class="hintline" id="trimSummary">영상을 업로드하면 구간을 선택할 수 있어.</p>
 <h3>타이틀 표시 시간</h3><div class="row"><div><label for="hold">타이틀 유지</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
@@ -66,7 +66,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
 <div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
 </div></details>
-<div class="editor-footer"><button class="btn primary" id="play" type="button">▶ 처음부터 미리보기</button><div id="status" class="status" role="status" aria-live="polite"></div></div>
+<div class="editor-footer"><button class="btn primary" id="play" type="button">▶ 자른 영상 처음부터 미리보기</button><div id="status" class="status" role="status" aria-live="polite"></div></div>
 </section></div></main>
 <script>
 (()=>{'use strict';
@@ -112,7 +112,12 @@ function wrap(text,maxW,maxLines=2){const all=[];ctx.font=font(800,state.titleSi
  for(const p of paras){let line='';for(const ch of [...p]){if(ctx.measureText(line+ch).width>maxW&&line){all.push(line);line=ch}else line+=ch}if(line)all.push(line)}
  return all.slice(0,maxLines)}
 function fitted(text,x,y,width,size,weight=500){let sz=size;ctx.font=font(weight,sz);while(sz>20&&ctx.measureText(text).width>width){sz-=2;ctx.font=font(weight,sz)}ctx.fillText(text,x,y)}
-function draw(forcedTime){if(!ctx)return;ctx.clearRect(0,0,1080,1920);const t=Number.isFinite(forcedTime)?forcedTime:(video.currentTime||0),hold=state.hold,fade=state.fade;
+// All title motion is relative to the FIRST frame of the trimmed clip, not the source file.
+function clipElapsed(){
+ const start=Number($('trimStart')?.value)||0;
+ return Math.max(0,(video.currentTime||0)-start);
+}
+function draw(forcedTime){if(!ctx)return;ctx.clearRect(0,0,1080,1920);const t=Number.isFinite(forcedTime)?forcedTime:clipElapsed(),hold=state.hold,fade=state.fade;
  const opacity=t<=hold?1:t>=hold+fade?0:Math.max(0,1-(t-hold)/fade);
  if(opacity<=0)return;ctx.save();ctx.globalAlpha=opacity;
  let g=ctx.createLinearGradient(0,900,0,1920);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.48,`rgba(0,0,0,${(.5*state.gradient/100).toFixed(3)})`);g.addColorStop(1,`rgba(0,0,0,${(.96*state.gradient/100).toFixed(3)})`);ctx.fillStyle=g;ctx.fillRect(0,900,1080,1020);
@@ -139,7 +144,11 @@ function draw(forcedTime){if(!ctx)return;ctx.clearRect(0,0,1080,1920);const t=Nu
  }
  ctx.restore();
 }
-function progress(){const t=video.currentTime||0,d=video.duration||0;$('time').textContent=t.toFixed(2)+'s';$('duration').textContent=(d||0).toFixed(2)+'s';$('progress').style.width=d?Math.min(100,100*t/d)+'%':'0%';draw()}
+function progress(){
+ const r=ranges(), t=clipElapsed(), d=r.valid?(r.b-r.a):(video.duration||0);
+ $('time').textContent=t.toFixed(2)+'s';$('duration').textContent=(d||0).toFixed(2)+'s';
+ $('progress').style.width=d?Math.min(100,100*t/d)+'%':'0%';draw();
+}
 for(const [key,label] of Object.entries(defs)){const b=document.createElement('button');b.type='button';b.className='category';b.dataset.category=key;b.innerHTML=`<i style="background:${label[1]}"></i>${label[0]}`;b.onclick=()=>{state.cat=key;syncForm();draw()};$('categories').appendChild(b)}
 $('import').onclick=()=>importReels();
 $('autoSync').onchange=()=>{if($('autoSync').checked)importReels(true)};
@@ -150,17 +159,27 @@ for(const [id,key] of [['titleSize','titleSize'],['subSize','subSize']])$(id).on
 for(const [id,key] of [['showLogo','logo'],['showLabel','labelEnabled'],['showArrow','arrow'],['showRule','rule']])$(id).onchange=e=>{state[key]=e.target.checked;draw()};
 $('hold').onchange=e=>{state.hold=Number(e.target.value);draw()};$('fade').onchange=e=>{state.fade=Number(e.target.value);draw()};
 $('file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;if(videoUrl)URL.revokeObjectURL(videoUrl);videoUrl=URL.createObjectURL(f);video.src=videoUrl;video.load();$('trimStart').value='0';$('trimEnd').value='0';status('영상 불러옴: '+f.name)};
-$('play').onclick=()=>{if(!video.src){status('영상을 먼저 업로드해줘.');return}video.currentTime=0;video.play().catch(()=>status('재생을 눌러줘.'))};
+$('play').onclick=()=>{if(!video.src){status('영상을 먼저 업로드해줘.');return}const r=ranges();video.currentTime=r.valid?r.a:0;draw(0);video.play().catch(()=>status('재생 버튼을 눌러줘.'))};
 video.addEventListener('timeupdate',progress);video.addEventListener('loadedmetadata',()=>{progress();$('trimStart').value='0';$('trimEnd').value=Number(video.duration.toFixed(2));refreshTrim()});video.addEventListener('seeked',progress);video.addEventListener('ended',progress);
 // Clip controls and local recording. No uploads or external service are used.
 const trimStart=$('trimStart'),trimEnd=$('trimEnd');
 let exportBusy=false,exportURL=null,coverURL=null,sharedAudioCtx=null,sharedSource=null,sharedDest=null;
 function ranges(){const d=Number(video.duration)||0;let a=Math.max(0,Number(trimStart.value)||0),b=Number(trimEnd.value);if(!Number.isFinite(b)||b<=0)b=d;return {a,b,d,valid:d>0&&a>=0&&a<b&&b<=d+.02}}
-function refreshTrim(){const r=ranges();$('trimSummary').textContent=r.valid?`${r.a.toFixed(1)}s ~ ${r.b.toFixed(1)}s · ${(r.b-r.a).toFixed(1)}초 분량`:'시작 시간은 종료 시간보다 작고, 둘 다 영상 길이 안에 있어야 해.'}
-trimStart.addEventListener('input',refreshTrim);trimEnd.addEventListener('input',refreshTrim);
-$('setStart').onclick=()=>{trimStart.value=(video.currentTime||0).toFixed(2);refreshTrim()};
-$('setEnd').onclick=()=>{trimEnd.value=(video.currentTime||0).toFixed(2);refreshTrim()};
-$('playTrim').onclick=async()=>{const r=ranges();if(!r.valid){status('구간을 확인해줘.');return}video.currentTime=r.a;await video.play().catch(()=>status('재생 버튼을 눌러줘.'))};
+function refreshTrim(resetToStart=false){
+ const r=ranges();
+ $('trimSummary').textContent=r.valid?`${r.a.toFixed(1)}s ~ ${r.b.toFixed(1)}s · ${(r.b-r.a).toFixed(1)}초 분량 · 이 구간의 첫 프레임부터 타이틀 시작`:'시작 시간은 종료 시간보다 작고, 둘 다 영상 길이 안에 있어야 해.';
+ if(r.valid && resetToStart && !exportBusy){
+   video.pause();video.currentTime=r.a;
+   draw(0);
+ }else{progress()}
+}
+trimStart.addEventListener('change',()=>refreshTrim(true));
+trimStart.addEventListener('input',()=>refreshTrim(false));
+trimEnd.addEventListener('change',()=>refreshTrim(false));
+trimEnd.addEventListener('input',()=>refreshTrim(false));
+$('setStart').onclick=()=>{trimStart.value=(video.currentTime||0).toFixed(2);refreshTrim(true)};
+$('setEnd').onclick=()=>{trimEnd.value=(video.currentTime||0).toFixed(2);refreshTrim(false)};
+$('playTrim').onclick=async()=>{const r=ranges();if(!r.valid){status('구간을 확인해줘.');return}video.currentTime=r.a;draw(0);await video.play().catch(()=>status('재생 버튼을 눌러줘.'))};
 video.addEventListener('timeupdate',()=>{const r=ranges();if(!exportBusy&&r.valid&&!video.paused&&video.currentTime>=r.b-.02){video.pause();video.currentTime=r.b}});
 function coverVideo(ctx2,w,h){const vw=video.videoWidth||w,vh=video.videoHeight||h;const scale=Math.max(w/vw,h/vh),sw=w/scale,sh=h/scale;try{ctx2.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,w,h)}catch(e){ctx2.fillStyle='#17191e';ctx2.fillRect(0,0,w,h)}}
 function composites(target,atTime){const tw=target.width,th=target.height,g=target.getContext('2d',{alpha:false});g.fillStyle='#13161c';g.fillRect(0,0,tw,th);coverVideo(g,tw,th);draw(atTime);g.drawImage(canvas,0,0,tw,th);}
@@ -190,7 +209,7 @@ $('exportVideo').onclick=async()=>{
   recorder.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};
   const done=new Promise((resolve,reject)=>{recorder.onerror=()=>reject(Error('영상 녹화 중 오류'));recorder.onstop=()=>resolve()});
   const clipLen=r.b-r.a;
-  // Use clip-relative time so opening animation starts at the selected clip's first frame.
+  // Export also uses the same trim-relative clock as the preview.
   const paintFrame=()=>{
    if(ended)return;
    let elapsed=Math.max(0,video.currentTime-r.a);
