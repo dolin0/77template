@@ -143,6 +143,9 @@ input[type=file]{display:none}
   main{padding:16px 12px 44px}.page-title{font-size:20px}.panel{padding:12px}
   .fx-grid{grid-template-columns:1fr}
 }
+.preview-play-controls{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;margin-top:12px}
+.preview-play-controls .preview-action{flex:1;min-height:42px;touch-action:manipulation}
+@media(max-width:640px){.preview-play-controls{width:100%}.preview-play-controls .preview-action{font-size:13px;padding:10px 8px}}
 </style>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
@@ -172,6 +175,12 @@ input[type=file]{display:none}
               <video id="video" playsinline preload="metadata" crossorigin="anonymous"></video>
               <canvas id="stageCanvas" width="1080" height="1920"></canvas>
             </div>
+          </div>
+
+          <!-- Always visible controls, including on mobile -->
+          <div class="preview-play-controls" aria-label="영상 미리보기 재생 및 오디오">
+            <button class="btn primary preview-action" type="button" id="previewPlay">▶ 재생</button>
+            <button class="btn preview-action" type="button" id="previewSound" aria-pressed="false">🔊 소리 켜짐</button>
           </div>
 
           <!-- Seekable playback bar in mm:ss -->
@@ -395,6 +404,22 @@ const DEFAULT_LOGO_SVG = "data:image/svg+xml;charset=utf-8," + encodeURIComponen
 
 const $ = id => document.getElementById(id);
 const video = $('video');
+// Preview audio is on by default. A separate source is used only for export.
+let previewMuted = false;
+let persistentAudioContext = null;
+let persistentAudioSource = null;
+let persistentAudioDestination = null;
+function syncPreviewControls(){
+  const play = $('previewPlay');
+  const sound = $('previewSound');
+  if(play)play.textContent = isPlaying ? '❚❚ 일시정지' : '▶ 재생';
+  if(sound){
+    sound.textContent = previewMuted ? '🔇 소리 꺼짐' : '🔊 소리 켜짐';
+    sound.setAttribute('aria-pressed', String(previewMuted));
+  }
+  video.muted=previewMuted;
+}
+
 const canvas = $('stageCanvas');
 const ctx = canvas.getContext('2d', { alpha: false });
 const FPS = 30;
@@ -736,7 +761,7 @@ function renderTimeline() {
         isInteractingTimeline = true;
         isPlaying = false;
         video.pause();
-        $('playToggle').textContent = '▶ 재생 / 일시정지';
+        $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
         selectClip(c.id);
         handleEl.setPointerCapture(ev.pointerId);
 
@@ -853,7 +878,7 @@ function renderTimeline() {
           const targetGlobal = clipStartGlobal + clickOffsetRatio * getClipDur(c);
           isPlaying = false;
           video.pause();
-          $('playToggle').textContent = '▶ 재생 / 일시정지';
+          $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
           seekPreviewTo(targetGlobal, true);
         }
       };
@@ -911,7 +936,8 @@ function seekPreviewTo(t, forceDraw = false) {
 
       if (activeMediaUrl !== loc.clip.url) {
     activeMediaUrl = loc.clip.url;
-    video.muted = true;
+    video.muted = previewMuted;
+    video.volume = 1;
     video.playsInline = true;
     video.src = loc.clip.url;
     try { video.load(); } catch (_) {}
@@ -1240,7 +1266,7 @@ function playbackLoop(now) {
       if (playheadSec >= total) {
         playheadSec = total;
         isPlaying = false;
-        $('playToggle').textContent = '▶ 재생 / 일시정지';
+        $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
         video.pause();
       } else {
         const loc = locateAtTime(playheadSec);
@@ -1262,7 +1288,7 @@ function playbackLoop(now) {
       renderFrame(playheadSec);
     } else {
       isPlaying = false;
-      $('playToggle').textContent = '▶ 재생 / 일시정지';
+      $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
     }
   } else if (!isExporting) {
     renderFrame(playheadSec);
@@ -1286,7 +1312,7 @@ requestAnimationFrame(playbackLoop);
     scrubbing = true;
     isPlaying = false;
     video.pause();
-    $('playToggle').textContent = '▶ 재생 / 일시정지';
+    $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
     track.setPointerCapture(ev.pointerId);
     seekByClientX(ev.clientX);
   });
@@ -1323,7 +1349,7 @@ requestAnimationFrame(playbackLoop);
     isInteractingTimeline = true;
     isPlaying = false;
     video.pause();
-    $('playToggle').textContent = '▶ 재생 / 일시정지';
+    $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
     targetEl.setPointerCapture(ev.pointerId);
     seekFromStageX(ev.clientX);
   };
@@ -1594,17 +1620,33 @@ $('setEnd').onclick = () => {
   syncTrimInputs(); renderTimeline(); updateScrubUI(); renderFrame(playheadSec);
 };
 
+$('previewPlay').onclick=()=>$('playToggle').click();
+$('previewSound').onclick=()=>{
+  previewMuted=!previewMuted;
+  syncPreviewControls();
+  // Safari audio context resumes from the user's direct tap.
+  if(persistentAudioContext?.state==='suspended')persistentAudioContext.resume().catch(()=>{});
+};
 $('playToggle').onclick = () => {
   if (!clips.length) { setStatus('먼저 영상을 업로드해 주세요.'); return; }
   if (isPlaying) {
     isPlaying = false;
     video.pause();
-    $('playToggle').textContent = '▶ 재생 / 일시정지';
+    $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
   } else {
     if (playheadSec >= getTotalDuration() - 0.02) playheadSec = 0;
     isPlaying = true;
-    $('playToggle').textContent = '❚❚ 일시정지';
-    seekPreviewTo(playheadSec, true).then(() => video.play().catch(() => {}));
+    $('playToggle').textContent = '❚❚ 일시정지';syncPreviewControls();
+    video.muted=previewMuted;
+    if(persistentAudioContext?.state==='suspended')persistentAudioContext.resume().catch(()=>{});
+    seekPreviewTo(playheadSec, true).then(() => {
+      video.muted=previewMuted;
+      return video.play();
+    }).catch(err=>{
+      isPlaying=false;
+      syncPreviewControls();
+      setStatus('재생을 시작하지 못했어. 재생 버튼을 다시 눌러줘. '+(err?.message||''));
+    });
   }
 };
 
@@ -1673,7 +1715,7 @@ $('exportVideo').onclick = async () => {
 
   isExporting = true;
   isPlaying = false;
-  $('playToggle').textContent = '▶ 재생 / 일시정지';
+  $('playToggle').textContent = '▶ 재생 / 일시정지';syncPreviewControls();
   $('exportVideo').disabled = true;
   $('exportProgress').textContent = '내보내기 준비 중...';
 
@@ -1683,7 +1725,7 @@ $('exportVideo').onclick = async () => {
   canvas.width = outDim.w;
   canvas.height = outDim.h;
 
-  let audioCtx = null, destNode = null, sourceNode = null;
+  let audioCtx = null, destNode = null;
   const streams = [];
   const canvasStream = canvas.captureStream(FPS);
   canvasStream.getVideoTracks().forEach(tr => streams.push(tr));
@@ -1692,10 +1734,17 @@ $('exportVideo').onclick = async () => {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (AC) {
-        audioCtx = new AC();
-        destNode = audioCtx.createMediaStreamDestination();
-        sourceNode = audioCtx.createMediaElementSource(video);
-        sourceNode.connect(destNode);
+        if(!persistentAudioContext){
+          persistentAudioContext = new AC();
+          persistentAudioSource = persistentAudioContext.createMediaElementSource(video);
+          persistentAudioDestination = persistentAudioContext.createMediaStreamDestination();
+          // Keep playback audible even after exporting. A media element routed
+          // through Web Audio is silent unless connected to speakers.
+          persistentAudioSource.connect(persistentAudioContext.destination);
+          persistentAudioSource.connect(persistentAudioDestination);
+        }
+        audioCtx=persistentAudioContext;
+        destNode=persistentAudioDestination;
         destNode.stream.getAudioTracks().forEach(tr => streams.push(tr));
         if (audioCtx.state === 'suspended') await audioCtx.resume();
       }
@@ -1750,8 +1799,10 @@ $('exportVideo').onclick = async () => {
     video.pause();
     if (recorder.state !== 'inactive') recorder.stop();
     await donePromise;
-    if (audioCtx && audioCtx.state !== 'closed') {
-      try { await audioCtx.close(); } catch (_) {}
+    // Do not close the media-element AudioContext after export:
+    // Safari would otherwise leave this video element silent on preview.
+    if (persistentAudioContext?.state==='suspended') {
+      try { await persistentAudioContext.resume(); } catch (_) {}
     }
     canvas.width = origW;
     canvas.height = origH;
@@ -1776,6 +1827,7 @@ applyRatioUI();
 renderTimeline();
 updateScrubUI();
 importPhotoEditorSettings(true);
+syncPreviewControls();
 })();
 </script>
 </body></html>
