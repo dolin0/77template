@@ -61,7 +61,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 </div></details>
 <details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
 <label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
-<p class="small">자른 영상의 시작점부터 원본 소리를 영상과 함께 녹음하도록 수정했어. 소리 트랙 연결에 실패하면 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
+<p class="small">프레임 최적화: 30fps를 기준으로 중복 화면 그리기를 줄였어. 자른 영상의 시작점부터 원본 소리를 영상과 함께 녹음하도록 수정했어. 소리 트랙 연결에 실패하면 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
 <button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 영상 내보내기 (1080×1920)</button>
 <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
 <div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
@@ -145,6 +145,9 @@ function draw(forcedTime){if(!ctx)return;ctx.clearRect(0,0,1080,1920);const t=Nu
  ctx.restore();
 }
 function progress(){
+ // Export has its own frame clock. Redrawing the preview simultaneously
+ // competes with 1080p video encoding and causes dropped frames on phones.
+ if(exportBusy)return;
  const r=ranges(), t=clipElapsed(), d=r.valid?(r.b-r.a):(video.duration||0);
  $('time').textContent=t.toFixed(2)+'s';$('duration').textContent=(d||0).toFixed(2)+'s';
  $('progress').style.width=d?Math.min(100,100*t/d)+'%':'0%';draw();
@@ -183,7 +186,16 @@ $('setEnd').onclick=()=>{trimEnd.value=(video.currentTime||0).toFixed(2);refresh
 $('playTrim').onclick=async()=>{const r=ranges();if(!r.valid){status('구간을 확인해줘.');return}video.currentTime=r.a;draw(0);await video.play().catch(()=>status('재생 버튼을 눌러줘.'))};
 video.addEventListener('timeupdate',()=>{const r=ranges();if(!exportBusy&&r.valid&&!video.paused&&video.currentTime>=r.b-.02){video.pause();video.currentTime=r.b}});
 function coverVideo(ctx2,w,h){const vw=video.videoWidth||w,vh=video.videoHeight||h;const scale=Math.max(w/vw,h/vh),sw=w/scale,sh=h/scale;try{ctx2.drawImage(video,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,w,h)}catch(e){ctx2.fillStyle='#17191e';ctx2.fillRect(0,0,w,h)}}
-function composites(target,atTime){const tw=target.width,th=target.height,g=target.getContext('2d',{alpha:false});g.fillStyle='#13161c';g.fillRect(0,0,tw,th);coverVideo(g,tw,th);draw(atTime);g.drawImage(canvas,0,0,tw,th);}
+function composites(target,atTime){
+ const tw=target.width,th=target.height,g=target.getContext('2d',{alpha:false});
+ g.fillStyle='#13161c';g.fillRect(0,0,tw,th);
+ coverVideo(g,tw,th);
+ // After the title has fully faded, avoid costly full-HD transparent canvas draws.
+ if(atTime<=state.hold+state.fade){
+   draw(atTime);
+   g.drawImage(canvas,0,0,tw,th);
+ }
+}
 function saveBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;a.textContent='다운로드: '+filename;document.getElementById('downloadLinks').replaceChildren(a);a.click();return u}
 function waitForSeek(t){return new Promise((resolve,reject)=>{if(Math.abs(video.currentTime-t)<.04){resolve();return}let done=false;const finish=()=>{if(done)return;done=true;video.removeEventListener('seeked',finish);video.removeEventListener('error',bad);clearTimeout(timeout);resolve()};const bad=()=>{if(done)return;done=true;clearTimeout(timeout);reject(Error('영상 위치 이동 실패'))};const timeout=setTimeout(()=>{finish()},5000);video.addEventListener('seeked',finish,{once:true});video.addEventListener('error',bad,{once:true});video.currentTime=t})}
 $('exportCover').onclick=async()=>{if(!video.src){status('먼저 영상을 업로드해줘.');return}if(exportBusy)return;try{video.pause();const r=ranges();await waitForSeek(r.valid?r.a:0);const c=document.createElement('canvas');c.width=1080;c.height=1920;composites(c,0);const blob=await new Promise(ok=>c.toBlob(ok,'image/png'));if(!blob)throw Error('PNG 생성 실패');if(coverURL)URL.revokeObjectURL(coverURL);coverURL=saveBlob(blob,'77_reels_cover.png');status('릴스 썸네일 PNG를 만들었어.')}catch(e){status('썸네일을 만들지 못했어: '+e.message)}};
@@ -238,21 +250,54 @@ $('exportVideo').onclick=async()=>{
   recorder.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};
   const done=new Promise((resolve,reject)=>{recorder.onerror=()=>reject(Error('영상 녹화 중 오류'));recorder.onstop=()=>resolve()});
   const clipLen=r.b-r.a;
-  // Export also uses the same trim-relative clock as the preview.
-  const paintFrame=()=>{
-   if(ended)return;
-   let elapsed=Math.max(0,video.currentTime-r.a);
-   composites(c,elapsed);
-   $('exportProgress').textContent=`영상 제작 중 ${Math.min(100,Math.round(elapsed/clipLen*100))}% · ${elapsed.toFixed(1)}/${clipLen.toFixed(1)}초`;
-   if(elapsed>=clipLen-.025||video.ended){finish();return}
-   raf=requestAnimationFrame(paintFrame);
+  const targetFPS=30;
+  const minFrameInterval=1000/targetFPS;
+  let lastFrameClock=-Infinity;
+  let lastStatusClock=-Infinity;
+  let recordedFrames=0;
+  let videoFrameCallbackId=null;
+  const useVideoFrames=typeof video.requestVideoFrameCallback==='function';
+  // On supported browsers, paint when a decoded video frame arrives rather than
+  // redrawing the same source frame at screen refresh rate (60/120 Hz).
+  const scheduleNext=()=>{
+    if(ended)return;
+    if(useVideoFrames) videoFrameCallbackId=video.requestVideoFrameCallback(paintFrame);
+    else raf=requestAnimationFrame(paintFrame);
   };
-  const finish=()=>{if(ended)return;ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);video.pause();composites(c,clipLen);if(recorder.state!=='inactive')recorder.stop()};
-  recorder.start(500);
+  const finish=()=>{
+    if(ended)return;
+    ended=true;
+    cancelAnimationFrame(raf);
+    if(videoFrameCallbackId!==null&&typeof video.cancelVideoFrameCallback==='function'){
+      video.cancelVideoFrameCallback(videoFrameCallbackId);
+    }
+    clearTimeout(stopTimer);
+    video.pause();
+    if(recorder.state!=='inactive')recorder.stop();
+  };
+  const paintFrame=(now,metadata)=>{
+    if(ended)return;
+    const elapsed=Math.max(0,video.currentTime-r.a);
+    if(elapsed>=clipLen-.025||video.ended){finish();return}
+    // A real 30fps output does not need 60-120 full-HD canvas draws per second.
+    if(now-lastFrameClock>=minFrameInterval-2){
+      composites(c,elapsed);
+      recordedFrames++;
+      lastFrameClock=now;
+    }
+    if(now-lastStatusClock>=350){
+      $('exportProgress').textContent=`영상 제작 중 ${Math.min(100,Math.round(elapsed/clipLen*100))}% · ${elapsed.toFixed(1)}/${clipLen.toFixed(1)}초 · 30fps`;
+      lastStatusClock=now;
+    }
+    scheduleNext();
+  };
+  recorder.start(1000);
   video.muted=false;
   await video.play();
-  raf=requestAnimationFrame(paintFrame);
-  stopTimer=setTimeout(finish,Math.ceil((clipLen+4)*1000));
+  scheduleNext();
+  // Real-time capture normally finishes at trimEnd. Allow some slack for
+  // decoder startup while still recovering if a browser event never fires.
+  stopTimer=setTimeout(finish,Math.ceil((clipLen+12)*1000));
   await done;
   if(!parts.length)throw Error('녹화 데이터가 생성되지 않았어');
   const blob=new Blob(parts,{type:mime});
@@ -268,7 +313,11 @@ $('exportVideo').onclick=async()=>{
  }
 };
 // Ensure overlay updates smoothly between coarse video timeupdate events.
-function tick(){if(!video.paused)progress();requestAnimationFrame(tick)}requestAnimationFrame(tick);
+function tick(){
+ if(!exportBusy&&!video.paused&&!document.hidden)progress();
+ requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
 // Record deliberate edits, but do not write to storage on playback or timeupdate.
 for(const id of ['title','subtitle','titleSize','subSize','showLogo','showLabel','showArrow','showRule','hold','fade']){
  const el=$(id);el.addEventListener(el.type==='checkbox'||el.tagName==='SELECT'?'change':'input',()=>persistVideo());
