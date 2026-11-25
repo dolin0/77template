@@ -146,6 +146,10 @@ input[type=file]{display:none}
 .preview-play-controls{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:360px;margin-top:12px}
 .preview-play-controls .preview-action{flex:1;min-height:42px;touch-action:manipulation}
 @media(max-width:640px){.preview-play-controls{width:100%}.preview-play-controls .preview-action{font-size:13px;padding:10px 8px}}
+.history-toolbar{display:flex;gap:7px;align-items:center;flex-wrap:wrap;width:100%;margin:12px 0 4px}
+.history-toolbar .btn{min-height:38px;flex:0 0 auto}
+.history-toolbar .small{margin-left:auto;font-variant-numeric:tabular-nums}
+@media(max-width:640px){.history-toolbar .btn{flex:1}.history-toolbar .small{width:100%;text-align:center;margin:0}}
 </style>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
@@ -192,6 +196,12 @@ input[type=file]{display:none}
             </div>
             <span class="timecode" id="totTime">00:00</span>
           </div>
+        </div>
+
+        <div class="history-toolbar" aria-label="편집 기록">
+          <button type="button" class="btn sm" id="historyUndo" disabled title="Ctrl+Z / ⌘Z">↶ 실행 취소</button>
+          <button type="button" class="btn sm" id="historyRedo" disabled title="Ctrl+Shift+Z / Ctrl+Y">↷ 다시 실행</button>
+          <span class="small" id="historyCount" aria-live="polite">기록 없음</span>
         </div>
 
         <!-- Below-preview timeline & Premiere-style Effect Controls -->
@@ -481,6 +491,94 @@ let isExporting = false;
 let isInteractingTimeline = false;
 let lastRenderedKey = '';
 
+// Lightweight undo/redo: state copies plus clip metadata only. Media File/Blob,
+// object URLs and thumbnail arrays remain shared references (not duplicated).
+const UNDO_MAX=40;
+const undoStack=[];
+const redoStack=[];
+let restoringHistory=false;
+function historySnapshot(){
+  return {
+    state:JSON.parse(JSON.stringify(state)),
+    clips:clips.map(c=>({...c,thumbs:c.thumbs})),
+    selectedClipId,
+    logoSrc:logoImg.src
+  };
+}
+function historySignature(s){
+  // Avoid including large media / thumbnails in change comparison.
+  const cs=s.clips.map(c=>[c.id,c.trimStart,c.trimEnd,c.scale,c.rot,c.posX,c.posY]);
+  return JSON.stringify([s.state,cs,s.selectedClipId,s.logoSrc]);
+}
+function updateHistoryButtons(){
+  $('historyUndo').disabled=undoStack.length===0;
+  $('historyRedo').disabled=redoStack.length===0;
+  $('historyCount').textContent=`되돌리기 ${undoStack.length} · 다시 실행 ${redoStack.length}`;
+}
+function rememberBeforeEdit(){
+  if(restoringHistory||isExporting)return;
+  const next=historySnapshot();
+  if(undoStack.length && historySignature(undoStack[undoStack.length-1])===historySignature(next))return;
+  undoStack.push(next);
+  if(undoStack.length>UNDO_MAX)undoStack.shift();
+  redoStack.length=0;
+  updateHistoryButtons();
+}
+async function restoreHistory(s){
+  restoringHistory=true;
+  try{
+    isPlaying=false;
+    video.pause();
+    Object.keys(state).forEach(k=>delete state[k]);
+    Object.assign(state,JSON.parse(JSON.stringify(s.state)));
+    clips=s.clips.map(c=>({...c,thumbs:c.thumbs}));
+    selectedClipId=s.selectedClipId;
+    if(s.logoSrc && logoImg.src!==s.logoSrc)logoImg.src=s.logoSrc;
+    $('title').value=state.title;
+    $('subtitle').value=state.subtitle;
+    $('titleSize').value=state.titleSize;
+    $('titleSizeVal').textContent=`${state.titleSize}px`;
+    $('subSize').value=state.subSize;
+    $('subSizeVal').textContent=`${state.subSize}px`;
+    for(const [id,field] of [['showLogo','logo'],['showLabel','labelEnabled'],['showArrow','arrow'],['showRule','rule']])$(id).checked=!!state[field];
+    $('hold').value=String(state.hold);
+    $('fade').value=String(state.fade);
+    document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b.dataset.category===state.cat));
+    $('calendarEditor').style.display=state.cat==='calendar'?'':'none';
+    const calRows=String(state.calendarRows||'').split('\n');
+    [...$('calrows').children].forEach((line,i)=>{
+      const parts=(calRows[i]||'').split(' | ');
+      line.children[0].value=parts[0]||'';
+      line.children[1].value=parts.slice(1).join(' | ')||'';
+    });
+    refreshClipControls();
+    applyRatioUI();
+    syncEffectControls();
+    syncTrimInputs();
+    renderTimeline();
+    updateScrubUI();
+    $('playToggle').textContent='▶ 재생 / 일시정지';
+    syncPreviewControls();
+    lastRenderedKey='';
+    await seekPreviewTo(playheadSec,true);
+  }finally{restoringHistory=false;updateHistoryButtons()}
+}
+async function historyStep(direction){
+  if(restoringHistory||isExporting)return;
+  const from=direction==='undo'?undoStack:redoStack;
+  const to=direction==='undo'?redoStack:undoStack;
+  const current=historySnapshot();
+  // Skip no-op snapshots created by cancelled gestures.
+  while(from.length && historySignature(from[from.length-1])===historySignature(current))from.pop();
+  if(!from.length){updateHistoryButtons();return}
+  const target=from.pop();
+  to.push(current);
+  if(to.length>UNDO_MAX)to.shift();
+  await restoreHistory(target);
+  setStatus(direction==='undo'?'이전 편집 상태로 되돌렸어.':'다시 적용했어.');
+}
+
+
 const logoImg = new Image();
 logoImg.onload = () => { lastRenderedKey = ''; renderFrame(playheadSec); };
 logoImg.onerror = () => {
@@ -601,6 +699,7 @@ async function generateClipThumbnails(clip) {
 async function addVideoFiles(fileList) {
   const files = Array.from(fileList || []).filter(f => f && f.type.startsWith('video/'));
   if (!files.length) return;
+  rememberBeforeEdit();
   for (const file of files) {
     const url = URL.createObjectURL(file);
     const metaVid = document.createElement('video');
@@ -1376,6 +1475,56 @@ requestAnimationFrame(playbackLoop);
   grip.addEventListener('pointercancel', endScrub);
 })();
 
+// Capture before an edit mutates state. Direct interactions on video playback
+// and timeline scrubbing are deliberately excluded from undo history.
+const historyInputIds=new Set([
+  'title','subtitle','titleSize','subSize','showLogo','showLabel','showArrow','showRule',
+  'hold','fade','layoutMode','clipLabelAlign','clipTitleAlign','clipLabelSize',
+  'clipTop','clipGap','clipVideoY','clipVideoH','clipVideoZoom','clipLogoY','clipSafeGuide',
+  'fxScale','fxRot','fxPosX','fxPosY','trimStart','trimEnd'
+]);
+const historyActionIds=new Set([
+  'btnSplitClip','btnDeleteClip','btnResetFx','btnToggleRatio','setStart','setEnd','import'
+]);
+// Multiple events during dragging or a focused text edit share one history step.
+let lastHistoryGesture='';
+function resetHistoryGesture(){lastHistoryGesture=''}
+document.addEventListener('input',e=>{
+  const target=e.target;
+  if(!historyInputIds.has(target.id) && !target.closest?.('#calrows'))return;
+  const gesture=target.id||'calendar-'+[...target.parentNode.parentNode.children].indexOf(target.parentNode);
+  if(gesture!==lastHistoryGesture){rememberBeforeEdit();lastHistoryGesture=gesture}
+},true);
+document.addEventListener('change',e=>{
+  if(historyInputIds.has(e.target.id) && e.target.type!=='range' && e.target.tagName!=='TEXTAREA' && e.target.type!=='text'){
+    rememberBeforeEdit();
+  }
+  resetHistoryGesture();
+},true);
+document.addEventListener('focusout',e=>{if(historyInputIds.has(e.target.id)||e.target.closest?.('#calrows'))resetHistoryGesture()},true);
+document.addEventListener('pointerup',e=>{if(e.target.type==='range')resetHistoryGesture()},true);
+document.addEventListener('click',e=>{
+  const id=e.target.closest?.('button')?.id;
+  if(historyActionIds.has(id)){rememberBeforeEdit();resetHistoryGesture()}
+  if(e.target.closest?.('[data-category]')){rememberBeforeEdit();resetHistoryGesture()}
+},true);
+// Clip handles and clip-order dragging mutate metadata outside input events.
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest?.('.clip-handle')||e.target.closest?.('.clip-block:not(.clip-handle)')){
+    rememberBeforeEdit();resetHistoryGesture();
+  }
+},true);
+$('historyUndo').onclick=()=>historyStep('undo');
+$('historyRedo').onclick=()=>historyStep('redo');
+document.addEventListener('keydown',e=>{
+  if(!(e.ctrlKey||e.metaKey)||e.altKey)return;
+  const k=e.key.toLowerCase();
+  if(k==='z'){
+    e.preventDefault();historyStep(e.shiftKey?'redo':'undo');
+  }else if(k==='y'){
+    e.preventDefault();historyStep('redo');
+  }
+},true);
 for (const [key, info] of Object.entries(defs)) {
   const btn = document.createElement('button');
   btn.type = 'button';
@@ -1466,6 +1615,7 @@ $('logoFile').onchange = e => {
   if (!f) return;
   const reader = new FileReader();
   reader.onload = () => {
+    rememberBeforeEdit();
     logoImg.src = String(reader.result || EMBEDDED_LOGO_SRC);
     state.logo = true;
     $('showLogo').checked = true;
@@ -1563,7 +1713,7 @@ $('btnDeleteClip').onclick = () => {
   const idx = clips.findIndex(c => c.id === selectedClipId);
   if (idx < 0) return;
   const [removed] = clips.splice(idx, 1);
-  if (removed?.url) URL.revokeObjectURL(removed.url);
+  // Keep the blob URL alive for Undo; page teardown releases it automatically.
   selectedClipId = clips[Math.max(0, idx - 1)]?.id || null;
   syncEffectControls();
   syncTrimInputs();
@@ -1828,6 +1978,7 @@ renderTimeline();
 updateScrubUI();
 importPhotoEditorSettings(true);
 syncPreviewControls();
+updateHistoryButtons();
 })();
 </script>
 </body></html>
