@@ -35,7 +35,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 @media(max-width:600px){header{padding:14px 16px}.brand{font-size:17px}header nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}header nav a{text-align:center;font-size:12px;padding:8px 5px}main{padding:16px 12px 40px}.page-title{font-size:20px}.panel{padding:12px}.phone{max-width:min(100%,295px)}.fold>summary span{font-size:10px}.editor-toolbar .btn{font-size:11px;padding:9px 7px}}
 </style><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"></head><body>
 <header><div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동</small></div><nav><a href="./index.html">사진 편집기</a><a href="./news.html">연예 뉴스</a><a href="./ai.html">글쓰기</a><a href="./video.html" aria-current="page">영상 편집기</a></nav></header>
-<main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 전용</span></div><div class="layout"><section class="panel preview-section"><h2>릴스 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="editor-toolbar" style="justify-content:center;margin-top:8px"><button type="button" class="btn" id="soundOn">🔊 원본 영상 소리 켜기</button></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 파일에 합쳐 저장할 수 있어. MP4 또는 WebM은 브라우저에서 지원하는 포맷으로 자동 선택돼. 아이폰 Safari 환경에 따라 녹화 기능이 제한될 수 있어.</div></div></details></div></section><section class="panel settings-section">
+<main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 전용</span></div><div class="layout"><section class="panel preview-section"><h2>릴스 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="editor-toolbar" style="justify-content:center;margin-top:8px"><button type="button" class="btn" id="soundOn">🔊 원본 영상 소리 켜기</button></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 MP4에 합쳐 저장해. 이제 실시간 화면 녹화 대신 FFmpeg.wasm으로 프레임별 인코딩을 사용해. 최초 실행에는 인터넷 연결이 필요하며, 아이폰에서는 메모리 부족으로 실패할 수 있어.</div></div></details></div></section><section class="panel settings-section">
 <details class="fold" open><summary>01 · 영상 업로드 <span>영상 파일 선택</span></summary><div class="fold-body">
 <label class="upload" for="file">＋ MP4 / MOV / WebM 영상 선택</label><input type="file" id="file" accept="video/*"><p class="small">영상은 이 기기에서만 처리돼. 브라우저에서 재생할 수 있는 파일을 선택해줘.</p>
 </div></details>
@@ -61,8 +61,8 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 </div></details>
 <details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
 <label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
-<p class="small">프레임 최적화: 30fps를 기준으로 중복 화면 그리기를 줄였어. 자른 영상의 시작점부터 원본 소리를 영상과 함께 녹음하도록 수정했어. 소리 트랙 연결에 실패하면 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
-<button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 영상 내보내기 (1080×1920)</button>
+<p class="small">새 방식: 원본 프레임을 30fps로 다시 인코딩하고 오디오도 잘린 구간에 맞춰 합쳐. 최초 실행 시 인코더 약 30MB를 받아와. 아이폰에서는 1080p가 느리거나 메모리 부족으로 실패할 수 있으니 짧은 구간으로 먼저 시험해줘.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
+<button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 끊김 없는 MP4 내보내기 (1080×1920)</button>
 <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
 <div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
 </div></details>
@@ -199,7 +199,7 @@ function composites(target,atTime){
 function saveBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;a.textContent='다운로드: '+filename;document.getElementById('downloadLinks').replaceChildren(a);a.click();return u}
 function waitForSeek(t){return new Promise((resolve,reject)=>{if(Math.abs(video.currentTime-t)<.04){resolve();return}let done=false;const finish=()=>{if(done)return;done=true;video.removeEventListener('seeked',finish);video.removeEventListener('error',bad);clearTimeout(timeout);resolve()};const bad=()=>{if(done)return;done=true;clearTimeout(timeout);reject(Error('영상 위치 이동 실패'))};const timeout=setTimeout(()=>{finish()},5000);video.addEventListener('seeked',finish,{once:true});video.addEventListener('error',bad,{once:true});video.currentTime=t})}
 $('exportCover').onclick=async()=>{if(!video.src){status('먼저 영상을 업로드해줘.');return}if(exportBusy)return;try{video.pause();const r=ranges();await waitForSeek(r.valid?r.a:0);const c=document.createElement('canvas');c.width=1080;c.height=1920;composites(c,0);const blob=await new Promise(ok=>c.toBlob(ok,'image/png'));if(!blob)throw Error('PNG 생성 실패');if(coverURL)URL.revokeObjectURL(coverURL);coverURL=saveBlob(blob,'77_reels_cover.png');status('릴스 썸네일 PNG를 만들었어.')}catch(e){status('썸네일을 만들지 못했어: '+e.message)}};
-$('exportResolution').addEventListener('change',e=>{$('exportVideo').textContent=e.target.value==='720'?'⬇ 영상 내보내기 (720×1280)':'⬇ 영상 내보내기 (1080×1920)'});
+$('exportResolution').addEventListener('change',e=>{$('exportVideo').textContent=e.target.value==='720'?'⬇ 끊김 없는 MP4 내보내기 (720×1280)':'⬇ 끊김 없는 MP4 내보내기 (1080×1920)'});
 // A stable MediaElementAudioSource remains attached to the same video element even
 // after seeking. captureStream() can lose/mute its audio track when seeking to trimStart.
 let sharedAudioContext=null,sharedAudioElementSource=null,sharedAudioDestination=null;
@@ -220,96 +220,131 @@ async function ensureOriginalAudioGraph(){
  if(!tracks.length||tracks[0].readyState!=='live')throw Error('원본 소리 트랙 연결에 실패했어.');
  return tracks;
 }
-$('exportVideo').onclick=async()=>{
- if(exportBusy)return;const r=ranges();if(!r.valid){status('먼저 영상을 업로드하고 시작·종료 시간을 확인해줘.');return}
- const c=document.createElement('canvas');const resolution=Number($('exportResolution').value)||1080;c.width=resolution;c.height=Math.round(resolution*16/9);
- if(!('MediaRecorder' in window)||typeof c.captureStream!=='function'){status('이 브라우저는 영상 녹화를 지원하지 않아. 데스크톱 Chrome이나 최신 Safari에서 다시 시도해줘.');return}
- const formats=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
- let mime=formats.find(x=>MediaRecorder.isTypeSupported(x));if(!mime){status('지원되는 영상 저장 포맷을 찾지 못했어.');return}
- exportBusy=true;$('exportVideo').disabled=true;$('exportProgress').textContent='준비 중…';video.pause();
- let recorder=null,stream=null,raf=0,stopTimer=0,ended=false;
+
+// Deterministic export: FFmpeg decodes the original video on its own timeline,
+// composites a transparent static title image, and encodes every 30fps frame.
+// Unlike MediaRecorder(canvas.captureStream), this does not depend on realtime
+// canvas painting or phone display refresh rates.
+let offlineFFmpeg=null;
+let ffmpegLastLog='';
+async function blobURLFromRemote(url,mime){
+ const response=await fetch(url,{mode:'cors'});
+ if(!response.ok)throw Error('영상 인코더 다운로드 실패 ('+response.status+')');
+ return URL.createObjectURL(new Blob([await response.arrayBuffer()],{type:mime}));
+}
+async function loadOfflineFFmpeg(){
+ if(offlineFFmpeg)return offlineFFmpeg;
+ const CDN='https://cdn.jsdelivr.net/npm';
+ if(!window.FFmpegWASM?.FFmpeg){
+   await new Promise((resolve,reject)=>{
+     const el=document.createElement('script');
+     el.src=CDN+'/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.js';
+     el.onload=resolve;
+     el.onerror=()=>reject(Error('인코더 스크립트를 읽지 못했어. 네트워크 연결을 확인해줘.'));
+     document.head.appendChild(el);
+   });
+ }
+ if(!window.FFmpegWASM?.FFmpeg)throw Error('인코더가 정상적으로 불러와지지 않았어.');
+ const ff=new window.FFmpegWASM.FFmpeg();
+ ff.on('log',({message})=>{
+   ffmpegLastLog=String(message||'');
+   const match=ffmpegLastLog.match(/time=\s*(\d+):(\d+):([\d.]+)/);
+   if(match){
+     const sec=Number(match[1])*3600+Number(match[2])*60+Number(match[3]);
+     const r=ranges(),length=Math.max(.01,r.b-r.a);
+     $('exportProgress').textContent='프레임별로 MP4 만드는 중… '+Math.min(99,Math.floor(100*sec/length))+'%';
+   }
+ });
+ const base=CDN+'/@ffmpeg/core@0.12.10/dist/umd';
+ const [classWorkerURL,coreURL,wasmURL]=await Promise.all([
+   blobURLFromRemote(CDN+'/@ffmpeg/ffmpeg@0.12.15/dist/umd/814.ffmpeg.js','text/javascript'),
+   blobURLFromRemote(base+'/ffmpeg-core.js','text/javascript'),
+   blobURLFromRemote(base+'/ffmpeg-core.wasm','application/wasm')
+ ]);
  try{
-  await waitForSeek(r.a);
-  composites(c,0);
-  stream=c.captureStream(30);
-  // Use the same playing video element for BOTH video frames and audio.
-  // Seeking no longer leaves a stale source-audio buffer or a muted captureStream track.
-  const includeAudio=$('includeAudio').checked;
-  if(includeAudio){
-    const tracks=await ensureOriginalAudioGraph();
-    // Keep the source track alive; the canvas stream owns only the recorder wrapper.
-    tracks.forEach(track=>stream.addTrack(track));
-    if(!stream.getAudioTracks().length)throw Error('원본 소리 트랙 연결에 실패했어.');
-  }
-  const parts=[];
-  try{
-    recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000),audioBitsPerSecond:128000});
-  }catch(err){
-    throw Error(includeAudio?'이 브라우저는 선택한 형식으로 소리를 포함해 저장할 수 없어. PC Chrome에서 다시 시도해줘.':'영상 녹화기를 만들지 못했어: '+err.message);
-  }
-  recorder.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};
-  const done=new Promise((resolve,reject)=>{recorder.onerror=()=>reject(Error('영상 녹화 중 오류'));recorder.onstop=()=>resolve()});
-  const clipLen=r.b-r.a;
-  const targetFPS=30;
-  const minFrameInterval=1000/targetFPS;
-  let lastFrameClock=-Infinity;
-  let lastStatusClock=-Infinity;
-  let recordedFrames=0;
-  let videoFrameCallbackId=null;
-  const useVideoFrames=typeof video.requestVideoFrameCallback==='function';
-  // On supported browsers, paint when a decoded video frame arrives rather than
-  // redrawing the same source frame at screen refresh rate (60/120 Hz).
-  const scheduleNext=()=>{
-    if(ended)return;
-    if(useVideoFrames) videoFrameCallbackId=video.requestVideoFrameCallback(paintFrame);
-    else raf=requestAnimationFrame(paintFrame);
-  };
-  const finish=()=>{
-    if(ended)return;
-    ended=true;
-    cancelAnimationFrame(raf);
-    if(videoFrameCallbackId!==null&&typeof video.cancelVideoFrameCallback==='function'){
-      video.cancelVideoFrameCallback(videoFrameCallbackId);
-    }
-    clearTimeout(stopTimer);
-    video.pause();
-    if(recorder.state!=='inactive')recorder.stop();
-  };
-  const paintFrame=(now,metadata)=>{
-    if(ended)return;
-    const elapsed=Math.max(0,video.currentTime-r.a);
-    if(elapsed>=clipLen-.025||video.ended){finish();return}
-    // A real 30fps output does not need 60-120 full-HD canvas draws per second.
-    if(now-lastFrameClock>=minFrameInterval-2){
-      composites(c,elapsed);
-      recordedFrames++;
-      lastFrameClock=now;
-    }
-    if(now-lastStatusClock>=350){
-      $('exportProgress').textContent=`영상 제작 중 ${Math.min(100,Math.round(elapsed/clipLen*100))}% · ${elapsed.toFixed(1)}/${clipLen.toFixed(1)}초 · 30fps`;
-      lastStatusClock=now;
-    }
-    scheduleNext();
-  };
-  recorder.start(1000);
-  video.muted=false;
-  await video.play();
-  scheduleNext();
-  // Real-time capture normally finishes at trimEnd. Allow some slack for
-  // decoder startup while still recovering if a browser event never fires.
-  stopTimer=setTimeout(finish,Math.ceil((clipLen+12)*1000));
-  await done;
-  if(!parts.length)throw Error('녹화 데이터가 생성되지 않았어');
-  const blob=new Blob(parts,{type:mime});
-  if(exportURL)URL.revokeObjectURL(exportURL);
-  const ext=mime.includes('mp4')?'mp4':'webm';exportURL=saveBlob(blob,'77_reels_edit.'+ext);
-  status(`완료! ${ext.toUpperCase()} 저장 (${(blob.size/1024/1024).toFixed(1)}MB) · ${includeAudio?'원본 소리를 실시간 연결해 녹화':'무음 출력'}. 저장한 영상을 재생해서 소리를 확인해줘.`);
- }catch(e){status('영상 저장 실패: '+e.message)}finally{
-  ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);
-  if(recorder&&recorder.state!=='inactive')try{recorder.stop()}catch(e){}
-  if(stream)stream.getVideoTracks().forEach(t=>t.stop());
-  // Shared audio tracks are reused after trim changes. Never stop them here.
-  video.pause();$('exportVideo').disabled=false;exportBusy=false;
+   await ff.load({classWorkerURL,coreURL,wasmURL});
+ } finally {
+   // Workers retain their blob URL reference after startup.
+   // Keep loaded URLs alive for the session.
+ }
+ offlineFFmpeg=ff;
+ return ff;
+}
+function canvasToPNG(c){
+ return new Promise((resolve,reject)=>{
+   c.toBlob(blob=>blob?resolve(blob):reject(Error('오버레이 이미지 생성 실패')),'image/png');
+ });
+}
+function extensionOf(file){
+ const ext=(file.name.split('.').pop()||'mp4').toLowerCase();
+ return /^[a-z0-9]{1,8}$/.test(ext)?ext:'mp4';
+}
+$('exportVideo').onclick=async()=>{
+ if(exportBusy)return;
+ const r=ranges();
+ if(!r.valid||!uploadedFile){status('먼저 영상을 업로드하고 시작·종료 시간을 확인해줘.');return}
+ const clipLen=r.b-r.a;
+ const resolution=Number($('exportResolution').value)||1080;
+ if(clipLen>120){status('프레임 인코딩은 메모리를 많이 사용해. 우선 2분 이하 영상으로 나눠서 저장해줘.');return}
+ exportBusy=true;
+ $('exportVideo').disabled=true;
+ $('exportProgress').textContent='인코딩 엔진 불러오는 중… (최초 1회 약 30MB)';
+ video.pause();
+ try{
+   // Overlay is drawn only once; all fade animation is driven by FFmpeg's timestamps.
+   if(state.logo && (!logo.complete || !logo.naturalWidth)){
+     await new Promise(resolve=>{if(logo.complete)return resolve();logo.addEventListener('load',resolve,{once:true});logo.addEventListener('error',resolve,{once:true})});
+   }
+   draw(0);
+   const overlayPNG=await canvasToPNG(canvas);
+   const ff=await loadOfflineFFmpeg();
+   const stamp=Date.now().toString(36);
+   const inName='v_'+stamp+'.'+extensionOf(uploadedFile);
+   const overlayName='overlay_'+stamp+'.png';
+   const outName='edited_'+stamp+'.mp4';
+   $('exportProgress').textContent='원본 영상 로딩 중…';
+   await ff.writeFile(inName,new Uint8Array(await uploadedFile.arrayBuffer()));
+   await ff.writeFile(overlayName,new Uint8Array(await overlayPNG.arrayBuffer()));
+   const w=resolution,h=Math.round(resolution*16/9);
+   const fadeAt=Math.max(0,Number(state.hold)||3.5);
+   const fadeLength=Math.max(.1,Number(state.fade)||.6);
+   // With -ss/-t preceding input, both video and audio start at trimStart.
+   const filter=[
+      `[0:v]scale=${w}:${h}:force_original_aspect_ratio=increase,crop=${w}:${h},setsar=1,fps=30[base]`,
+      `[1:v]scale=${w}:${h},format=rgba,fade=t=out:st=${fadeAt}:d=${fadeLength}:alpha=1[title]`,
+      `[base][title]overlay=x=0:y=0:shortest=1:format=auto,format=yuv420p[v]`
+   ].join(';');
+   const args=[
+     '-ss',String(r.a),'-t',String(clipLen),'-i',inName,
+     '-loop','1','-framerate','30','-i',overlayName,
+     '-filter_complex',filter,
+     '-map','[v]'
+   ];
+   const withAudio=$('includeAudio').checked;
+   if(withAudio)args.push('-map','0:a?','-c:a','aac','-b:a','128k');
+   else args.push('-an');
+   args.push('-c:v','libx264','-preset','ultrafast','-crf','22',
+             '-pix_fmt','yuv420p','-r','30','-t',String(clipLen),
+             '-movflags','+faststart','-y',outName);
+   $('exportProgress').textContent='MP4 인코딩 중… 영상 재생 속도와 무관하게 처리하고 있어.';
+   const exitCode=await ff.exec(args);
+   if(exitCode!==0)throw Error('인코더 오류 '+exitCode+': '+ffmpegLastLog.slice(-150));
+   const bytes=await ff.readFile(outName);
+   if(!bytes || bytes.length<1024)throw Error('파일이 생성되지 않았어.');
+   const result=new Blob([bytes],{type:'video/mp4'});
+   if(exportURL)URL.revokeObjectURL(exportURL);
+   exportURL=saveBlob(result,'77_reels_edit_30fps.mp4');
+   $('exportProgress').textContent='완료 · '+(result.size/1024/1024).toFixed(1)+'MB · 30fps';
+   status('MP4 저장 완료! 실시간 재녹화 방식 대신 프레임별 인코딩을 사용했어.');
+   for(const name of [inName,overlayName,outName])try{await ff.deleteFile(name)}catch(e){}
+ }catch(err){
+   const msg=String(err?.message||err);
+   $('exportProgress').textContent='내보내기 실패';
+   status('MP4 인코딩 실패: '+msg+' · 아이폰 메모리 부족이면 720p 또는 짧은 구간으로 시도해줘.');
+ }finally{
+   exportBusy=false;
+   $('exportVideo').disabled=false;
+   draw();
  }
 };
 // Ensure overlay updates smoothly between coarse video timeupdate events.
