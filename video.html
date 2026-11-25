@@ -1,384 +1,102 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111319">
-<title>77 MAGAZINE STUDIO · 영상 편집기</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111319"><title>77 MAGAZINE · 영상 편집기</title>
 <style>
-:root{color-scheme:dark;--bg:#12141a;--panel:#1c1f27;--line:#3c4352;--text:#f5f7fb;--muted:#b6bfce;--soft:#262a34;--news:#315BFF;--issue:#FF4B57;--pick:#C7FF4D;--calendar:#8A63FF}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-a{color:inherit}button,input,textarea,select{font:inherit}
-header{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 18px;border-bottom:1px solid #2e3440;flex-wrap:wrap}
-.brand{font-weight:900;letter-spacing:-.2px;font-size:20px}.brand small{display:block;font-size:11px;font-weight:500;color:var(--muted)}
-.nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{text-decoration:none;padding:8px 12px;border:1px solid #434b5b;border-radius:999px;background:#1d212a;color:#d7def0;font-size:13px}.nav a[aria-current="page"]{background:#fff;color:#111}
-.tag{font-size:12px;color:#d2daf0;background:#202838;border:1px solid #44516a;border-radius:999px;padding:8px 11px}
-main{max-width:1280px;margin:0 auto;padding:20px 16px 48px}
-.grid{display:grid;grid-template-columns:360px minmax(0,1fr);gap:18px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
-.panel h2{margin:0 0 12px;font-size:17px}
-label{display:block;font-size:12px;color:#cdd6e8;margin:10px 0 6px}
-input[type=text], textarea, select{width:100%;background:#181c25;border:1px solid #454d5e;color:#fff;border-radius:10px;padding:10px 12px}
-textarea{min-height:80px;resize:vertical}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.button{appearance:none;border:1px solid #586171;background:#2a3040;color:#fff;border-radius:10px;padding:11px 14px;cursor:pointer}
-.button:hover{background:#353d50}.button.primary{background:#d8e4ff;color:#111827;border:0;font-weight:800}
-.button.secondary{background:#232834}
-.upload{display:block;text-align:center;border:1px dashed #62708c;padding:13px;border-radius:12px;background:#181d26;color:#dfe8ff;cursor:pointer}
-input[type=file]{display:none}
-.choice-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.choice{padding:10px;border-radius:11px;border:1px solid #495062;background:#21252f;color:#e8edf8;font-weight:800;cursor:pointer}
-.choice.active{outline:2px solid #fff}
-.color-chip{height:8px;border-radius:99px;margin-bottom:6px}
-.preview-wrap{display:grid;grid-template-columns:420px 1fr;gap:18px}
-.phone{width:min(100%,420px);aspect-ratio:9/16;background:#0c0f16;border-radius:26px;border:1px solid #3f4655;padding:12px;margin:0 auto}
-.phone-screen{position:relative;width:100%;height:100%;overflow:hidden;border-radius:18px;background:#000}
-.phone video{width:100%;height:100%;object-fit:cover;background:#000}
-.overlay{position:absolute;inset:0;padding:34px 26px 28px 26px;display:flex;flex-direction:column;pointer-events:none;transition:opacity .12s linear}
-.topline{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.logo77{font-size:56px;font-style:italic;font-weight:900;line-height:.9;letter-spacing:-2px}
-.meta{font-size:12px;color:#f4f6fb;text-align:right;font-weight:700;line-height:1.35}
-.lower{margin-top:auto}
-.cat-label{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;font-size:24px;font-weight:900;font-style:italic;letter-spacing:-.2px}
-.headline{margin:18px 0 0;font-size:42px;font-weight:900;line-height:1.05;letter-spacing:-1px;text-shadow:0 2px 16px rgba(0,0,0,.25)}
-.subline{margin:12px 0 0;font-size:20px;line-height:1.28;color:#f4f6fb;text-shadow:0 2px 12px rgba(0,0,0,.22)}
-.bottom-rule{position:absolute;left:26px;right:26px;bottom:24px;height:2px;background:rgba(255,255,255,.92)}
-.arrow{position:absolute;right:26px;bottom:13px;width:56px;height:24px}
-.arrow:before,.arrow:after{content:"";position:absolute;background:#fff}
-.arrow:before{left:0;right:0;top:10px;height:2px}
-.arrow:after{right:0;top:3px;width:14px;height:14px;border-top:2px solid #fff;border-right:2px solid #fff;background:transparent;transform:rotate(45deg)}
-.gradient{position:absolute;left:0;right:0;bottom:0;height:52%;background:linear-gradient(to top, rgba(0,0,0,var(--grad,.68)), rgba(0,0,0,.24) 45%, rgba(0,0,0,0) 100%)}
-.preview-info{display:grid;gap:10px}
-.info-card{padding:12px;border-radius:12px;background:#171c24;border:1px solid #343d4e}
-.timeline{height:8px;background:#252b37;border-radius:999px;overflow:hidden}.timeline > i{display:block;height:100%;width:0;background:#d9e5ff}
-.small{font-size:12px;color:var(--muted)} .status{min-height:20px;color:#cfdefd;font-size:12px}
-.check{display:flex;align-items:center;gap:8px;margin-top:10px;color:#dbe2f0}
-.stack{display:grid;gap:12px}
-.calendar-list{display:grid;gap:8px}
-.cal-row{display:grid;grid-template-columns:88px 1fr;gap:8px}
-.cal-date,.cal-text{background:#171c25;border:1px solid #434b5b;color:#fff;border-radius:9px;padding:10px}
-.right-card{background:rgba(7,9,14,.35);border:1px solid rgba(255,255,255,.18);padding:14px 14px 10px;border-radius:0}
-.right-title{font-size:18px;font-style:italic;font-weight:900;margin:0 0 8px}
-.right-item{display:grid;grid-template-columns:84px 1fr;gap:8px;align-items:center;margin-bottom:8px}
-.right-item .d{padding:6px 8px;font-size:14px;font-weight:900;text-align:center}
-.right-item .t{font-size:14px;line-height:1.3;padding:6px 0}
-.desktop-preview{min-height:100%}
-@media (max-width:1050px){.grid{grid-template-columns:1fr}.preview-wrap{grid-template-columns:1fr}.choice-row{grid-template-columns:repeat(2,1fr)}}
-</style>
-</head>
-<body>
-<header>
-  <div class="brand">77 MAGAZINE STUDIO <small>Reels video cover editor · first version</small></div>
-  <nav class="nav" aria-label="페이지 메뉴">
-    <a href="./index.html">사진 편집기</a>
-    <a href="./news.html">연예 뉴스</a>
-    <a href="./ai.html">글쓰기</a>
-    <a href="./video.html" aria-current="page">영상 편집기</a>
-  </nav>
-  <div class="tag">릴스 기본 스타일 연동 · 3.5초 타이틀</div>
-</header>
-
-<main>
-  <div class="grid">
-    <section class="panel">
-      <h2>01 · 영상 업로드</h2>
-      <label class="upload" for="videoFile">＋ MP4 / MOV 영상 업로드</label>
-      <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/webm">
-      <div class="small" style="margin-top:8px">첫 버전은 브라우저 미리보기 중심이야. 영상 자르기와 MP4 내보내기는 다음 단계에서 붙이면 돼.</div>
-
-      <h2 style="margin-top:18px">02 · 카테고리</h2>
-      <div class="choice-row" id="categoryButtons"></div>
-
-      <h2 style="margin-top:18px">03 · 제목 / 라벨</h2>
-      <label for="headline">제목</label>
-      <textarea id="headline" placeholder="예: 오늘 가장 뜨거운 무대"></textarea>
-      <label for="subline">부제목</label>
-      <textarea id="subline" placeholder="예: 팬들이 주목한 포인트를 짧게 적어줘"></textarea>
-      <div class="row">
-        <div>
-          <label for="issueText">오른쪽 상단 표시</label>
-          <input id="issueText" type="text" placeholder="예: NO. 77">
-        </div>
-        <div>
-          <label for="gradientStrength">그라데이션 강도</label>
-          <select id="gradientStrength">
-            <option value="0.52">약하게</option>
-            <option value="0.68" selected>보통</option>
-            <option value="0.82">강하게</option>
-          </select>
-        </div>
-      </div>
-      <label class="check"><input type="checkbox" id="showArrow" checked> 오른쪽 아래 화살표 표시</label>
-      <label class="check"><input type="checkbox" id="showLabel" checked> 카테고리 라벨 표시</label>
-      <label class="check"><input type="checkbox" id="showLogo" checked> 77 로고 표시</label>
-
-      <h2 style="margin-top:18px">04 · 타이틀 노출 시간</h2>
-      <div class="row">
-        <div>
-          <label for="overlayDuration">화면 표시 시간</label>
-          <select id="overlayDuration">
-            <option value="3.5" selected>3.5초</option>
-            <option value="4.0">4.0초</option>
-            <option value="5.0">5.0초</option>
-          </select>
-        </div>
-        <div>
-          <label for="fadeDuration">페이드아웃</label>
-          <select id="fadeDuration">
-            <option value="0.4">0.4초</option>
-            <option value="0.6" selected>0.6초</option>
-            <option value="0.8">0.8초</option>
-          </select>
-        </div>
-      </div>
-      <div class="small">기본값은 요청한 대로 <b>3.5초 노출 후 페이드아웃</b>이야.</div>
-
-      <div id="calendarEditor" style="display:none">
-        <h2 style="margin-top:18px">05 · 캘린더 일정표</h2>
-        <div class="calendar-list">
-          <div class="cal-row"><input class="cal-date" data-cal-date="0" value="06.14"><input class="cal-text" data-cal-text="0" value="ENHYPEN 잠실 시구·시타"></div>
-          <div class="cal-row"><input class="cal-date" data-cal-date="1" value="06.15"><input class="cal-text" data-cal-text="1" value="음악방송 라인업 체크"></div>
-          <div class="cal-row"><input class="cal-date" data-cal-date="2" value="06.18"><input class="cal-text" data-cal-text="2" value="컴백 티저 공개"></div>
-          <div class="cal-row"><input class="cal-date" data-cal-date="3" value="06.21"><input class="cal-text" data-cal-text="3" value="공연·페스티벌 일정"></div>
-        </div>
-      </div>
-
-      <div class="stack" style="margin-top:18px">
-        <button class="button primary" id="playFromStart">처음부터 미리보기</button>
-        <button class="button secondary" id="resetVideoSettings">영상 편집 설정 초기화</button>
-        <div id="status" class="status">영상 업로드 후 미리보기 해봐.</div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>릴스 미리보기</h2>
-      <div class="preview-wrap">
-        <div class="phone">
-          <div class="phone-screen" id="screen">
-            <video id="video" playsinline controls preload="metadata"></video>
-            <div class="gradient" id="gradient"></div>
-            <div class="overlay" id="overlay">
-              <div class="topline">
-                <div class="logo77" id="logo77">77</div>
-                <div class="meta" id="metaBlock">NO. 77<br><span id="dateText"></span></div>
-              </div>
-              <div class="lower" id="lowerBlock">
-                <div class="cat-label" id="catLabel">77 NEWS</div>
-                <div class="headline" id="headlinePreview">오늘 가장 뜨거운 무대</div>
-                <div class="subline" id="sublinePreview">팬들이 주목한 포인트를 짧고 강하게 정리하는 릴스용 제목 템플릿</div>
-                <div class="right-card" id="calendarCard" style="display:none;margin-top:18px;max-width:100%">
-                  <div class="right-title">SCHEDULE</div>
-                  <div id="calendarRowsPreview"></div>
-                </div>
-              </div>
-              <div class="bottom-rule"></div>
-              <div class="arrow" id="arrowEl"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="desktop-preview">
-          <div class="preview-info">
-            <div class="info-card">
-              <b>연동 방식</b>
-              <div class="small" style="margin-top:8px">이 화면은 릴스 사진 템플릿과 같은 카테고리 색·라벨·로고 배치를 기본값으로 사용해. 영상 시작 부분에 제목 카드가 들어가는 형태야.</div>
-            </div>
-            <div class="info-card">
-              <b>오버레이 진행</b>
-              <div class="small" style="margin-top:10px">0초부터 타이틀 카드가 나타나고, <b>3.5초</b> 시점까지 유지된 뒤 선택한 페이드 시간 동안 자연스럽게 사라져.</div>
-              <div style="margin-top:12px" class="timeline"><i id="timelineFill"></i></div>
-              <div class="small" style="margin-top:8px"><span id="timeLabel">0.00s</span> / <span id="videoDuration">0.00s</span></div>
-            </div>
-            <div class="info-card">
-              <b>현재 메모</b>
-              <div class="small" style="margin-top:8px">소재·일정 메뉴는 이번 버전에서 뺐어. 사진 편집기 / 뉴스 / 글쓰기 / 영상 편집기만 상단에 남겨뒀어.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</main>
-
+:root{color-scheme:dark;--bg:#12141a;--panel:#1c1f27;--line:#3b4150;--muted:#b9c0d0}*{box-sizing:border-box}body{background:var(--bg);color:#f7f7f9;margin:0;font:14px/1.5 system-ui,-apple-system,Pretendard,"Apple SD Gothic Neo",sans-serif}header{padding:16px 22px;border-bottom:1px solid #343b4b;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px}.brand{font-size:19px;font-weight:900}.brand small{display:block;font-size:11px;font-weight:500;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:7px}nav a{border:1px solid #48516a;padding:8px 11px;text-decoration:none;color:#dce5f7;border-radius:24px;font-size:13px}nav a[aria-current]{background:#fff;color:#111}main{max-width:1210px;margin:auto;padding:18px 14px 50px}.layout{display:grid;grid-template-columns:360px minmax(0,1fr);gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:17px}.panel h2{font-size:17px;margin:0 0 12px}h3{font-size:15px;margin:18px 0 10px}label{color:#d2d9e8;font-size:12px;display:block;margin:10px 0 5px}input,textarea,select,button{font:inherit}input[type=text],textarea,select{width:100%;color:#fff;background:#171c25;border:1px solid #475169;border-radius:9px;padding:10px}textarea{resize:vertical;min-height:74px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.btn{background:#323b4e;border:1px solid #64718a;color:#fff;padding:11px 13px;border-radius:10px;cursor:pointer;font-weight:700}.btn.primary{background:#ecf2ff;color:#0e1624;border-color:#ecf2ff}.btn:disabled{opacity:.5}.upload{background:#202634;border:1px dashed #7b89a5;text-align:center;border-radius:10px;padding:13px;cursor:pointer}input[type=file]{display:none}.small{font-size:12px;color:var(--muted);line-height:1.6}.status{font-size:12px;color:#b9ceff;min-height:16px}.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.category{background:#252c3a;color:#f5f5f5;padding:11px;border:1px solid #566176;border-radius:10px;font-weight:800}.category.active{outline:2px solid #b9d1ff}.category i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.check{display:flex;gap:7px;align-items:center;margin:9px 0;font-size:13px}.check input{accent-color:#789dff}.controls{display:grid;gap:8px}.preview-area{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:start;gap:20px}.phone{width:100%;max-width:420px;aspect-ratio:9/16;background:#0d0e13;padding:10px;border:1px solid #535b69;border-radius:22px;margin:auto}.screen{position:relative;width:100%;height:100%;background:#101319;overflow:hidden;border-radius:14px}.screen video{width:100%;height:100%;object-fit:cover}.screen canvas{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:none}.playbar{display:flex;gap:9px;align-items:center;margin-top:15px}.seek{width:100%}.timeline{width:100%;height:7px;background:#303849;border-radius:9px;overflow:hidden}.timeline span{display:block;height:100%;width:0;background:#c9d9ff}.notes{padding:13px;border:1px solid #3d465b;background:#202633;border-radius:10px;font-size:12px;color:#c8d4ed;line-height:1.75}.notes strong{color:#fff}.calrows{display:grid;gap:6px}.calrows>div{display:grid;grid-template-columns:95px 1fr;gap:6px}.error{color:#ffbdbd}@media(max-width:1010px){.layout{grid-template-columns:1fr}.preview-area{grid-template-columns:1fr}.phone{max-width:440px}}
+</style></head><body>
+<header><div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동</small></div><nav><a href="./index.html">사진 편집기</a><a href="./news.html">연예 뉴스</a><a href="./ai.html">글쓰기</a><a href="./video.html" aria-current="page">영상 편집기</a></nav></header>
+<main><div class="layout"><section class="panel">
+<h2>01 · 영상 업로드</h2><label class="upload" for="file">＋ MP4 / MOV / WebM 영상 선택</label><input type="file" id="file" accept="video/*"><div class="small" style="margin-top:7px">브라우저에서 재생 가능한 형식만 미리보기돼.</div>
+<h3>02 · 사진 편집기 릴스 설정 가져오기</h3><button class="btn primary" id="import" style="width:100%">↻ 릴스 템플릿 설정 불러오기</button><label class="check"><input type="checkbox" id="autoSync"> 화면으로 돌아올 때 릴스 설정 자동 갱신</label><div class="small">같은 브라우저의 사진 편집기에서 저장한 제목·부제·색상·로고·글씨 크기·화살표 설정을 읽어와. 영상 파일은 별도로 올려야 해.</div>
+<h3>03 · 카테고리</h3><div class="categories" id="categories"></div>
+<h3>04 · 문구</h3><label for="title">제목</label><textarea id="title"></textarea><label for="subtitle">부제목</label><textarea id="subtitle"></textarea>
+<div class="row"><div><label for="titleSize">제목 크기 (1080px 기준)</label><input type="range" id="titleSize" min="36" max="110" value="83" step="1"><div class="small" id="titleSizeVal">83px</div></div><div><label for="subSize">부제 크기</label><input type="range" id="subSize" min="20" max="60" value="39"><div class="small" id="subSizeVal">39px</div></div></div>
+<label class="check"><input id="showLogo" type="checkbox" checked> 원래 77 로고 표시</label><label class="check"><input id="showLabel" type="checkbox" checked> 라벨 표시</label><label class="check"><input id="showArrow" type="checkbox" checked> 오른쪽 아래 화살표 표시</label><label class="check"><input id="showRule" type="checkbox" checked> 아래 가로선 표시</label>
+<div id="calendarEditor" style="display:none"><h3>05 · 오른쪽 캘린더</h3><div class="calrows" id="calrows"></div></div>
+<h3>타이틀 표시 시간</h3><div class="row"><div><label for="hold">유지 시간</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃 시간</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
+<div class="controls" style="margin-top:17px"><button class="btn primary" id="play">▶ 처음부터 미리보기</button><div id="status" class="status"></div></div></section>
+<section class="panel"><h2>릴스 미리보기 · 1080 × 1920</h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>현재 버전은 영상 위 디자인을 미리보기하는 기능이야. 다운로드되는 MP4에 합성하는 내보내기는 아직 구현되지 않았어.</div></div></div></section></div></main>
 <script>
-(()=>{
-  const $=id=>document.getElementById(id);
-  const categories = {
-    news:{name:'77 NEWS', color:getComputedStyle(document.documentElement).getPropertyValue('--news').trim(), headline:'오늘 가장 뜨거운 소식', sub:'컴백·공식 발표·화제의 뉴스용 릴스'},
-    issue:{name:'77 ISSUE', color:getComputedStyle(document.documentElement).getPropertyValue('--issue').trim(), headline:'팬들이 주목한 무대 순간', sub:'화제의 장면·스타일링·반응 정리'},
-    pick:{name:'77 PICK', color:getComputedStyle(document.documentElement).getPropertyValue('--pick').trim(), headline:'지금 다시 봐야 할 포인트', sub:'추천 무대·수록곡·콘셉트 분석'},
-    calendar:{name:'77 CALENDAR', color:getComputedStyle(document.documentElement).getPropertyValue('--calendar').trim(), headline:'이번 주 K-POP 일정', sub:'컴백·공연·팝업·음악방송 일정'},
-    classic:{name:'릴스 기본', color:'#9ba4b4', headline:'릴스 기본 제목', sub:'기본 릴스 스타일'}
-  };
-  const state = {
-    category:'news',
-    headline:categories.news.headline,
-    subline:categories.news.sub,
-    issue:'NO. 77',
-    gradient:'0.68',
-    showArrow:true,
-    showLabel:true,
-    showLogo:true,
-    overlayDuration:3.5,
-    fadeDuration:0.6,
-    calendarRows:[
-      ['06.14','ENHYPEN 잠실 시구·시타'],
-      ['06.15','음악방송 라인업 체크'],
-      ['06.18','컴백 티저 공개'],
-      ['06.21','공연·페스티벌 일정']
-    ]
-  };
-
-  const catWrap=$('categoryButtons');
-  Object.entries(categories).forEach(([key,v])=>{
-    const b=document.createElement('button');
-    b.className='choice'+(key===state.category?' active':'');
-    b.dataset.category=key;
-    b.innerHTML=`<div class="color-chip" style="background:${v.color}"></div>${v.name}`;
-    b.onclick=()=>{
-      state.category=key;
-      if(!$('headline').dataset.edited) state.headline=v.headline;
-      if(!$('subline').dataset.edited) state.subline=v.sub;
-      syncInputs();
-      render();
-    };
-    catWrap.appendChild(b);
-  });
-
-  function todayString(){
-    return new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit',timeZone:'Asia/Seoul'}).format(new Date()).toUpperCase();
-  }
-
-  function syncInputs(){
-    $('headline').value=state.headline;
-    $('subline').value=state.subline;
-    $('issueText').value=state.issue;
-    $('gradientStrength').value=state.gradient;
-    $('showArrow').checked=state.showArrow;
-    $('showLabel').checked=state.showLabel;
-    $('showLogo').checked=state.showLogo;
-    $('overlayDuration').value=String(state.overlayDuration);
-    $('fadeDuration').value=String(state.fadeDuration);
-    document.querySelectorAll('.choice').forEach(btn=>btn.classList.toggle('active', btn.dataset.category===state.category));
-    $('calendarEditor').style.display = state.category==='calendar' ? '' : 'none';
-    state.calendarRows.forEach((row,idx)=>{
-      const d=document.querySelector(`[data-cal-date="${idx}"]`);
-      const t=document.querySelector(`[data-cal-text="${idx}"]`);
-      if(d) d.value=row[0];
-      if(t) t.value=row[1];
-    });
-  }
-
-  function renderCalendarPreview(){
-    const wrap=$('calendarRowsPreview');
-    wrap.innerHTML='';
-    state.calendarRows.forEach(([d,t])=>{
-      const item=document.createElement('div');
-      item.className='right-item';
-      item.innerHTML=`<div class="d" style="background:${categories[state.category].color};color:${state.category==='pick'?'#111':'#fff'}">${d||'DATE'}</div><div class="t">${t||'일정을 입력해보세요'}</div>`;
-      wrap.appendChild(item);
-    });
-  }
-
-  function render(){
-    const cat=categories[state.category];
-    $('catLabel').textContent = cat.name;
-    $('catLabel').style.background = cat.color;
-    $('catLabel').style.color = state.category==='pick' ? '#111' : '#fff';
-    $('headlinePreview').textContent = state.headline || cat.headline;
-    $('sublinePreview').textContent = state.subline || cat.sub;
-    $('metaBlock').style.display = (state.issue || todayString()) ? '' : 'none';
-    $('metaBlock').innerHTML = `${(state.issue||'').replace(/\n/g,'<br>')}<br><span id="dateText">${todayString()}</span>`;
-    $('gradient').style.setProperty('--grad', state.gradient);
-    $('arrowEl').style.display = state.showArrow ? '' : 'none';
-    $('catLabel').style.display = state.showLabel ? 'inline-flex' : 'none';
-    $('logo77').style.display = state.showLogo ? '' : 'block';
-    $('calendarCard').style.display = state.category==='calendar' ? '' : 'none';
-    renderCalendarPreview();
-    overlayTick();
-  }
-
-  const video=$('video');
-  function overlayTick(){
-    const hold = Number(state.overlayDuration);
-    const fade = Number(state.fadeDuration);
-    const t = video.currentTime || 0;
-    let opacity = 1;
-    if(t <= hold-fade) opacity = 1;
-    else if(t <= hold) opacity = Math.max(0, 1 - ((t-(hold-fade))/fade));
-    else opacity = 0;
-    $('overlay').style.opacity = opacity;
-    const duration = video.duration || 0;
-    $('timelineFill').style.width = duration ? `${Math.min(100,(t/duration)*100)}%` : '0%';
-    $('timeLabel').textContent = `${t.toFixed(2)}s`;
-    $('videoDuration').textContent = `${duration ? duration.toFixed(2) : '0.00'}s`;
-  }
-
-  $('videoFile').addEventListener('change', e=>{
-    const file=e.target.files?.[0];
-    if(!file) return;
-    const url=URL.createObjectURL(file);
-    video.src=url;
-    video.load();
-    $('status').textContent=`영상 불러왔어: ${file.name}`;
-  });
-
-  $('headline').addEventListener('input',e=>{state.headline=e.target.value; e.target.dataset.edited='1'; render();});
-  $('subline').addEventListener('input',e=>{state.subline=e.target.value; e.target.dataset.edited='1'; render();});
-  $('issueText').addEventListener('input',e=>{state.issue=e.target.value; render();});
-  $('gradientStrength').addEventListener('change',e=>{state.gradient=e.target.value; render();});
-  $('showArrow').addEventListener('change',e=>{state.showArrow=e.target.checked; render();});
-  $('showLabel').addEventListener('change',e=>{state.showLabel=e.target.checked; render();});
-  $('showLogo').addEventListener('change',e=>{state.showLogo=e.target.checked; render();});
-  $('overlayDuration').addEventListener('change',e=>{state.overlayDuration=Number(e.target.value); render();});
-  $('fadeDuration').addEventListener('change',e=>{state.fadeDuration=Number(e.target.value); render();});
-  document.querySelectorAll('[data-cal-date],[data-cal-text]').forEach(input=>{
-    input.addEventListener('input', ()=>{
-      state.calendarRows=[0,1,2,3].map(i=>[
-        document.querySelector(`[data-cal-date="${i}"]`).value,
-        document.querySelector(`[data-cal-text="${i}"]`).value
-      ]);
-      render();
-    });
-  });
-
-  $('playFromStart').onclick=()=>{
-    if(!video.src){
-      $('status').textContent='먼저 영상을 업로드해줘.';
-      return;
-    }
-    video.currentTime=0;
-    video.play();
-    $('status').textContent='처음부터 미리보는 중이야.';
-  };
-
-  $('resetVideoSettings').onclick=()=>{
-    state.category='news';
-    state.headline=categories.news.headline;
-    state.subline=categories.news.sub;
-    state.issue='NO. 77';
-    state.gradient='0.68';
-    state.showArrow=true;
-    state.showLabel=true;
-    state.showLogo=true;
-    state.overlayDuration=3.5;
-    state.fadeDuration=0.6;
-    $('headline').dataset.edited='';
-    $('subline').dataset.edited='';
-    syncInputs();
-    render();
-    $('status').textContent='영상 편집 설정을 초기화했어.';
-  };
-
-  video.addEventListener('timeupdate', overlayTick);
-  video.addEventListener('loadedmetadata', overlayTick);
-  video.addEventListener('play', ()=>{ $('status').textContent='재생 중 · 타이틀 카드가 3.5초 뒤 페이드아웃돼.'; });
-  video.addEventListener('pause', ()=>{ $('status').textContent='일시정지했어.'; });
-  video.addEventListener('ended', ()=>{ $('status').textContent='영상이 끝났어.'; });
-
-  syncInputs();
-  render();
+(()=>{'use strict';
+const $=id=>document.getElementById(id),video=$('video'),canvas=$('overlay'),ctx=canvas.getContext('2d');
+const font=(weight,size)=>`${weight} ${size}px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`;
+const defs={news:['77 NEWS','#315bff'],issue:['77 ISSUE','#f04452'],pick:['77 PICK','#b1f522'],calendar:['77 CALENDAR','#956dff'],classic:['기본 릴스','#e53232']};
+const state={title:'',subtitle:'',cat:'news',titleSize:83,subSize:39,titleColor:'#fff',subColor:'#fff',labelEnabled:true,arrow:true,rule:true,logo:true,gradient:65,meta:false,issue:'',calendarRows:'',legacyLabel:'',legacyColor:'#e53232',legacyTextColor:'#fff',legacySize:32,colors:{},hold:3.5,fade:0.6};
+let videoUrl=null;const logo=new Image();logo.onload=()=>draw();logo.src='./77-logo.png';
+function status(t){$('status').textContent=t}
+function catColor(){return state.colors?.[state.cat]||defs[state.cat]?.[1]||'#315bff'}
+function catName(){return defs[state.cat]?.[0]||'77 NEWS'}
+function syncForm(){
+ $('title').value=state.title;$('subtitle').value=state.subtitle;$('titleSize').value=state.titleSize;$('subSize').value=state.subSize;
+ $('titleSizeVal').textContent=state.titleSize+'px';$('subSizeVal').textContent=state.subSize+'px';
+ $('showLogo').checked=state.logo;$('showLabel').checked=state.labelEnabled;$('showArrow').checked=state.arrow;$('showRule').checked=state.rule;
+ $('calendarEditor').style.display=state.cat==='calendar'?'':'none';
+ document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b.dataset.category===state.cat));
+ const rows=state.calendarRows.split('\n').slice(0,4);const box=$('calrows');box.replaceChildren();for(let i=0;i<4;i++){
+  const line=document.createElement('div'),date=document.createElement('input'),title=document.createElement('input');date.type='text';title.type='text';
+  let [d,...n]=(rows[i]||'').split('|');date.value=(d||'').trim();title.value=n.join('|').trim();date.placeholder='06.14';title.placeholder='일정 입력';
+  const update=()=>{const vals=[...box.children].map(el=>el.children[0].value+' | '+el.children[1].value);state.calendarRows=vals.join('\n');draw()};
+  date.addEventListener('input',update);title.addEventListener('input',update);line.append(date,title);box.appendChild(line);
+ }
+}
+function importReels(silent=false){let source;try{const raw=localStorage.getItem('studio77-values');source=raw?JSON.parse(raw).reels:null}catch(e){status('사진 편집기 저장 정보를 읽을 수 없어.');return false}
+ if(!source){if(!silent)status('저장된 릴스 설정이 없어. 사진 편집기에서 릴스 템플릿을 먼저 편집해줘.');return false}
+ const cat=source.editorialCategory||'classic';state.cat=defs[cat]?cat:'classic';
+ state.title=String(source.title||'');state.subtitle=String(cat==='classic'?source.reelsSubtitle||'':source.reelsSubtitle||'');
+ state.titleSize=Number(source.titleSize)||83;state.subSize=Number(source.reelsSubtitleSize)||39;
+ state.titleColor=source.titleColor||'#fff';state.subColor=source.reelsSubtitleColor||'#fff';
+ state.labelEnabled=state.cat==='classic'?source.labelEnabled!==false:source.editorialLabelEnabled!==false;
+ state.arrow=source.feedArrowEnabled!==false;state.rule=source.editorialRuleEnabled!==false;
+ state.logo=true;state.gradient=Number(source.textGradient??65);state.meta=!!source.editorialMetaEnabled;
+ state.issue=source.editorialIssue||'';state.calendarRows=source.calendarRows||'';
+ state.colors=source.editorialColors||{};state.legacyLabel=source.labelText||'';
+ state.legacyColor=source.labelBg||'#e53232';state.legacyTextColor=source.labelColor||'#fff';state.legacySize=Number(source.labelSize)||32;
+ syncForm();draw();if(!silent)status('사진 편집기의 릴스 설정을 불러왔어!');return true;
+}
+function wrap(text,maxW,maxLines=2){const all=[];ctx.font=font(800,state.titleSize);const paras=String(text||'').split(/\n/);
+ for(const p of paras){let line='';for(const ch of [...p]){if(ctx.measureText(line+ch).width>maxW&&line){all.push(line);line=ch}else line+=ch}if(line)all.push(line)}
+ return all.slice(0,maxLines)}
+function fitted(text,x,y,width,size,weight=500){let sz=size;ctx.font=font(weight,sz);while(sz>20&&ctx.measureText(text).width>width){sz-=2;ctx.font=font(weight,sz)}ctx.fillText(text,x,y)}
+function draw(){if(!ctx)return;ctx.clearRect(0,0,1080,1920);const t=video.currentTime||0,hold=state.hold,fade=state.fade;
+ const opacity=t<=hold?1:t>=hold+fade?0:Math.max(0,1-(t-hold)/fade);
+ if(opacity<=0)return;ctx.save();ctx.globalAlpha=opacity;
+ let g=ctx.createLinearGradient(0,900,0,1920);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.48,`rgba(0,0,0,${(.5*state.gradient/100).toFixed(3)})`);g.addColorStop(1,`rgba(0,0,0,${(.96*state.gradient/100).toFixed(3)})`);ctx.fillStyle=g;ctx.fillRect(0,900,1080,1020);
+ // Reuse the exact embedded raster 77 logo from the photo editor.
+ if(state.logo&&logo.complete&&logo.naturalWidth){const w=state.cat==='classic'?68:104,h=w*logo.naturalHeight/logo.naturalWidth,cx=state.cat==='classic'?540:100,cy=state.cat==='classic'?1815:85;ctx.drawImage(logo,cx-w/2,cy-h/2,w,h)}
+ if(state.meta){ctx.textAlign='right';ctx.fillStyle='#fff';ctx.font=font(600,26);if(state.issue)ctx.fillText(state.issue,1025,69);const ds=new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'2-digit',timeZone:'Asia/Seoul'}).format(new Date()).toUpperCase();ctx.fillText(ds,1025,104);ctx.textAlign='left'}
+ const editor=state.cat!=='classic',isCal=state.cat==='calendar',shift=455;
+ if(editor){
+  const x=64,labelY=(isCal?812:796)+shift,labelH=58,color=catColor();
+  if(state.labelEnabled){ctx.font='italic 800 36px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';const lw=Math.min(430,ctx.measureText(catName()).width+46);ctx.fillStyle=color;ctx.fillRect(x,labelY,lw,labelH);ctx.fillStyle=state.cat==='pick'?'#111':'#fff';ctx.fillText(catName(),x+18,labelY+40)}
+  if(isCal){const px=556,py=760+shift,pw=462,ph=408;ctx.fillStyle='rgba(7,9,14,.38)';ctx.fillRect(px,py,pw,ph);ctx.strokeStyle='rgba(255,255,255,.22)';ctx.strokeRect(px,py,pw,ph);ctx.fillStyle='#fff';ctx.font='italic 800 30px Pretendard, sans-serif';ctx.fillText('SCHEDULE',px+24,py+41);const rows=state.calendarRows.split('\n').filter(Boolean).slice(0,4);
+   rows.forEach((r,i)=>{const [date,...rest]=r.split('|'),yy=py+112+i*72;ctx.fillStyle=color;ctx.fillRect(px+24,yy-24,108,40);ctx.textAlign='center';ctx.fillStyle='#fff';fitted((date||'').trim(),px+78,yy+4,86,25,800);ctx.textAlign='left';ctx.fillStyle='#fff';fitted(rest.join('|').trim(),px+148,yy+2,285,24,500);ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillRect(px+24,yy+32,pw-48,1)})}
+  const ty=labelY+labelH+(state.labelEnabled?(isCal?98:108):(isCal?58:70)),w=isCal?420:930;
+  ctx.fillStyle=state.titleColor;ctx.font=font(800,state.titleSize);const lines=wrap(state.title,w,isCal?3:2);let lineH=state.titleSize*1.16;
+  lines.forEach((line,i)=>fitted(line,64,ty+i*lineH,w,state.titleSize,800));
+  if(state.subtitle){ctx.fillStyle=state.subColor;const yy=Math.min(1665,ty+Math.max(0,lines.length-1)*lineH+92);fitted(state.subtitle,64,yy,w,Math.min(42,state.subSize),500)}
+  if(state.rule){ctx.fillStyle='rgba(255,255,255,.85)';ctx.fillRect(64,1731,state.arrow?868:952,2)}
+  if(state.arrow){ctx.strokeStyle='#fff';ctx.lineWidth=4.4;ctx.beginPath();ctx.moveTo(960,1732);ctx.lineTo(1015,1732);ctx.moveTo(996,1713);ctx.lineTo(1015,1732);ctx.lineTo(996,1751);ctx.stroke()}
+ }else{
+  ctx.fillStyle=state.titleColor;const lines=wrap(state.title,916,2),h=state.titleSize*1.19,first=1522-(lines.length-1)*h;lines.forEach((line,i)=>fitted(line,90,first+i*h,916,state.titleSize,800));
+  if(state.subtitle){ctx.fillStyle=state.subColor;fitted(state.subtitle,91,1612,904,state.subSize,600)}
+  if(state.labelEnabled&&state.legacyLabel){ctx.font=font(500,state.legacySize);const wd=ctx.measureText(state.legacyLabel).width+36,top=first-state.titleSize-17-state.legacySize-18;ctx.fillStyle=state.legacyColor;ctx.fillRect(90,top,wd,state.legacySize+18);ctx.fillStyle=state.legacyTextColor;fitted(state.legacyLabel,107,top+state.legacySize+2,wd-34,state.legacySize,500)}
+  if(state.arrow){ctx.strokeStyle='#fff';ctx.lineWidth=4.5;ctx.beginPath();ctx.moveTo(895,1810);ctx.lineTo(1011,1810);ctx.moveTo(994,1793);ctx.lineTo(1011,1810);ctx.lineTo(994,1827);ctx.stroke()}
+ }
+ ctx.restore();
+}
+function progress(){const t=video.currentTime||0,d=video.duration||0;$('time').textContent=t.toFixed(2)+'s';$('duration').textContent=(d||0).toFixed(2)+'s';$('progress').style.width=d?Math.min(100,100*t/d)+'%':'0%';draw()}
+for(const [key,label] of Object.entries(defs)){const b=document.createElement('button');b.type='button';b.className='category';b.dataset.category=key;b.innerHTML=`<i style="background:${label[1]}"></i>${label[0]}`;b.onclick=()=>{state.cat=key;syncForm();draw()};$('categories').appendChild(b)}
+$('import').onclick=()=>importReels();
+$('autoSync').onchange=()=>{if($('autoSync').checked)importReels(true)};
+window.addEventListener('storage',e=>{if(e.key==='studio77-values'&&$('autoSync').checked)importReels(true)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&$('autoSync').checked)importReels(true)});
+$('title').oninput=e=>{state.title=e.target.value;draw()};$('subtitle').oninput=e=>{state.subtitle=e.target.value;draw()};
+for(const [id,key] of [['titleSize','titleSize'],['subSize','subSize']])$(id).oninput=e=>{state[key]=Number(e.target.value);$(id+'Val').textContent=e.target.value+'px';draw()};
+for(const [id,key] of [['showLogo','logo'],['showLabel','labelEnabled'],['showArrow','arrow'],['showRule','rule']])$(id).onchange=e=>{state[key]=e.target.checked;draw()};
+$('hold').onchange=e=>{state.hold=Number(e.target.value);draw()};$('fade').onchange=e=>{state.fade=Number(e.target.value);draw()};
+$('file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;if(videoUrl)URL.revokeObjectURL(videoUrl);videoUrl=URL.createObjectURL(f);video.src=videoUrl;video.load();status('영상 불러옴: '+f.name)};
+$('play').onclick=()=>{if(!video.src){status('영상을 먼저 업로드해줘.');return}video.currentTime=0;video.play().catch(()=>status('재생을 눌러줘.'))};
+video.addEventListener('timeupdate',progress);video.addEventListener('loadedmetadata',progress);video.addEventListener('seeked',progress);video.addEventListener('ended',progress);
+// Ensure overlay updates smoothly between coarse video timeupdate events.
+function tick(){if(!video.paused)progress();requestAnimationFrame(tick)}requestAnimationFrame(tick);
+syncForm();importReels(true);draw();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
