@@ -156,7 +156,7 @@ input[type=file]{display:none}
 </head>
 <body>
 <header>
-  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동</small></div>
+  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="컷 전환 안정화 업데이트" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.0.1</span></small></div>
   <nav>
     <a href="./index.html">사진 편집기</a>
     <a href="./news.html">연예 뉴스</a>
@@ -1022,11 +1022,15 @@ function updateScrubUI() {
 
 let activeMediaUrl = '';
 let seekQueue = Promise.resolve();
+let previewSeekEpoch = 0;
 function seekPreviewTo(t, forceDraw = false) {
+  const epoch=++previewSeekEpoch;
   playheadSec = Math.max(0, Math.min(getTotalDuration(), t));
   updateScrubUI();
 
   seekQueue = seekQueue.then(async () => {
+    if(epoch!==previewSeekEpoch)return;
+    if(previewSwitching){previewSwitchVersion++;previewSwitching=false;}
     const loc = locateAtTime(playheadSec);
     if (!loc) {
       renderFrame(playheadSec);
@@ -1072,6 +1076,7 @@ function seekPreviewTo(t, forceDraw = false) {
       });
     }
 
+    if(epoch!==previewSeekEpoch)return;
     if (forceDraw) lastRenderedKey = '';
     renderFrame(playheadSec);
   });
@@ -1184,6 +1189,12 @@ function renderFrame(t) {
   ].join('|');
 
   if (key === lastRenderedKey) return;
+  // Preserve the last completely decoded frame during discontinuous cuts:
+  // iOS may fire 'seeked' before a drawable frame actually exists.
+  // The canvas must NOT be cleared while the video decoder is seeking/loading.
+  if(clip && !isExporting && (previewSwitching || activeMediaUrl !== clip.url || video.seeking || video.readyState < 2 || !video.videoWidth)) {
+    return;
+  }
   lastRenderedKey = key;
 
   ctx.save();
@@ -1391,6 +1402,23 @@ function startNextPreviewClip(loc) {
       if(token!==previewSwitchVersion)return;
       video.muted=previewMuted;
       await video.play();
+      // The browser's seeked event can arrive before the first new frame is
+      // decoded, especially in Safari. Wait for a video-frame callback before
+      // replacing the last image shown on the canvas.
+      if(typeof video.requestVideoFrameCallback==='function'){
+        await Promise.race([
+          new Promise(resolve=>video.requestVideoFrameCallback(()=>resolve())),
+          new Promise(resolve=>setTimeout(resolve,650))
+        ]);
+      }else{
+        await new Promise(resolve=>{
+          if(video.readyState>=3&&!video.seeking)return resolve();
+          const done=()=>{video.removeEventListener('canplay',done);resolve()};
+          video.addEventListener('canplay',done,{once:true});
+          setTimeout(done,450);
+        });
+      }
+      if(token!==previewSwitchVersion)return;
       // Keep project time anchored to the actual media time after the seek.
       playheadSec=loc.clipStartGlobal+Math.max(0,video.currentTime-loc.clip.trimStart);
       lastRenderedKey='';
