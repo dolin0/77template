@@ -61,7 +61,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 </div></details>
 <details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
 <label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
-<p class="small">원본 음성을 포함해 영상에 합쳐 녹화해. 소리 합성이 지원되지 않으면 무음 파일을 몰래 만들지 않고 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
+<p class="small">자른 영상의 시작점부터 원본 소리를 영상과 함께 녹음하도록 수정했어. 소리 트랙 연결에 실패하면 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
 <button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 영상 내보내기 (1080×1920)</button>
 <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
 <div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
@@ -188,6 +188,26 @@ function saveBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.cr
 function waitForSeek(t){return new Promise((resolve,reject)=>{if(Math.abs(video.currentTime-t)<.04){resolve();return}let done=false;const finish=()=>{if(done)return;done=true;video.removeEventListener('seeked',finish);video.removeEventListener('error',bad);clearTimeout(timeout);resolve()};const bad=()=>{if(done)return;done=true;clearTimeout(timeout);reject(Error('영상 위치 이동 실패'))};const timeout=setTimeout(()=>{finish()},5000);video.addEventListener('seeked',finish,{once:true});video.addEventListener('error',bad,{once:true});video.currentTime=t})}
 $('exportCover').onclick=async()=>{if(!video.src){status('먼저 영상을 업로드해줘.');return}if(exportBusy)return;try{video.pause();const r=ranges();await waitForSeek(r.valid?r.a:0);const c=document.createElement('canvas');c.width=1080;c.height=1920;composites(c,0);const blob=await new Promise(ok=>c.toBlob(ok,'image/png'));if(!blob)throw Error('PNG 생성 실패');if(coverURL)URL.revokeObjectURL(coverURL);coverURL=saveBlob(blob,'77_reels_cover.png');status('릴스 썸네일 PNG를 만들었어.')}catch(e){status('썸네일을 만들지 못했어: '+e.message)}};
 $('exportResolution').addEventListener('change',e=>{$('exportVideo').textContent=e.target.value==='720'?'⬇ 영상 내보내기 (720×1280)':'⬇ 영상 내보내기 (1080×1920)'});
+// A stable MediaElementAudioSource remains attached to the same video element even
+// after seeking. captureStream() can lose/mute its audio track when seeking to trimStart.
+let sharedAudioContext=null,sharedAudioElementSource=null,sharedAudioDestination=null;
+async function ensureOriginalAudioGraph(){
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC)throw Error('이 브라우저는 원본 소리 합성을 지원하지 않아.');
+ if(!sharedAudioContext){
+  sharedAudioContext=new AC();
+  sharedAudioElementSource=sharedAudioContext.createMediaElementSource(video);
+  sharedAudioDestination=sharedAudioContext.createMediaStreamDestination();
+  sharedAudioElementSource.connect(sharedAudioDestination);
+  // createMediaElementSource reroutes the element output, so also keep preview audible.
+  sharedAudioElementSource.connect(sharedAudioContext.destination);
+ }
+ await sharedAudioContext.resume();
+ if(sharedAudioContext.state!=='running')throw Error('오디오 엔진이 활성화되지 않았어. 재생 버튼을 누른 뒤 다시 시도해줘.');
+ const tracks=sharedAudioDestination.stream.getAudioTracks();
+ if(!tracks.length||tracks[0].readyState!=='live')throw Error('원본 소리 트랙 연결에 실패했어.');
+ return tracks;
+}
 $('exportVideo').onclick=async()=>{
  if(exportBusy)return;const r=ranges();if(!r.valid){status('먼저 영상을 업로드하고 시작·종료 시간을 확인해줘.');return}
  const c=document.createElement('canvas');const resolution=Number($('exportResolution').value)||1080;c.width=resolution;c.height=Math.round(resolution*16/9);
@@ -195,46 +215,19 @@ $('exportVideo').onclick=async()=>{
  const formats=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
  let mime=formats.find(x=>MediaRecorder.isTypeSupported(x));if(!mime){status('지원되는 영상 저장 포맷을 찾지 못했어.');return}
  exportBusy=true;$('exportVideo').disabled=true;$('exportProgress').textContent='준비 중…';video.pause();
- let recorder=null,stream=null,raf=0,stopTimer=0,ended=false,audioCtx=null,audioSource=null,audioDest=null,audioCaptureStream=null;
+ let recorder=null,stream=null,raf=0,stopTimer=0,ended=false;
  try{
   await waitForSeek(r.a);
   composites(c,0);
   stream=c.captureStream(30);
-  // Keep original audio as an explicit, verified recording track.
-  // Prefer an independent decoded buffer to avoid silencing the preview element
-  // through createMediaElementSource (notably problematic on some mobile browsers).
+  // Use the same playing video element for BOTH video frames and audio.
+  // Seeking no longer leaves a stale source-audio buffer or a muted captureStream track.
   const includeAudio=$('includeAudio').checked;
-  let audioReady=false;
   if(includeAudio){
-    const AC=window.AudioContext||window.webkitAudioContext;
-    if(!AC)throw Error('이 브라우저는 원본 소리 합성을 지원하지 않아. 무음 내보내기를 원하면 원본 소리 포함 체크를 해제해줘.');
-    if(!uploadedFile)throw Error('원본 영상 파일을 다시 업로드해줘.');
-    audioCtx=new AC();
-    audioDest=audioCtx.createMediaStreamDestination();
-    try{
-      const decoded=await audioCtx.decodeAudioData(await uploadedFile.arrayBuffer());
-      if(!decoded || !decoded.numberOfChannels || decoded.duration<=r.a)throw Error('잘라낸 구간에 오디오 없음');
-      audioSource=audioCtx.createBufferSource();
-      audioSource.buffer=decoded;
-      audioSource.connect(audioDest);
-      audioReady=true;
-    }catch(audioError){
-      // Some browsers can capture an audio track from the source video,
-      // even when their WebAudio decoder cannot decode the original file container.
-      try{
-        audioCaptureStream=(video.captureStream||video.webkitCaptureStream)?.call(video)||null;
-        const tracks=audioCaptureStream?.getAudioTracks()||[];
-        if(tracks.length){tracks.forEach(track=>stream.addTrack(track));audioReady=true;}
-      }catch(e){}
-    }
-    if(!audioReady)throw Error('원본 오디오를 읽지 못했어. 이 형식은 브라우저에서 소리 포함 내보내기가 어려워. PC Chrome에서 다시 시도하거나 영상 파일을 변환해줘.');
-    if(audioSource){
-      const track=audioDest.stream.getAudioTracks()[0];
-      if(!track)throw Error('소리 녹음 트랙을 만들지 못했어.');
-      stream.addTrack(track);
-      await audioCtx.resume();
-    }
-    if(stream.getAudioTracks().length===0)throw Error('소리 트랙이 없어. 무음 파일로 저장하지 않을게.');
+    const tracks=await ensureOriginalAudioGraph();
+    // Keep the source track alive; the canvas stream owns only the recorder wrapper.
+    tracks.forEach(track=>stream.addTrack(track));
+    if(!stream.getAudioTracks().length)throw Error('원본 소리 트랙 연결에 실패했어.');
   }
   const parts=[];
   try{
@@ -254,15 +247,10 @@ $('exportVideo').onclick=async()=>{
    if(elapsed>=clipLen-.025||video.ended){finish();return}
    raf=requestAnimationFrame(paintFrame);
   };
-  const finish=()=>{if(ended)return;ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);video.pause();if(audioSource)try{audioSource.stop()}catch(e){}composites(c,clipLen);if(recorder.state!=='inactive')recorder.stop()};
+  const finish=()=>{if(ended)return;ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);video.pause();composites(c,clipLen);if(recorder.state!=='inactive')recorder.stop()};
   recorder.start(500);
   video.muted=false;
   await video.play();
-  if(audioSource){
-    // Start at trimmed position: original audio starts at the new clip's zero point.
-    const available=Math.max(0,Math.min(clipLen,audioSource.buffer.duration-r.a));
-    if(available>0)audioSource.start(0,r.a,available);
-  }
   raf=requestAnimationFrame(paintFrame);
   stopTimer=setTimeout(finish,Math.ceil((clipLen+4)*1000));
   await done;
@@ -270,13 +258,12 @@ $('exportVideo').onclick=async()=>{
   const blob=new Blob(parts,{type:mime});
   if(exportURL)URL.revokeObjectURL(exportURL);
   const ext=mime.includes('mp4')?'mp4':'webm';exportURL=saveBlob(blob,'77_reels_edit.'+ext);
-  status(`완료! ${ext.toUpperCase()} 영상을 저장했어. (${(blob.size/1024/1024).toFixed(1)}MB) · ${includeAudio?'원본 소리 트랙 포함':'무음 출력'}`);
+  status(`완료! ${ext.toUpperCase()} 저장 (${(blob.size/1024/1024).toFixed(1)}MB) · ${includeAudio?'원본 소리를 실시간 연결해 녹화':'무음 출력'}. 저장한 영상을 재생해서 소리를 확인해줘.`);
  }catch(e){status('영상 저장 실패: '+e.message)}finally{
   ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);
   if(recorder&&recorder.state!=='inactive')try{recorder.stop()}catch(e){}
-  if(audioSource)try{audioSource.stop()}catch(e){}
-  if(stream)stream.getTracks().forEach(t=>t.stop());
-  if(audioCtx)try{await audioCtx.close()}catch(e){}
+  if(stream)stream.getVideoTracks().forEach(t=>t.stop());
+  // Shared audio tracks are reused after trim changes. Never stop them here.
   video.pause();$('exportVideo').disabled=false;exportBusy=false;
  }
 };
