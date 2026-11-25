@@ -156,7 +156,7 @@ input[type=file]{display:none}
 </head>
 <body>
 <header>
-  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="컷 전환 안정화 업데이트" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.0.1</span></small></div>
+  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="77 REWIND 노란색 라벨 추가" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.0.3</span></small></div>
   <nav>
     <a href="./index.html">사진 편집기</a>
     <a href="./news.html">연예 뉴스</a>
@@ -353,6 +353,16 @@ input[type=file]{display:none}
             <button class="btn sm" id="setEnd" type="button">현재 위치 → 종료</button>
           </div>
           <p class="small" id="trimSummary" style="margin-top:6px">영상을 업로드하면 구간을 조절할 수 있습니다.</p>
+          <h3>컷 사이 사운드 연결</h3>
+          <label for="audioCutFade">오디오 전환 부드럽게 (컷 앞·뒤 각각)</label>
+          <select id="audioCutFade">
+            <option value="0">사용 안 함 · 즉시 전환</option>
+            <option value="0.1">0.1초 · 짧게</option>
+            <option value="0.2" selected>0.2초 · 자연스럽게 (추천)</option>
+            <option value="0.35">0.35초 · 부드럽게</option>
+            <option value="0.5">0.5초 · 길게</option>
+          </select>
+          <p class="small">컷 직전 소리를 줄이고 다음 컷에서 서서히 높여요. 같은 원본의 끊김 없는 연속 분할은 소리를 그대로 유지해요. 서로 다른 영상의 소리가 실제로 겹치는 크로스페이드는 아닙니다.</p>
           <h3>타이틀 표시 시간</h3><p class="small">77 CLIP 상단 헤드라인형은 아래 시간 설정과 관계없이 타이틀이 영상 끝까지 유지됩니다.</p>
           <div class="row">
             <div><label for="hold">타이틀 유지</label><select id="hold"><option value="3.5" selected>3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div>
@@ -418,6 +428,7 @@ const video = $('video');
 let previewMuted = false;
 let persistentAudioContext = null;
 let persistentAudioSource = null;
+let persistentAudioGain = null;
 let persistentAudioDestination = null;
 function syncPreviewControls(){
   const play = $('previewPlay');
@@ -442,6 +453,7 @@ const defs = {
   issue: ['77 ISSUE', '#f04452'],
   pick: ['77 PICK', '#b1f522'],
   calendar: ['77 CALENDAR', '#956dff'],
+  rewind: ['77 REWIND', '#FFD83D'],
   classic: ['기본 릴스', '#e53232']
 };
 
@@ -468,6 +480,7 @@ const state = {
   colors: {},
   hold: 3.5,
   fade: 0.6,
+  audioCutFade: 0.2,
   ratio: '9:16',
   layoutMode: 'standard',
   clipLabelAlign: 'center',
@@ -543,6 +556,8 @@ async function restoreHistory(s){
     for(const [id,field] of [['showLogo','logo'],['showLabel','labelEnabled'],['showArrow','arrow'],['showRule','rule']])$(id).checked=!!state[field];
     $('hold').value=String(state.hold);
     $('fade').value=String(state.fade);
+    $('audioCutFade').value=String(state.audioCutFade??0.2);
+    updateCutAudioGain(playheadSec);
     document.querySelectorAll('[data-category]').forEach(b=>b.classList.toggle('active',b.dataset.category===state.cat));
     $('calendarEditor').style.display=state.cat==='calendar'?'':'none';
     const calRows=String(state.calendarRows||'').split('\n');
@@ -590,6 +605,57 @@ function setStatus(msg) { $('status').textContent = msg; }
 function catColor() { return state.colors?.[state.cat] || defs[state.cat]?.[1] || '#315bff'; }
 function catName() { return defs[state.cat]?.[0] || '77 NEWS'; }
 function fontStr(weight, size) { return `${weight} ${size}px Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`; }
+
+// A short fade-to-silence followed by fade-in at a discontinuous cut.
+function cutAudioEnvelope(t){
+  const duration=Math.max(0,Math.min(0.5,Number(state.audioCutFade)||0));
+  if(!duration||clips.length<2)return 1;
+  let boundary=0;
+  let multiplier=1;
+  for(let i=0;i<clips.length-1;i++){
+    const a=clips[i],b=clips[i+1];
+    boundary+=getClipDur(a);
+    if(a.url===b.url&&Math.abs(a.trimEnd-b.trimStart)<0.05)continue;
+    const half=Math.min(duration,getClipDur(a)*0.45,getClipDur(b)*0.45);
+    if(half<=0)continue;
+    if(t>=boundary-half&&t<boundary)
+      multiplier=Math.min(multiplier,Math.max(0,(boundary-t)/half));
+    else if(t>=boundary&&t<=boundary+half)
+      multiplier=Math.min(multiplier,Math.max(0,(t-boundary)/half));
+  }
+  return multiplier;
+}
+function updateCutAudioGain(t){
+  const gain=cutAudioEnvelope(t);
+  if(persistentAudioGain&&persistentAudioContext){
+    persistentAudioGain.gain.setTargetAtTime(gain,persistentAudioContext.currentTime,0.008);
+  } else {
+    // Browser volume property is advisory on iOS; prefer Web Audio after a tap.
+    try{video.volume=gain;}catch(_){}
+  }
+}
+async function ensurePreviewAudioGraph(){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return false;
+  try{
+    if(!persistentAudioContext){
+      const context=new AC();
+      const source=context.createMediaElementSource(video);
+      const gain=context.createGain();
+      const dest=context.createMediaStreamDestination();
+      source.connect(gain);
+      gain.connect(context.destination);
+      gain.connect(dest);
+      persistentAudioContext=context;
+      persistentAudioSource=source;
+      persistentAudioGain=gain;
+      persistentAudioDestination=dest;
+    }
+    if(persistentAudioContext.state==='suspended')await persistentAudioContext.resume();
+    updateCutAudioGain(playheadSec);
+    return true;
+  }catch(e){return false}
+}
 
 function formatMMSS(sec) {
   const s = Math.max(0, Math.floor(Number(sec) || 0));
@@ -1142,7 +1208,7 @@ function drawClipLayout(clip, cw, ch) {
     const labelW=Math.min(560,ctx.measureText(labelName).width+48);
     const lx=centerLabel?(1080-labelW)/2:90;
     ctx.fillStyle=catColor();ctx.fillRect(lx,drawLabelY,labelW,labelH);
-    ctx.fillStyle=state.cat==='pick'?'#111':'#fff';
+    ctx.fillStyle=(state.cat==='pick'||state.cat==='rewind')?'#111':'#fff';
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(labelName,lx+labelW/2,drawLabelY+labelH/2+1,labelW-28);
   }
@@ -1292,7 +1358,7 @@ function renderFrame(t) {
         const lw = Math.min(430, ctx.measureText(catName()).width + 44);
         ctx.fillStyle = cColor;
         ctx.fillRect(x, baseY, lw, 56);
-        ctx.fillStyle = state.cat === 'pick' ? '#111' : '#fff';
+        ctx.fillStyle = (state.cat === 'pick' || state.cat === 'rewind') ? '#111' : '#fff';
         ctx.fillText(catName(), x + 18, baseY + 40);
       }
       if (isCal) {
@@ -1377,6 +1443,7 @@ function startNextPreviewClip(loc) {
       const url=loc.clip.url;
       if (activeMediaUrl !== url) {
         video.pause();
+        updateCutAudioGain(loc.clipStartGlobal);
         activeMediaUrl=url;
         video.src=url;
         video.load();
@@ -1469,6 +1536,7 @@ function playbackLoop(now) {
             }
             if(video.paused&&!video.seeking)video.play().catch(()=>{});
           }
+          updateCutAudioGain(playheadSec);
           updateScrubUI();renderFrame(playheadSec);
         }
       }
@@ -1561,7 +1629,7 @@ requestAnimationFrame(playbackLoop);
 // and timeline scrubbing are deliberately excluded from undo history.
 const historyInputIds=new Set([
   'title','subtitle','titleSize','subSize','showLogo','showLabel','showArrow','showRule',
-  'hold','fade','layoutMode','clipLabelAlign','clipTitleAlign','clipLabelSize',
+  'hold','fade','audioCutFade','layoutMode','clipLabelAlign','clipTitleAlign','clipLabelSize',
   'clipTop','clipGap','clipVideoY','clipVideoH','clipVideoZoom','clipLogoY','clipSafeGuide',
   'fxScale','fxRot','fxPosX','fxPosY','trimStart','trimEnd'
 ]);
@@ -1744,6 +1812,7 @@ $('showArrow').onchange = e => { state.arrow = e.target.checked; lastRenderedKey
 $('showRule').onchange = e => { state.rule = e.target.checked; lastRenderedKey = ''; renderFrame(playheadSec); };
 $('hold').onchange = e => { state.hold = Number(e.target.value); lastRenderedKey = ''; renderFrame(playheadSec); };
 $('fade').onchange = e => { state.fade = Number(e.target.value); lastRenderedKey = ''; renderFrame(playheadSec); };
+$('audioCutFade').onchange = e => {state.audioCutFade=Number(e.target.value);updateCutAudioGain(playheadSec);};
 
 $('btnToggleRatio').onclick = () => {
   state.ratio = state.ratio === '9:16' ? '16:9' : '9:16';
@@ -1870,6 +1939,7 @@ $('playToggle').onclick = () => {
     isPlaying = true;
     $('playToggle').textContent = '❚❚ 일시정지';syncPreviewControls();
     video.muted=previewMuted;
+    ensurePreviewAudioGraph().catch(()=>{});
     if(persistentAudioContext?.state==='suspended')persistentAudioContext.resume().catch(()=>{});
     seekPreviewTo(playheadSec, true).then(() => {
       video.muted=previewMuted;
@@ -1966,15 +2036,7 @@ $('exportVideo').onclick = async () => {
     try {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (AC) {
-        if(!persistentAudioContext){
-          persistentAudioContext = new AC();
-          persistentAudioSource = persistentAudioContext.createMediaElementSource(video);
-          persistentAudioDestination = persistentAudioContext.createMediaStreamDestination();
-          // Keep playback audible even after exporting. A media element routed
-          // through Web Audio is silent unless connected to speakers.
-          persistentAudioSource.connect(persistentAudioContext.destination);
-          persistentAudioSource.connect(persistentAudioDestination);
-        }
+        await ensurePreviewAudioGraph();
         audioCtx=persistentAudioContext;
         destNode=persistentAudioDestination;
         destNode.stream.getAudioTracks().forEach(tr => streams.push(tr));
@@ -2021,6 +2083,7 @@ $('exportVideo').onclick = async () => {
           }
         }
       }
+      updateCutAudioGain(playheadSec);
       lastRenderedKey = '';
       renderFrame(playheadSec);
       updateScrubUI();
@@ -2029,6 +2092,8 @@ $('exportVideo').onclick = async () => {
     }
   } finally {
     video.pause();
+    if(persistentAudioGain)persistentAudioGain.gain.value=1;
+    try{video.volume=1}catch(_){}
     if (recorder.state !== 'inactive') recorder.stop();
     await donePromise;
     // Do not close the media-element AudioContext after export:
