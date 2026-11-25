@@ -35,7 +35,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 @media(max-width:600px){header{padding:14px 16px}.brand{font-size:17px}header nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}header nav a{text-align:center;font-size:12px;padding:8px 5px}main{padding:16px 12px 40px}.page-title{font-size:20px}.panel{padding:12px}.phone{max-width:min(100%,295px)}.fold>summary span{font-size:10px}.editor-toolbar .btn{font-size:11px;padding:9px 7px}}
 </style><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"></head><body>
 <header><div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동</small></div><nav><a href="./index.html">사진 편집기</a><a href="./news.html">연예 뉴스</a><a href="./ai.html">글쓰기</a><a href="./video.html" aria-current="page">영상 편집기</a></nav></header>
-<main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 전용</span></div><div class="layout"><section class="panel preview-section"><h2>릴스 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 파일에 합쳐 저장할 수 있어. MP4 또는 WebM은 브라우저에서 지원하는 포맷으로 자동 선택돼. 아이폰 Safari 환경에 따라 녹화 기능이 제한될 수 있어.</div></div></details></div></section><section class="panel settings-section">
+<main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 전용</span></div><div class="layout"><section class="panel preview-section"><h2>릴스 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="editor-toolbar" style="justify-content:center;margin-top:8px"><button type="button" class="btn" id="soundOn">🔊 원본 영상 소리 켜기</button></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 파일에 합쳐 저장할 수 있어. MP4 또는 WebM은 브라우저에서 지원하는 포맷으로 자동 선택돼. 아이폰 Safari 환경에 따라 녹화 기능이 제한될 수 있어.</div></div></details></div></section><section class="panel settings-section">
 <details class="fold" open><summary>01 · 영상 업로드 <span>영상 파일 선택</span></summary><div class="fold-body">
 <label class="upload" for="file">＋ MP4 / MOV / WebM 영상 선택</label><input type="file" id="file" accept="video/*"><p class="small">영상은 이 기기에서만 처리돼. 브라우저에서 재생할 수 있는 파일을 선택해줘.</p>
 </div></details>
@@ -61,7 +61,7 @@ input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px so
 </div></details>
 <details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
 <label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
-<p class="small">타이틀과 페이드아웃을 영상에 합쳐 녹화해. 원본 소리 유지 시도, 음악 추가 없음. 아이폰 Safari에서는 영상 녹화가 지원되지 않을 수 있어.</p>
+<p class="small">원본 음성을 포함해 영상에 합쳐 녹화해. 소리 합성이 지원되지 않으면 무음 파일을 몰래 만들지 않고 안내해. 아이폰 Safari는 MP4 녹화와 음성 합성 지원이 제한될 수 있어.</p><label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함 (기본)</label>
 <button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 영상 내보내기 (1080×1920)</button>
 <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
 <div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
@@ -158,12 +158,13 @@ $('title').oninput=e=>{state.title=e.target.value;draw()};$('subtitle').oninput=
 for(const [id,key] of [['titleSize','titleSize'],['subSize','subSize']])$(id).oninput=e=>{state[key]=Number(e.target.value);$(id+'Val').textContent=e.target.value+'px';draw()};
 for(const [id,key] of [['showLogo','logo'],['showLabel','labelEnabled'],['showArrow','arrow'],['showRule','rule']])$(id).onchange=e=>{state[key]=e.target.checked;draw()};
 $('hold').onchange=e=>{state.hold=Number(e.target.value);draw()};$('fade').onchange=e=>{state.fade=Number(e.target.value);draw()};
-$('file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;if(videoUrl)URL.revokeObjectURL(videoUrl);videoUrl=URL.createObjectURL(f);video.src=videoUrl;video.load();$('trimStart').value='0';$('trimEnd').value='0';status('영상 불러옴: '+f.name)};
+$('file').onchange=e=>{const f=e.target.files?.[0];if(!f)return;uploadedFile=f;video.muted=false;video.volume=1;if(videoUrl)URL.revokeObjectURL(videoUrl);videoUrl=URL.createObjectURL(f);video.src=videoUrl;video.load();$('trimStart').value='0';$('trimEnd').value='0';status('영상 불러옴: '+f.name)};
+$('soundOn').onclick=()=>{video.muted=false;video.volume=1;video.play().then(()=>status('원본 영상 소리를 켰어. 아이폰 무음 모드와 기기 볼륨도 확인해줘.')).catch(()=>status('영상을 먼저 선택한 다음 다시 눌러줘.'))};
 $('play').onclick=()=>{if(!video.src){status('영상을 먼저 업로드해줘.');return}const r=ranges();video.currentTime=r.valid?r.a:0;draw(0);video.play().catch(()=>status('재생 버튼을 눌러줘.'))};
 video.addEventListener('timeupdate',progress);video.addEventListener('loadedmetadata',()=>{progress();$('trimStart').value='0';$('trimEnd').value=Number(video.duration.toFixed(2));refreshTrim()});video.addEventListener('seeked',progress);video.addEventListener('ended',progress);
 // Clip controls and local recording. No uploads or external service are used.
 const trimStart=$('trimStart'),trimEnd=$('trimEnd');
-let exportBusy=false,exportURL=null,coverURL=null,sharedAudioCtx=null,sharedSource=null,sharedDest=null;
+let exportBusy=false,exportURL=null,coverURL=null,uploadedFile=null;
 function ranges(){const d=Number(video.duration)||0;let a=Math.max(0,Number(trimStart.value)||0),b=Number(trimEnd.value);if(!Number.isFinite(b)||b<=0)b=d;return {a,b,d,valid:d>0&&a>=0&&a<b&&b<=d+.02}}
 function refreshTrim(resetToStart=false){
  const r=ranges();
@@ -194,18 +195,53 @@ $('exportVideo').onclick=async()=>{
  const formats=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
  let mime=formats.find(x=>MediaRecorder.isTypeSupported(x));if(!mime){status('지원되는 영상 저장 포맷을 찾지 못했어.');return}
  exportBusy=true;$('exportVideo').disabled=true;$('exportProgress').textContent='준비 중…';video.pause();
- let recorder=null,stream=null,raf=0,stopTimer=0,ended=false;
+ let recorder=null,stream=null,raf=0,stopTimer=0,ended=false,audioCtx=null,audioSource=null,audioDest=null,audioCaptureStream=null;
  try{
   await waitForSeek(r.a);
   composites(c,0);
   stream=c.captureStream(30);
-  // Safari may disallow media-element capture, so audio is best-effort.
-  try{
-   const AC=window.AudioContext||window.webkitAudioContext;
-   if(AC){if(!sharedAudioCtx){sharedAudioCtx=new AC();sharedSource=sharedAudioCtx.createMediaElementSource(video);sharedDest=sharedAudioCtx.createMediaStreamDestination();sharedSource.connect(sharedDest);sharedSource.connect(sharedAudioCtx.destination)}sharedDest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));await sharedAudioCtx.resume()}
-  }catch(e){$('exportProgress').textContent='오디오 연결 불가: 영상만 저장할 수 있어.'}
+  // Keep original audio as an explicit, verified recording track.
+  // Prefer an independent decoded buffer to avoid silencing the preview element
+  // through createMediaElementSource (notably problematic on some mobile browsers).
+  const includeAudio=$('includeAudio').checked;
+  let audioReady=false;
+  if(includeAudio){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)throw Error('이 브라우저는 원본 소리 합성을 지원하지 않아. 무음 내보내기를 원하면 원본 소리 포함 체크를 해제해줘.');
+    if(!uploadedFile)throw Error('원본 영상 파일을 다시 업로드해줘.');
+    audioCtx=new AC();
+    audioDest=audioCtx.createMediaStreamDestination();
+    try{
+      const decoded=await audioCtx.decodeAudioData(await uploadedFile.arrayBuffer());
+      if(!decoded || !decoded.numberOfChannels || decoded.duration<=r.a)throw Error('잘라낸 구간에 오디오 없음');
+      audioSource=audioCtx.createBufferSource();
+      audioSource.buffer=decoded;
+      audioSource.connect(audioDest);
+      audioReady=true;
+    }catch(audioError){
+      // Some browsers can capture an audio track from the source video,
+      // even when their WebAudio decoder cannot decode the original file container.
+      try{
+        audioCaptureStream=(video.captureStream||video.webkitCaptureStream)?.call(video)||null;
+        const tracks=audioCaptureStream?.getAudioTracks()||[];
+        if(tracks.length){tracks.forEach(track=>stream.addTrack(track));audioReady=true;}
+      }catch(e){}
+    }
+    if(!audioReady)throw Error('원본 오디오를 읽지 못했어. 이 형식은 브라우저에서 소리 포함 내보내기가 어려워. PC Chrome에서 다시 시도하거나 영상 파일을 변환해줘.');
+    if(audioSource){
+      const track=audioDest.stream.getAudioTracks()[0];
+      if(!track)throw Error('소리 녹음 트랙을 만들지 못했어.');
+      stream.addTrack(track);
+      await audioCtx.resume();
+    }
+    if(stream.getAudioTracks().length===0)throw Error('소리 트랙이 없어. 무음 파일로 저장하지 않을게.');
+  }
   const parts=[];
-  try{recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000)})}catch(err){stream.getAudioTracks().forEach(t=>stream.removeTrack(t));recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000)});$('exportProgress').textContent='이 브라우저는 원본 소리 합성을 지원하지 않아 영상만 내보내.'}
+  try{
+    recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000),audioBitsPerSecond:128000});
+  }catch(err){
+    throw Error(includeAudio?'이 브라우저는 선택한 형식으로 소리를 포함해 저장할 수 없어. PC Chrome에서 다시 시도해줘.':'영상 녹화기를 만들지 못했어: '+err.message);
+  }
   recorder.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};
   const done=new Promise((resolve,reject)=>{recorder.onerror=()=>reject(Error('영상 녹화 중 오류'));recorder.onstop=()=>resolve()});
   const clipLen=r.b-r.a;
@@ -218,9 +254,15 @@ $('exportVideo').onclick=async()=>{
    if(elapsed>=clipLen-.025||video.ended){finish();return}
    raf=requestAnimationFrame(paintFrame);
   };
-  const finish=()=>{if(ended)return;ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);video.pause();composites(c,clipLen);if(recorder.state!=='inactive')recorder.stop()};
+  const finish=()=>{if(ended)return;ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);video.pause();if(audioSource)try{audioSource.stop()}catch(e){}composites(c,clipLen);if(recorder.state!=='inactive')recorder.stop()};
   recorder.start(500);
+  video.muted=false;
   await video.play();
+  if(audioSource){
+    // Start at trimmed position: original audio starts at the new clip's zero point.
+    const available=Math.max(0,Math.min(clipLen,audioSource.buffer.duration-r.a));
+    if(available>0)audioSource.start(0,r.a,available);
+  }
   raf=requestAnimationFrame(paintFrame);
   stopTimer=setTimeout(finish,Math.ceil((clipLen+4)*1000));
   await done;
@@ -228,11 +270,13 @@ $('exportVideo').onclick=async()=>{
   const blob=new Blob(parts,{type:mime});
   if(exportURL)URL.revokeObjectURL(exportURL);
   const ext=mime.includes('mp4')?'mp4':'webm';exportURL=saveBlob(blob,'77_reels_edit.'+ext);
-  status(`완료! ${ext.toUpperCase()} 영상을 저장했어. (${(blob.size/1024/1024).toFixed(1)}MB)`);
+  status(`완료! ${ext.toUpperCase()} 영상을 저장했어. (${(blob.size/1024/1024).toFixed(1)}MB) · ${includeAudio?'원본 소리 트랙 포함':'무음 출력'}`);
  }catch(e){status('영상 저장 실패: '+e.message)}finally{
   ended=true;cancelAnimationFrame(raf);clearTimeout(stopTimer);
   if(recorder&&recorder.state!=='inactive')try{recorder.stop()}catch(e){}
+  if(audioSource)try{audioSource.stop()}catch(e){}
   if(stream)stream.getTracks().forEach(t=>t.stop());
+  if(audioCtx)try{await audioCtx.close()}catch(e){}
   video.pause();$('exportVideo').disabled=false;exportBusy=false;
  }
 };
