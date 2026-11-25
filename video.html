@@ -1,19 +1,73 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111319"><title>77 MAGAZINE · 영상 편집기</title>
 <style>
 :root{color-scheme:dark;--bg:#12141a;--panel:#1c1f27;--line:#3b4150;--muted:#b9c0d0}*{box-sizing:border-box}body{background:var(--bg);color:#f7f7f9;margin:0;font:14px/1.5 system-ui,-apple-system,Pretendard,"Apple SD Gothic Neo",sans-serif}header{padding:16px 22px;border-bottom:1px solid #343b4b;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px}.brand{font-size:19px;font-weight:900}.brand small{display:block;font-size:11px;font-weight:500;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:7px}nav a{border:1px solid #48516a;padding:8px 11px;text-decoration:none;color:#dce5f7;border-radius:24px;font-size:13px}nav a[aria-current]{background:#fff;color:#111}main{max-width:1210px;margin:auto;padding:18px 14px 50px}.layout{display:grid;grid-template-columns:360px minmax(0,1fr);gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:17px}.panel h2{font-size:17px;margin:0 0 12px}h3{font-size:15px;margin:18px 0 10px}label{color:#d2d9e8;font-size:12px;display:block;margin:10px 0 5px}input,textarea,select,button{font:inherit}input[type=text],textarea,select{width:100%;color:#fff;background:#171c25;border:1px solid #475169;border-radius:9px;padding:10px}textarea{resize:vertical;min-height:74px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.btn{background:#323b4e;border:1px solid #64718a;color:#fff;padding:11px 13px;border-radius:10px;cursor:pointer;font-weight:700}.btn.primary{background:#ecf2ff;color:#0e1624;border-color:#ecf2ff}.btn:disabled{opacity:.5}.upload{background:#202634;border:1px dashed #7b89a5;text-align:center;border-radius:10px;padding:13px;cursor:pointer}input[type=file]{display:none}.small{font-size:12px;color:var(--muted);line-height:1.6}.status{font-size:12px;color:#b9ceff;min-height:16px}.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.category{background:#252c3a;color:#f5f5f5;padding:11px;border:1px solid #566176;border-radius:10px;font-weight:800}.category.active{outline:2px solid #b9d1ff}.category i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.check{display:flex;gap:7px;align-items:center;margin:9px 0;font-size:13px}.check input{accent-color:#789dff}.controls{display:grid;gap:8px}.preview-area{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);align-items:start;gap:20px}.phone{width:100%;max-width:420px;aspect-ratio:9/16;background:#0d0e13;padding:10px;border:1px solid #535b69;border-radius:22px;margin:auto}.screen{position:relative;width:100%;height:100%;background:#101319;overflow:hidden;border-radius:14px}.screen video{width:100%;height:100%;object-fit:cover}.screen canvas{position:absolute;width:100%;height:100%;left:0;top:0;pointer-events:none}.playbar{display:flex;gap:9px;align-items:center;margin-top:15px}.seek{width:100%}.timeline{width:100%;height:7px;background:#303849;border-radius:9px;overflow:hidden}.timeline span{display:block;height:100%;width:0;background:#c9d9ff}.notes{padding:13px;border:1px solid #3d465b;background:#202633;border-radius:10px;font-size:12px;color:#c8d4ed;line-height:1.75}.notes strong{color:#fff}.calrows{display:grid;gap:6px}.calrows>div{display:grid;grid-template-columns:95px 1fr;gap:6px}.error{color:#ffbdbd}.export-area{margin-top:16px;padding:14px;border-radius:12px;background:#181f2c;border:1px solid #42516c}.export-area .btn{width:100%;margin-top:8px}.export-area a{display:block;margin-top:10px;color:#c8ddff;font-weight:700;overflow-wrap:anywhere}.trimrow{display:grid;grid-template-columns:1fr 1fr;gap:9px}.trimrow input{width:100%;border:1px solid #475169;background:#171c25;border-radius:8px;color:#fff;padding:9px}.hintline{font-size:12px;color:#bcc9de;margin:6px 0}.export-time{font-variant-numeric:tabular-nums}.editor-toolbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}@media(max-width:1010px){.layout{grid-template-columns:1fr}.preview-area{grid-template-columns:1fr}.phone{max-width:440px}}
-</style></head><body>
+
+/* 77 MAGAZINE STUDIO · shared photo editor design */
+:root{--bg:#0c0d10;--panel:#17191f;--line:#30333b;--muted:#9a9da8}
+body{background:var(--bg);color:#f7f8fb;font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+header{padding:21px 30px;border-bottom:1px solid var(--line);gap:14px}
+.brand{font-size:20px;font-weight:800;letter-spacing:-.6px}.brand small{font-weight:500;font-size:12px;color:var(--muted);margin-top:2px}
+nav{gap:8px}nav a{padding:9px 12px;background:#22252c;border:1px solid #3b414c;border-radius:9px;color:#ced2dd;font-weight:650}nav a[aria-current]{background:#353c50;border-color:#859fe2;color:#fff}
+main{max-width:1440px;padding:24px 20px 50px}
+.page-kicker{color:#98b4ff;letter-spacing:1.5px;font-size:11px;font-weight:800;margin:0 0 4px}
+.page-title{font-size:23px;font-weight:850;margin-bottom:18px}.page-title span{font-size:12px;font-weight:500;color:#b6bdc9;margin-left:7px}
+.layout{grid-template-columns:minmax(0,1fr) minmax(320px,420px);align-items:start;gap:18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px}
+.panel h2{font-size:15px;font-weight:800}
+.preview-section{min-width:0;display:flex;flex-direction:column;align-items:stretch;background:radial-gradient(ellipse at top,#1d2028 0,#111217 70%)}
+.preview-section>h2{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px}.heading-dim{font-size:12px;color:var(--muted);font-weight:500}
+.preview-area{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
+.preview-area>div:first-child{width:100%;max-width:380px}.phone{width:100%;max-width:330px;padding:0;border:0;border-radius:0;background:#000;box-shadow:0 13px 36px #0008}.screen{border-radius:0;background:#000}
+.preview-area .notes{background:#22252c;border:1px solid #383b43;color:#cbd0dc}
+.preview-help{width:100%;max-width:460px;background:#22252c;border:1px solid #363c48;border-radius:10px;padding:0 12px}
+.preview-help summary{cursor:pointer;padding:10px 0;font-size:12px;font-weight:650;color:#d1d9e8}.preview-help .notes{border:0;background:transparent;padding:6px 0 12px}
+.settings-section{padding:10px 14px}.fold{border-bottom:1px solid #30343e}.fold:last-of-type{border:0}
+.fold>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 4px;font-weight:800;font-size:14px;list-style:none}
+.fold>summary::-webkit-details-marker{display:none}.fold>summary:after{content:'⌄';font-size:19px;font-weight:500;color:#b6c7ef;transition:transform .2s}
+.fold[open]>summary:after{transform:rotate(180deg)}.fold>summary span{color:#98a0af;font-weight:500;font-size:11px;text-align:right;margin-left:auto;max-width:45%}
+.fold-body{padding:0 3px 16px}.fold-body h3{font-size:13px;margin:15px 0 10px}
+.editor-footer{border-top:1px solid #30343e;padding:14px 4px 3px;display:grid;gap:8px}.editor-footer>.btn{width:100%}
+.btn{border-radius:9px;background:#343c4d;border:1px solid #566078;font-weight:700}.btn.primary{background:#353c50;border-color:#859fe2;color:#fff}
+input[type=text],textarea,select,.trimrow input{background:#22252c;border:1px solid #40434c;border-radius:8px}
+.categories .category{background:#25272e;border:1px solid #40434c;border-radius:9px}
+.categories .category.active{background:#353c50;outline:0;border-color:#859fe2}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.preview-area>div:first-child{max-width:360px}.phone{max-width:310px}.settings-section{max-width:none}}
+@media(max-width:600px){header{padding:14px 16px}.brand{font-size:17px}header nav{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}header nav a{text-align:center;font-size:12px;padding:8px 5px}main{padding:16px 12px 40px}.page-title{font-size:20px}.panel{padding:12px}.phone{max-width:min(100%,295px)}.fold>summary span{font-size:10px}.editor-toolbar .btn{font-size:11px;padding:9px 7px}}
+</style><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"></head><body>
 <header><div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동</small></div><nav><a href="./index.html">사진 편집기</a><a href="./news.html">연예 뉴스</a><a href="./ai.html">글쓰기</a><a href="./video.html" aria-current="page">영상 편집기</a></nav></header>
-<main><div class="layout"><section class="panel">
-<h2>01 · 영상 업로드</h2><label class="upload" for="file">＋ MP4 / MOV / WebM 영상 선택</label><input type="file" id="file" accept="video/*"><div class="small" style="margin-top:7px">브라우저에서 재생 가능한 형식만 미리보기돼.</div>
-<h3>02 · 사진 편집기 릴스 설정 가져오기</h3><button class="btn primary" id="import" style="width:100%">↻ 릴스 템플릿 설정 불러오기</button><label class="check"><input type="checkbox" id="autoSync"> 화면으로 돌아올 때 릴스 설정 자동 갱신</label><div class="small">같은 브라우저의 사진 편집기에서 저장한 제목·부제·색상·로고·글씨 크기·화살표 설정을 읽어와. 영상 파일은 별도로 올려야 해.</div>
-<h3>03 · 카테고리</h3><div class="categories" id="categories"></div>
-<h3>04 · 문구</h3><label for="title">제목</label><textarea id="title"></textarea><label for="subtitle">부제목</label><textarea id="subtitle"></textarea>
+<main><div class="page-kicker">77 MAGAZINE · VIDEO STUDIO</div><div class="page-title">영상 편집기 <span>릴스 전용</span></div><div class="layout"><section class="panel preview-section"><h2>릴스 미리보기 <span class="heading-dim">1080 × 1920 미리보기</span></h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><details class="preview-help"><summary>미리보기 안내 · 지원 포맷</summary><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 파일에 합쳐 저장할 수 있어. MP4 또는 WebM은 브라우저에서 지원하는 포맷으로 자동 선택돼. 아이폰 Safari 환경에 따라 녹화 기능이 제한될 수 있어.</div></div></details></div></section><section class="panel settings-section">
+<details class="fold" open><summary>01 · 영상 업로드 <span>영상 파일 선택</span></summary><div class="fold-body">
+<label class="upload" for="file">＋ MP4 / MOV / WebM 영상 선택</label><input type="file" id="file" accept="video/*"><p class="small">영상은 이 기기에서만 처리돼. 브라우저에서 재생할 수 있는 파일을 선택해줘.</p>
+</div></details>
+<details class="fold"><summary>02 · 사진 편집기 연동 <span>릴스 디자인 불러오기</span></summary><div class="fold-body">
+<button class="btn primary" id="import" type="button" style="width:100%">↻ 릴스 템플릿 설정 불러오기</button>
+<label class="check"><input type="checkbox" id="autoSync"> 사진 편집기에서 돌아올 때 자동 갱신</label><p class="small">같은 브라우저에 저장된 릴스 제목·부제·라벨·로고·글자 크기·화살표를 가져와.</p>
+</div></details>
+<details class="fold"><summary>03 · 라벨과 문구 <span>카테고리 · 제목 · 부제</span></summary><div class="fold-body">
+<div class="categories" id="categories"></div>
+<label for="title">제목</label><textarea id="title"></textarea><label for="subtitle">부제목</label><textarea id="subtitle"></textarea>
 <div class="row"><div><label for="titleSize">제목 크기 (1080px 기준)</label><input type="range" id="titleSize" min="36" max="110" value="83" step="1"><div class="small" id="titleSizeVal">83px</div></div><div><label for="subSize">부제 크기</label><input type="range" id="subSize" min="20" max="60" value="39"><div class="small" id="subSizeVal">39px</div></div></div>
-<label class="check"><input id="showLogo" type="checkbox" checked> 원래 77 로고 표시</label><label class="check"><input id="showLabel" type="checkbox" checked> 라벨 표시</label><label class="check"><input id="showArrow" type="checkbox" checked> 오른쪽 아래 화살표 표시</label><label class="check"><input id="showRule" type="checkbox" checked> 아래 가로선 표시</label>
-<div id="calendarEditor" style="display:none"><h3>05 · 오른쪽 캘린더</h3><div class="calrows" id="calrows"></div></div>
-<h3>06 · 영상 자르기</h3><div class="small">시작·종료 시간을 초 단위로 지정해. 원본은 변경하지 않아.</div><div class="trimrow"><div><label for="trimStart">시작 (초)</label><input type="number" id="trimStart" min="0" value="0" step="0.1" inputmode="decimal"></div><div><label for="trimEnd">종료 (초)</label><input type="number" id="trimEnd" min="0" value="0" step="0.1" inputmode="decimal"></div></div><div class="editor-toolbar"><button class="btn" id="setStart" type="button">현재 위치 → 시작</button><button class="btn" id="setEnd" type="button">현재 위치 → 종료</button><button class="btn" id="playTrim" type="button">▶ 선택 구간 미리보기</button></div><p class="hintline" id="trimSummary">영상을 업로드하면 구간을 선택할 수 있어.</p><h3>타이틀 표시 시간</h3><div class="row"><div><label for="hold">유지 시간</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃 시간</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
-<div class="controls" style="margin-top:17px"><button class="btn primary" id="play">▶ 처음부터 미리보기</button><div class="export-area"><strong>07 · 릴스 파일 만들기</strong><div class="small">선택 구간 + 77 템플릿 + 3.5초 페이드아웃을 합쳐 영상 파일로 녹화해. 영상 원본의 소리는 유지하되 BGM은 추가하지 않아.</div><button class="btn" type="button" id="exportVideo">⬇ 영상 내보내기 (720×1280)</button><button class="btn" type="button" id="exportCover">⬇ 릴스 썸네일 PNG (1080×1920)</button><div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div></div><div id="status" class="status"></div></div></section>
-<section class="panel"><h2>릴스 미리보기 · 1080 × 1920</h2><div class="preview-area"><div><div class="phone"><div class="screen"><video id="video" controls playsinline preload="metadata"></video><canvas id="overlay" width="1080" height="1920"></canvas></div></div><div class="playbar"><span class="small" id="time">0.00s</span><div class="timeline" style="flex:1"><span id="progress"></span></div><span class="small" id="duration">0.00s</span></div></div><div class="notes"><strong>동일한 스타일로 표시</strong><div>• 원본 77 PNG 로고</div><div>• 사진 편집기의 릴스 카테고리 색상·크기·제목·부제</div><div>• 같은 위치의 하단 라인·화살표</div><div>• 3.5초 표시 후 0.6초 페이드아웃</div><hr style="border:0;border-top:1px solid #444d60"><div>편집한 내용을 파일에 합쳐 저장할 수 있어. MP4 또는 WebM은 브라우저에서 지원하는 포맷으로 자동 선택돼. 아이폰 Safari 환경에 따라 녹화 기능이 제한될 수 있어.</div></div></div></section></div></main>
+<label class="check"><input id="showLogo" type="checkbox" checked> 원본 77 로고 표시</label>
+<label class="check"><input id="showLabel" type="checkbox" checked> 카테고리 라벨 표시</label>
+<label class="check"><input id="showArrow" type="checkbox" checked> 오른쪽 아래 화살표 표시</label>
+<label class="check"><input id="showRule" type="checkbox" checked> 아래 가로선 표시</label>
+<div id="calendarEditor" style="display:none"><h3>캘린더 오른쪽 일정표</h3><div class="calrows" id="calrows"></div></div>
+</div></details>
+<details class="fold"><summary>04 · 영상 자르기와 페이드 <span>앞뒤 자르기 · 3.5초 타이틀</span></summary><div class="fold-body">
+<p class="small">시작·종료 시간을 초 단위로 지정해. 원본 영상은 바뀌지 않아.</p>
+<div class="trimrow"><div><label for="trimStart">시작 (초)</label><input type="number" id="trimStart" min="0" value="0" step="0.1" inputmode="decimal"></div><div><label for="trimEnd">종료 (초)</label><input type="number" id="trimEnd" min="0" value="0" step="0.1" inputmode="decimal"></div></div>
+<div class="editor-toolbar"><button class="btn" id="setStart" type="button">현재 위치 → 시작</button><button class="btn" id="setEnd" type="button">현재 위치 → 종료</button><button class="btn" id="playTrim" type="button">▶ 선택 구간</button></div><p class="hintline" id="trimSummary">영상을 업로드하면 구간을 선택할 수 있어.</p>
+<h3>타이틀 표시 시간</h3><div class="row"><div><label for="hold">타이틀 유지</label><select id="hold"><option value="3.5">3.5초</option><option value="4">4초</option><option value="5">5초</option></select></div><div><label for="fade">페이드아웃</label><select id="fade"><option value="0.4">0.4초</option><option value="0.6" selected>0.6초</option><option value="0.8">0.8초</option></select></div></div>
+</div></details>
+<details class="fold" open><summary>05 · 파일 저장 <span>1080p 기본 · 720p 빠른 저장</span></summary><div class="fold-body">
+<label for="exportResolution">내보내기 화질</label><select id="exportResolution"><option value="1080" selected>1080 × 1920 · 릴스 기본 화질</option><option value="720">720 × 1280 · 빠른 출력</option></select>
+<p class="small">타이틀과 페이드아웃을 영상에 합쳐 녹화해. 원본 소리 유지 시도, 음악 추가 없음. 아이폰 Safari에서는 영상 녹화가 지원되지 않을 수 있어.</p>
+<button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 영상 내보내기 (1080×1920)</button>
+<button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 릴스 썸네일 PNG (1080×1920)</button>
+<div class="small export-time" id="exportProgress"></div><div id="downloadLinks"></div>
+</div></details>
+<div class="editor-footer"><button class="btn primary" id="play" type="button">▶ 처음부터 미리보기</button><div id="status" class="status" role="status" aria-live="polite"></div></div>
+</section></div></main>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id),video=$('video'),canvas=$('overlay'),ctx=canvas.getContext('2d');
@@ -113,9 +167,10 @@ function composites(target,atTime){const tw=target.width,th=target.height,g=targ
 function saveBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;a.textContent='다운로드: '+filename;document.getElementById('downloadLinks').replaceChildren(a);a.click();return u}
 function waitForSeek(t){return new Promise((resolve,reject)=>{if(Math.abs(video.currentTime-t)<.04){resolve();return}let done=false;const finish=()=>{if(done)return;done=true;video.removeEventListener('seeked',finish);video.removeEventListener('error',bad);clearTimeout(timeout);resolve()};const bad=()=>{if(done)return;done=true;clearTimeout(timeout);reject(Error('영상 위치 이동 실패'))};const timeout=setTimeout(()=>{finish()},5000);video.addEventListener('seeked',finish,{once:true});video.addEventListener('error',bad,{once:true});video.currentTime=t})}
 $('exportCover').onclick=async()=>{if(!video.src){status('먼저 영상을 업로드해줘.');return}if(exportBusy)return;try{video.pause();const r=ranges();await waitForSeek(r.valid?r.a:0);const c=document.createElement('canvas');c.width=1080;c.height=1920;composites(c,0);const blob=await new Promise(ok=>c.toBlob(ok,'image/png'));if(!blob)throw Error('PNG 생성 실패');if(coverURL)URL.revokeObjectURL(coverURL);coverURL=saveBlob(blob,'77_reels_cover.png');status('릴스 썸네일 PNG를 만들었어.')}catch(e){status('썸네일을 만들지 못했어: '+e.message)}};
+$('exportResolution').addEventListener('change',e=>{$('exportVideo').textContent=e.target.value==='720'?'⬇ 영상 내보내기 (720×1280)':'⬇ 영상 내보내기 (1080×1920)'});
 $('exportVideo').onclick=async()=>{
  if(exportBusy)return;const r=ranges();if(!r.valid){status('먼저 영상을 업로드하고 시작·종료 시간을 확인해줘.');return}
- const c=document.createElement('canvas');c.width=720;c.height=1280;
+ const c=document.createElement('canvas');const resolution=Number($('exportResolution').value)||1080;c.width=resolution;c.height=Math.round(resolution*16/9);
  if(!('MediaRecorder' in window)||typeof c.captureStream!=='function'){status('이 브라우저는 영상 녹화를 지원하지 않아. 데스크톱 Chrome이나 최신 Safari에서 다시 시도해줘.');return}
  const formats=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
  let mime=formats.find(x=>MediaRecorder.isTypeSupported(x));if(!mime){status('지원되는 영상 저장 포맷을 찾지 못했어.');return}
@@ -131,7 +186,7 @@ $('exportVideo').onclick=async()=>{
    if(AC){if(!sharedAudioCtx){sharedAudioCtx=new AC();sharedSource=sharedAudioCtx.createMediaElementSource(video);sharedDest=sharedAudioCtx.createMediaStreamDestination();sharedSource.connect(sharedDest);sharedSource.connect(sharedAudioCtx.destination)}sharedDest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));await sharedAudioCtx.resume()}
   }catch(e){$('exportProgress').textContent='오디오 연결 불가: 영상만 저장할 수 있어.'}
   const parts=[];
-  try{recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:3000000})}catch(err){stream.getAudioTracks().forEach(t=>stream.removeTrack(t));recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:3000000});$('exportProgress').textContent='이 브라우저는 원본 소리 합성을 지원하지 않아 영상만 내보내.'}
+  try{recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000)})}catch(err){stream.getAudioTracks().forEach(t=>stream.removeTrack(t));recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:(resolution===1080?6000000:3000000)});$('exportProgress').textContent='이 브라우저는 원본 소리 합성을 지원하지 않아 영상만 내보내.'}
   recorder.ondataavailable=e=>{if(e.data&&e.data.size)parts.push(e.data)};
   const done=new Promise((resolve,reject)=>{recorder.onerror=()=>reject(Error('영상 녹화 중 오류'));recorder.onstop=()=>resolve()});
   const clipLen=r.b-r.a;
