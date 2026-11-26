@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T17:26:58.190003+00:00",
+  "updated_at": "2026-11-26T19:27:37.109762+00:00",
   "articles": [
     {
       "title": "크리스마스 대표 가족뮤지컬 '산타와 빈양말', 새로운 아역배우 캐스팅 공개!",
@@ -136,9 +136,9 @@
     },
     {
       "title": "[캐스타 배우 인터뷰] 연극 〈죽여주는 이야기〉 이은솔, “일상적인 호흡으로 살아 숨 쉬는 ‘팔색조’ 배우 될 것”",
-      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9ZTDVZSGdOc2xVQW54SWY5S0VmSHVrOUdFRTgwRGg3R0Jkbm9MTnJZaEZWQVZKTExqRzJlY0l3eXVFeGFQZlBzbzBndmE?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9WeFhYWU1RVkdFdUswY2VkUlBBa0x0NnNyc3J4WlU2dUZWWHYwVjYtMTVmUTRwNWRHb2ZQaEJhcTctekhpQlAzRXA3RmJRZHFfZ0dB?oc=5",
       "category": "actor",
-      "source": "한국IT산업뉴스",
+      "source": "패트론타임스",
       "published": "2026-11-26T08:32:12+00:00"
     },
     {
@@ -159,7 +159,7 @@
       "title": "코드 쿤스트 새 앨범에 '글로벌 아이돌' BTS 정국 참여",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNaXRyWXFqdXc4SWZfaS13ZExSc0xKVUNxUEswNVYwNk9CbHpXR3Y0RlpXXzFuc3BiZ20zRjg4Mnl5Q1lvNGdJYzI2ZTZNZmhTbEtlWlJXaXI4Y2dRSk5UMzY2Ty1acGc3UGVKWGRJNXZIWVI3WHJhMkJoYWpBQU1ENA?oc=5",
       "category": "idol",
-      "source": "이데일리",
+      "source": "m.edaily.co.kr",
       "published": "2026-11-26T08:24:05+00:00"
     },
     {
@@ -284,7 +284,7 @@
     {
       "title": "30대 女배우, 불륜 의혹→4개월 만에 근황…파격 시스루 드레스 소화 [MHN:글로벌]",
       "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBNMG9oNUhVNTQ3bE02RkpyYlRYRm8xalZIdDJDUTdELXdYMEkzclVwaTdFZHBmQ01xWEVRWkhUT21oa0d5SmlURUZNTTZoOHE1TDJzU0NxZ254RExWOW16UXhqVQ?oc=5",
-      "category": "actor",
+      "category": "issue",
       "source": "MHN스포츠",
       "published": "2026-11-26T07:17:47+00:00"
     },
@@ -315,6 +315,13 @@
       "category": "variety",
       "source": "전자신문",
       "published": "2026-11-26T07:10:51+00:00"
+    },
+    {
+      "title": "'공황·우울증 고백' 정현규, 중도하차 근황 \"전 국민에 욕먹고 칩거…불안감에 술만 마셨다\"",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1KU1FIUklVc09NeE8tNW5MbVRzYm5jVzdMaVc5RGlHQi1YbWFHSkRiSzBSZFRXMTBjSVNuSjhqbnEzVC1fRkUyYlB6V0ZabjRJaHFRS21GMlZPcnhQUDV1aWVOMEdrOXlxZE5SQXBWMjU?oc=5",
+      "category": "variety",
+      "source": "SPOTV NEWS",
+      "published": "2026-11-26T07:08:37+00:00"
     },
     {
       "title": "도합 85년 우정 여행…한지민 \"나이·성별 떠나 친구 됐죠\"",
@@ -555,6 +562,20 @@
       "published": "2026-11-26T04:27:09+00:00"
     },
     {
+      "title": "스쿠발, ‘역대 최고액 계약’ 공식 발표 날 소송당했다…MLB·선수노조 갈등 결국 법정으로",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9wOEVmNjFyZk1MQ0tzZ2J0Y1A0RHh1S2NXTF9uaG9KSER3VlNFbS15SEJwRHFjVlpaQWhoTXJNYTNMQ1NKSHNCejBvTnh3YU94eWF4SmpMSWd0dGRzNDNvajFwaw?oc=5",
+      "category": "issue",
+      "source": "MHN스포츠",
+      "published": "2026-11-26T04:22:34+00:00"
+    },
+    {
+      "title": "재재 만난 정현규 “전 국민한테 욕먹었다” 악플 고백",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5mYUU3RzR1aVRIM01YRjZqTG53SVF6SS16R3cta1NoTThUdkNxZ2JZVnVwMzdWcVY3aXotSE9INGJZeHRqRTlheDhPQzBfS3JqNUF2clFlSjZ4cHdKbmdqZWw3XzM?oc=5",
+      "category": "variety",
+      "source": "bnt뉴스",
+      "published": "2026-11-26T04:10:46+00:00"
+    },
+    {
       "title": "한일 합작 보이그룹 에이엔, 내년 1월 컴백…첫 싱글 ‘텔레파시’",
       "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTFA4NFpmcy1QUDl3b2MzNVVUZTNqdEVvZ250Qm1GTld6bEVkb0Z0RU1zd3U0VzB2VEtDblBNWU4tWF9wVjFqQVVhdE9SZC1qM0FqX2o2RU5fNjM5TDNjSDVuM1ctRWJTd1F4QW8zdG13?oc=5",
       "category": "idol",
@@ -668,7 +689,7 @@
     },
     {
       "title": "‘라이어’ 유연석 사망 충격 속…최대훈 특별출연",
-      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9JTThJUFh0OHVqclNHekdXR01yT0RJS3pBMzNrVEVWY085QlZtNFZlM1YzanFlMHRMeVFvZGlQdzJJTzRybWc?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE50RGdZa21JUzBNNWlXdE5DR0ZkczdLeGdJRUpTM0xFRzA4V2FYcTB0SUpRbm5iNlROaXpOWGt2cjNTbjJ4QlJtcEtqYlNvbVJ4NnNVS1AtQ2RqSVhPSktLLTViY3FEUQ?oc=5",
       "category": "actor",
       "source": "매일경제",
       "published": "2026-11-26T02:36:31+00:00"
@@ -819,6 +840,13 @@
       "category": "variety",
       "source": "MHN스포츠",
       "published": "2026-11-26T01:02:49+00:00"
+    },
+    {
+      "title": "\"사색된 채 식은땀, 드러누워\"…최재림, 박칼린과 산책 중 '깜짝' - 머니투데이",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE14UFdydm9iQnJzaG0zY05EbDdsTzJPeGtvaHU0WHZwWWhETktBSE92ZnY5X2ltVlhMWW5RM0VvcDYtV3pNMzVTWEVkUS1UVnJ2dm1lNVUwRU9UNl9FSndqLTJIVDJGNWNKNzBUWG5aMEVOd3B6ZmlHU9IBeEFVX3lxTE14UFdydm9iQnJzaG0zY05EbDdsTzJPeGtvaHU0WHZwWWhETktBSE92ZnY5X2ltVlhMWW5RM0VvcDYtV3pNMzVTWEVkUS1UVnJ2dm1lNVUwRU9UNl9FSndqLTJIVDJGNWNKNzBUWG5aMEVOd3B6ZmlHUw?oc=5",
+      "category": "variety",
+      "source": "머니투데이",
+      "published": "2026-11-26T01:00:17+00:00"
     },
     {
       "title": "JYP 신인 보이그룹 오브더블루, 데뷔 앨범 'out of the blue' 콘셉트 포토 오픈",
@@ -1416,6 +1444,13 @@
       "published": "2026-11-25T13:48:00+00:00"
     },
     {
+      "title": "환희, 23년 전 '등씽유' 소환에 불화 고백 \"무대 전 쓰레기통 박살\" [유퀴즈][★밤TView]",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQbzJxRXJKRmVxdTRyTWVOSW5XN3FUM01QNkJHY1dWWVRxcDlreDV6MHhaUVl6VFhZTXZLRTJSQmRaZGY1d29EbHJERlhJRTVlZlRUNDE1MGJtNS1ZYzlTcmMwNnZuMEN5X1o4Zi1xQ1lrRm5OYURHVWRPUlc5dlZ0NQ?oc=5",
+      "category": "variety",
+      "source": "스타뉴스",
+      "published": "2026-11-25T13:36:48+00:00"
+    },
+    {
       "title": "케이타운포유, '서울 여행 주간'에서 27개국 K-POP 팬 열광시켰다…OVUS 신곡 무대도",
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE1nX29KWGZFUV82eGwzY0xmSk5CYnVGMGEtcTY3UmRxbVJjWjBwT3BkaW0tRS1Ud2NHV3dtQm5SRFFTYVJ1OTQtQTVDM0dLbVJqSUJycWpmRE5LSUF5eEJ5V0FlbTk?oc=5",
       "category": "idol",
@@ -1624,6 +1659,34 @@
       "category": "issue",
       "source": "제이앤엠뉴스",
       "published": "2026-11-25T09:01:22+00:00"
+    },
+    {
+      "title": "영화 ‘슬픈열대’ 오늘 개봉…김명민x이신영 액션 비밀 공개",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE4ycktsd2pGcHR6Umg0RU1aSkp4R1lydGRZYldZZ1dZeHhCbW9rOHJPRXphM2FqV3NyQW9hX01mU1VOeVNzYUJuYVl3Tm82ZjhIanlVckxKSVpWd3NHVUJxMGhhV0d6YzJwZmxB?oc=5",
+      "category": "drama",
+      "source": "맥스무비",
+      "published": "2026-11-25T08:56:51+00:00"
+    },
+    {
+      "title": "'데블스 플랜3' 서출구, 종영 소감 \"부딪혔던 과정 전부 소중\"",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1nU0t4NW5oV19veDJSYUtWaHdpVFJDMGZQU0tQTXUwbloteWg3NnNDR0N2b2ZMSGpoYnF1OFhuRzhhYTB0eThKZkNiMHp0YnZ0RUNYai1sU0xLamUyNENZd0xQVW52RTBCVkxJ?oc=5",
+      "category": "variety",
+      "source": "티브이데일리",
+      "published": "2026-11-25T08:54:59+00:00"
+    },
+    {
+      "title": "박상하, 아이돌에서 배우로…오크컴퍼니에 새 둥지",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9qUmc1YnAyakNhMGVsb2JmZUk1TDNvMTg1Yk5nMURaeGpDdzFsQ3NrbGQyUEdWRk5GQ3hBdHZNUjZfSTc5MndaZWVnN211SmxVb0NRcHhSY1dHejZfaS1xYVJ1czdyTl91akHSAW5BVV95cUxOYnlQQm5WN2ZEcFh6SFJQV2VUQkc5UDJfMkxLcHhzNVRNMldtQ0RiR2hQbElpSUgxX2RZLXBmd3NvV1M0MzRuQm9yanFFdEZIdDM4aXoyT0ZBeXpOanlrNGlQSEppWlFVVnhkWnZIdw?oc=5",
+      "category": "idol",
+      "source": "앳스타일",
+      "published": "2026-11-25T08:47:42+00:00"
+    },
+    {
+      "title": "흑백요리사로 재미 보더니…결국 '걸그룹'까지 손댄 넷플릭스",
+      "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5CYUlOd1o2ZWdNR2Q4cWY5OUc1c3dFV09lY0NjU1BFUEphQ3VESXppTThKblBMcW5kUjd3N08yMENORHRoUmhGZTBIQTA4b3BFaktjUlozUU5SQQ?oc=5",
+      "category": "variety",
+      "source": "한국경제",
+      "published": "2026-11-25T08:30:46+00:00"
     }
   ]
 }
