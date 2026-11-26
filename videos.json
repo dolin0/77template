@@ -1,6 +1,27 @@
 {
-  "updated_at": "2026-11-25T22:29:55.768371+00:00",
+  "updated_at": "2026-11-26T01:56:30.898837+00:00",
   "videos": [
+    {
+      "id": "BF0wXPiALKk",
+      "title": "[#2026MAMA] PERFORMANCE HIGHLIGHT 🌟 izna",
+      "channel": "Mnet K-POP",
+      "url": "https://www.youtube.com/watch?v=BF0wXPiALKk",
+      "published": "2026-11-26T01:02:24+00:00"
+    },
+    {
+      "id": "cZ2R-UVqKo4",
+      "title": "[#2026MAMA] PERFORMANCE HIGHLIGHT 🌟 KO1KEYZ (Korean ver.)",
+      "channel": "Mnet K-POP",
+      "url": "https://www.youtube.com/watch?v=cZ2R-UVqKo4",
+      "published": "2026-11-26T01:01:14+00:00"
+    },
+    {
+      "id": "swmhSkcKxwM",
+      "title": "[#2026MAMA] PERFORMANCE HIGHLIGHT 🌟 ENHYPEN",
+      "channel": "Mnet K-POP",
+      "url": "https://www.youtube.com/watch?v=swmhSkcKxwM",
+      "published": "2026-11-26T01:00:06+00:00"
+    },
     {
       "id": "Y66dF8xW-Lg",
       "title": "2026 뮤직뱅크 글로벌 페스티벌 in JAPAN🎉 라인업 무대 모음 2탄 | MUSIC BANK GLOBAL FESTIVAL Stage Compilation",
@@ -945,13 +966,6 @@
       "channel": "STARSHIP",
       "url": "https://www.youtube.com/watch?v=EFOYsCbbBQs",
       "published": "2026-11-12T12:00:35+00:00"
-    },
-    {
-      "id": "eM8P-CLMA0M",
-      "title": "GIRLSET \"young & dumb\" MV Trailer 2",
-      "channel": "JYP Entertainment",
-      "url": "https://www.youtube.com/watch?v=eM8P-CLMA0M",
-      "published": "2026-11-12T01:30:03+00:00"
     }
   ]
 }
