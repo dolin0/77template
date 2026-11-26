@@ -44,7 +44,7 @@ input[type=file]{display:none}
 .preview-area{display:flex;flex-direction:column;align-items:center;gap:12px;min-width:0}
 .monitor-wrap{width:100%;max-width:360px;display:flex;flex-direction:column;align-items:center}
 .phone{width:100%;max-width:310px;aspect-ratio:9/16;background:#000;overflow:hidden;box-shadow:0 13px 36px #0008;position:relative;transition:max-width .2s,aspect-ratio .2s}
-.phone.ratio-16-9{max-width:440px;aspect-ratio:16/9}
+.phone.ratio-16-9{max-width:440px;aspect-ratio:16/9}.phone.ratio-4-5{max-width:310px;aspect-ratio:4/5}
 .screen{position:relative;width:100%;height:100%;background:#000;overflow:hidden}
 .screen video,.screen canvas{position:absolute;inset:0;width:100%;height:100%}
 .screen video{opacity:0;pointer-events:none}
@@ -135,6 +135,7 @@ input[type=file]{display:none}
   .monitor-wrap{max-width:340px}
   .phone{max-width:290px}
   .phone.ratio-16-9{max-width:360px}
+  .phone.ratio-4-5{max-width:290px}
 }
 @media(max-width:640px){
   header{padding:14px 16px}.brand{font-size:17px}
@@ -150,13 +151,21 @@ input[type=file]{display:none}
 .history-toolbar .btn{min-height:38px;flex:0 0 auto}
 .history-toolbar .small{margin-left:auto;font-variant-numeric:tabular-nums}
 @media(max-width:640px){.history-toolbar .btn{flex:1}.history-toolbar .small{width:100%;text-align:center;margin:0}}
+/* 77 overlays – no large external libraries */
+.overlay-list{display:grid;gap:7px;margin-top:12px}
+.overlay-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#232733;border:1px solid #414757;border-radius:8px;padding:8px 10px;font-size:12px;text-align:left;color:#e9eaf0;cursor:pointer;width:100%}
+.overlay-item.active{border-color:#b5c5fa;background:#333b53}
+#overlayEditor{margin-top:12px;padding:12px;background:#191c25;border:1px solid #373d4d;border-radius:10px}
+#overlayColor{height:38px;width:100%;background:transparent;border:0}
+.screen canvas.overlay-draggable{pointer-events:auto;touch-action:none;cursor:grab}
+.screen canvas.overlay-draggable:active{cursor:grabbing}
 </style>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 </head>
 <body>
 <header>
-  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="77 REWIND 노란색 라벨 추가" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.0.3</span></small></div>
+  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="4:5 카드뉴스 · 자막 · 사진 스티커" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.1.0</span></small></div>
   <nav>
     <a href="./index.html">사진 편집기</a>
     <a href="./news.html">연예 뉴스</a>
@@ -211,7 +220,7 @@ input[type=file]{display:none}
               <button type="button" class="btn sm primary" id="btnAddClip">＋ 영상 추가</button>
               <button type="button" class="btn sm" id="btnSplitClip">✂ 현재 위치 자르기</button>
               <button type="button" class="btn sm danger" id="btnDeleteClip">삭제</button>
-              <button type="button" class="btn sm" id="btnToggleRatio">⇄ 화면 비율 (9:16 / 16:9)</button>
+              <label for="aspectRatio" class="small" style="margin:0;align-self:center">화면 비율</label><select id="aspectRatio" style="width:auto;padding:7px;font-size:12px"><option value="9:16">릴스 9:16</option><option value="4:5">카드뉴스 4:5</option><option value="16:9">가로 16:9</option></select>
             </div>
             <div class="nle-meta" id="nleInfo">클립 0개 · 총 00:00 · 30fps</div>
           </div>
@@ -371,13 +380,48 @@ input[type=file]{display:none}
         </div>
       </details>
 
+      <details class="fold" id="overlaySection" open>
+        <summary>05 · 영상 위 자막·사진 <span>시간 지정 · 드래그 위치 편집</span></summary>
+        <div class="fold-body">
+          <div class="row">
+            <button class="btn primary" type="button" id="addOverlayText">＋ 자막 추가</button>
+            <button class="btn" type="button" id="addOverlayImage">＋ 사진 스티커</button>
+          </div>
+          <input type="file" id="overlayFile" accept="image/*" multiple>
+          <p class="small">재생바를 원하는 시간으로 옮긴 뒤 추가하면 그 시간부터 나타나요. 미리보기에서 자막·사진을 한 손가락으로 끌어 이동할 수 있어요.</p>
+          <div id="overlayList" class="overlay-list"></div>
+          <div id="overlayEditor" hidden>
+            <label for="overlayText">자막 내용</label>
+            <textarea id="overlayText" rows="2" placeholder="영상 위에 표시할 자막"></textarea>
+            <div class="row">
+              <div><label for="overlayStart">시작 (초)</label><input id="overlayStart" type="number" min="0" step="0.1"></div>
+              <div><label for="overlayEnd">끝 (초)</label><input id="overlayEnd" type="number" min="0" step="0.1"></div>
+            </div>
+            <div class="row">
+              <div><label for="overlaySize">글자 크기 / 사진 크기</label><input id="overlaySize" type="range" min="20" max="300" step="2"></div>
+              <div><label for="overlayOpacity">불투명도</label><input id="overlayOpacity" type="range" min="10" max="100" step="1"></div>
+            </div>
+            <div id="overlayTextStyle">
+              <div class="row">
+                <div><label for="overlayColor">글자 색</label><input id="overlayColor" type="color" value="#ffffff"></div>
+                <div><label for="overlayBg">검정 반투명 바탕</label><input id="overlayBg" type="checkbox"></div>
+              </div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <button type="button" class="btn" id="overlayCenter">화면 가운데로</button>
+              <button type="button" class="btn danger" id="overlayDelete">선택 요소 삭제</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
       <details class="fold" open>
-        <summary>05 · 파일 저장 <span>네이밍 옵션 · 영상 내보내기</span></summary>
+        <summary>06 · 파일 저장 <span>네이밍 옵션 · 영상 내보내기</span></summary>
         <div class="fold-body">
           <label for="exportResolution">내보내기 해상도 기준</label>
           <select id="exportResolution">
-            <option value="1080" selected>고해상도 기준 (9:16 1080×1920 / 16:9 1920×1080)</option>
-            <option value="720">빠른 출력 기준 (9:16 720×1280 / 16:9 1280×720)</option>
+            <option value="1080" selected>고해상도 (9:16 1080×1920 / 4:5 1080×1350 / 16:9 1920×1080)</option>
+            <option value="720">빠른 출력 (9:16 720×1280 / 4:5 720×900 / 16:9 1280×720)</option>
           </select>
 
           <label>추출 파일 이름 옵션</label>
@@ -482,6 +526,7 @@ const state = {
   fade: 0.6,
   audioCutFade: 0.2,
   ratio: '9:16',
+  overlays: [],
   layoutMode: 'standard',
   clipLabelAlign: 'center',
   clipTitleAlign: 'center',
@@ -515,6 +560,7 @@ function historySnapshot(){
     state:JSON.parse(JSON.stringify(state)),
     clips:clips.map(c=>({...c,thumbs:c.thumbs})),
     selectedClipId,
+    overlayImages:{...overlayImages},
     logoSrc:logoImg.src
   };
 }
@@ -546,6 +592,10 @@ async function restoreHistory(s){
     Object.assign(state,JSON.parse(JSON.stringify(s.state)));
     clips=s.clips.map(c=>({...c,thumbs:c.thumbs}));
     selectedClipId=s.selectedClipId;
+    overlayImages={...s.overlayImages};
+    selectedOverlayId=null;
+    $('aspectRatio').value=state.ratio;
+    syncOverlayEditor();
     if(s.logoSrc && logoImg.src!==s.logoSrc)logoImg.src=s.logoSrc;
     $('title').value=state.title;
     $('subtitle').value=state.subtitle;
@@ -665,6 +715,7 @@ function formatMMSS(sec) {
 }
 
 function getCanvasDimensions(baseShort = 1080) {
+  if (state.ratio === '4:5') return baseShort === 720 ? {w:720,h:900} : {w:1080,h:1350};
   if (state.ratio === '16:9') {
     return baseShort === 720 ? { w: 1280, h: 720 } : { w: 1920, h: 1080 };
   }
@@ -674,6 +725,8 @@ function getCanvasDimensions(baseShort = 1080) {
 function applyRatioUI() {
   const is169 = state.ratio === '16:9';
   $('phoneFrame').classList.toggle('ratio-16-9', is169);
+  $('phoneFrame').classList.toggle('ratio-4-5',state.ratio==='4:5');
+  $('aspectRatio').value=state.ratio;
   const dim = getCanvasDimensions(1080);
   canvas.width = dim.w;
   canvas.height = dim.h;
@@ -1236,6 +1289,140 @@ function drawClipLayout(clip, cw, ch) {
   ctx.restore();
 }
 
+// Timed photo stickers and captions share the same canvas path in preview and export.
+let overlayImages={};
+let selectedOverlayId=null;
+let overlayHitRects=[];
+function overlayActive(o,t){return t>=Number(o.start)&&t<Number(o.end)}
+function overlayBounds(o,cw,ch){
+  const w=o.type==='image'?Math.max(35,o.size)/1000*cw:Math.max(60,Math.min(cw*.94,Math.max(120, (o.size||60)*9)*cw/1080));
+  return {x:o.x*cw,y:o.y*ch,w,h:o.type==='image'?w:Math.max(36,(o.size||60)*1.55*cw/1080)};
+}
+function drawVideoOverlays(t,cw,ch){
+  overlayHitRects=[];
+  for(const o of state.overlays||[]){
+    if(!overlayActive(o,t))continue;
+    const b=overlayBounds(o,cw,ch);
+    ctx.save();ctx.globalAlpha=Math.max(0.1,Math.min(1,(o.opacity??100)/100));
+    if(o.type==='image'){
+      const img=overlayImages[o.id];
+      if(img&&img.complete&&img.naturalWidth){
+        const w=b.w,h=w*img.naturalHeight/img.naturalWidth;
+        b.w=w;b.h=h;
+        ctx.drawImage(img,b.x-w/2,b.y-h/2,w,h);
+      }
+    }else{
+      const f=Math.max(15,(o.size||60)*cw/1080);
+      ctx.font=`800 ${f}px Pretendard, "Apple SD Gothic Neo", sans-serif`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      const lines=String(o.text||'').split('\n').slice(0,6);
+      const step=f*1.21;
+      const total=lines.length*step;
+      b.h=total;b.w=Math.min(cw*.96,Math.max(140,...lines.map(line=>ctx.measureText(line).width+32)));
+      if(o.bg){ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(b.x-b.w/2,b.y-total/2-12,b.w,total+24)}
+      ctx.lineWidth=Math.max(2.4, f*.07);ctx.strokeStyle='rgba(0,0,0,.86)';
+      ctx.fillStyle=o.color||'#fff';
+      lines.forEach((line,i)=>{const y=b.y+(i-(lines.length-1)/2)*step;ctx.strokeText(line,b.x,y,cw*.9);ctx.fillText(line,b.x,y,cw*.9)});
+    }
+    ctx.restore();
+    overlayHitRects.push({id:o.id,x:b.x-b.w/2,y:b.y-b.h/2,w:b.w,h:b.h});
+  }
+  // Selection border only in preview; never burn guide boxes into exported files.
+  if(!isExporting&&selectedOverlayId){const b=overlayHitRects.find(b=>b.id===selectedOverlayId);if(b){
+    ctx.save();ctx.strokeStyle='#c4d5ff';ctx.lineWidth=Math.max(2,cw/400);ctx.setLineDash([cw/75,cw/100]);ctx.strokeRect(b.x-4,b.y-4,b.w+8,b.h+8);ctx.restore();
+  }}
+}
+function overlayRedraw(){lastRenderedKey='';renderFrame(playheadSec)}
+function syncOverlayEditor(){
+  const list=$('overlayList');if(!list)return;
+  list.replaceChildren();
+  for(const o of state.overlays||[]){
+    const row=document.createElement('button');row.type='button';row.className='overlay-item'+(o.id===selectedOverlayId?' active':'');
+    const label=document.createElement('span');label.textContent=(o.type==='image'?'🖼 사진':'Aa 자막')+' · '+(o.type==='text'?(o.text||'새 자막').slice(0,22):(o.name||'사진'));
+    const range=document.createElement('small');range.textContent=`${Number(o.start).toFixed(1)}–${Number(o.end).toFixed(1)}s`;
+    row.append(label,range);row.onclick=()=>{selectedOverlayId=o.id;syncOverlayEditor();overlayRedraw()};list.appendChild(row);
+  }
+  const o=(state.overlays||[]).find(o=>o.id===selectedOverlayId);
+  $('overlayEditor').hidden=!o;
+  if(!o){canvas.classList.toggle('overlay-draggable',(state.overlays||[]).length>0);return}
+  canvas.classList.add('overlay-draggable');
+  $('overlayText').hidden=o.type!=='text';
+  $('overlayText').previousElementSibling.hidden=o.type!=='text';
+  $('overlaySize').max=o.type==='image'?'900':'180';
+  $('overlaySize').min=o.type==='image'?'70':'20';
+  $('overlayTextStyle').hidden=o.type!=='text';
+  $('overlayText').value=o.text||'';
+  $('overlayStart').value=o.start;
+  $('overlayEnd').value=o.end;
+  $('overlaySize').value=o.size;
+  $('overlayOpacity').value=o.opacity??100;
+  $('overlayColor').value=o.color||'#ffffff';
+  $('overlayBg').checked=!!o.bg;
+}
+function selectedOverlay(){return (state.overlays||[]).find(o=>o.id===selectedOverlayId)}
+function newOverlay(type,img=null,name=''){
+  rememberBeforeEdit();
+  const id='ov_'+Math.random().toString(36).slice(2,10);
+  const start=Math.min(playheadSec,Math.max(0,getTotalDuration()-.1));
+  const o={id,type,name,text:type==='text'?'자막을 입력하세요':'',start,end:Math.max(start+1,getTotalDuration()||5),x:.5,y:type==='text'?.79:.47,size:type==='text'?60:440,opacity:100,color:'#ffffff',bg:false};
+  state.overlays.push(o);
+  if(img)overlayImages[id]=img;
+  selectedOverlayId=id;syncOverlayEditor();overlayRedraw();return o;
+}
+$('addOverlayText').onclick=()=>newOverlay('text');
+$('addOverlayImage').onclick=()=>$('overlayFile').click();
+$('overlayFile').addEventListener('change',async e=>{
+  for(const file of Array.from(e.target.files||[])){
+    if(!file.type.startsWith('image/'))continue;
+    const img=new Image();const url=URL.createObjectURL(file);
+    try{await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});newOverlay('image',img,file.name)}
+    catch(_){setStatus('사진을 읽을 수 없어: '+file.name)}
+    finally{URL.revokeObjectURL(url)}
+  }
+  e.target.value='';
+});
+for(const [id,key] of [['overlayText','text'],['overlayStart','start'],['overlayEnd','end'],['overlaySize','size'],['overlayOpacity','opacity'],['overlayColor','color'],['overlayBg','bg']]){
+  $(id).addEventListener('input',e=>{
+    const o=selectedOverlay();if(!o)return;
+    if(!window.overlayEditGesture){rememberBeforeEdit();window.overlayEditGesture=true}
+    const v=key==='bg'?e.target.checked:key==='text'||key==='color'?e.target.value:Number(e.target.value);
+    o[key]=v;
+    if(o.end<=o.start)o.end=o.start+.1;
+    syncOverlayListOnly();overlayRedraw();
+  });
+  $(id).addEventListener('change',()=>{window.overlayEditGesture=false});
+  $(id).addEventListener('blur',()=>{window.overlayEditGesture=false});
+}
+function syncOverlayListOnly(){
+  for(const row of $('overlayList').children){
+    const i=[...$('overlayList').children].indexOf(row),o=state.overlays[i];if(!o)continue;
+    row.firstChild.textContent=(o.type==='image'?'🖼 사진':'Aa 자막')+' · '+(o.type==='text'?(o.text||'새 자막').slice(0,22):(o.name||'사진'));
+    row.lastChild.textContent=`${Number(o.start).toFixed(1)}–${Number(o.end).toFixed(1)}s`;
+  }
+}
+$('overlayDelete').onclick=()=>{const o=selectedOverlay();if(!o)return;rememberBeforeEdit();state.overlays=state.overlays.filter(x=>x.id!==o.id);delete overlayImages[o.id];selectedOverlayId=null;syncOverlayEditor();overlayRedraw()};
+$('overlayCenter').onclick=()=>{const o=selectedOverlay();if(!o)return;rememberBeforeEdit();o.x=.5;o.y=.5;overlayRedraw()};
+let overlayPointer=null;
+canvas.addEventListener('pointerdown',e=>{
+  if(isExporting)return;
+  const r=canvas.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width*canvas.width,y=(e.clientY-r.top)/r.height*canvas.height;
+  const hit=[...overlayHitRects].reverse().find(b=>x>=b.x-12&&x<=b.x+b.w+12&&y>=b.y-12&&y<=b.y+b.h+12);
+  if(!hit)return;
+  e.preventDefault();rememberBeforeEdit();selectedOverlayId=hit.id;
+  overlayPointer={id:hit.id,pid:e.pointerId,x,y};canvas.setPointerCapture(e.pointerId);syncOverlayEditor();overlayRedraw();
+});
+canvas.addEventListener('pointermove',e=>{
+  if(!overlayPointer||e.pointerId!==overlayPointer.pid)return;
+  e.preventDefault();const o=selectedOverlay();if(!o)return;
+  const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*canvas.width,y=(e.clientY-r.top)/r.height*canvas.height;
+  o.x=Math.max(0,Math.min(1,o.x+(x-overlayPointer.x)/canvas.width));
+  o.y=Math.max(0,Math.min(1,o.y+(y-overlayPointer.y)/canvas.height));
+  overlayPointer.x=x;overlayPointer.y=y;overlayRedraw();
+});
+const endOverlayPointer=()=>overlayPointer=null;
+canvas.addEventListener('pointerup',endOverlayPointer);canvas.addEventListener('pointercancel',endOverlayPointer);
+
 function renderFrame(t) {
   const cw = canvas.width;
   const ch = canvas.height;
@@ -1251,7 +1438,8 @@ function renderFrame(t) {
     state.labelEnabled, state.arrow, state.rule, state.logo, state.hold, state.fade, state.calendarRows,
     state.layoutMode, state.clipLabelAlign, state.clipTitleAlign, state.clipLabelSize,
     state.clipTop, state.clipGap, state.clipVideoY, state.clipVideoH, state.clipVideoZoom,
-    state.clipLogoY, state.clipSafeGuide
+    state.clipLogoY, state.clipSafeGuide,
+    JSON.stringify(state.overlays),selectedOverlayId
   ].join('|');
 
   if (key === lastRenderedKey) return;
@@ -1268,8 +1456,9 @@ function renderFrame(t) {
   ctx.fillStyle = '#0c0d10';
   ctx.fillRect(0, 0, cw, ch);
 
-  if (state.layoutMode === 'clip') {
+  if (state.layoutMode === 'clip' && state.ratio !== '4:5') {
     drawClipLayout(clip, cw, ch);
+    drawVideoOverlays(t,cw,ch);
     ctx.restore();
     return;
   }
@@ -1301,7 +1490,7 @@ function renderFrame(t) {
     const s = cw / 1080;
     ctx.save();
     ctx.globalAlpha = alpha;
-    ctx.scale(s, s);
+    ctx.scale(s, s * (state.ratio==='4:5'?1350/1920:1));
 
     const grad = ctx.createLinearGradient(0, 900, 0, 1920);
     grad.addColorStop(0, 'rgba(0,0,0,0)');
@@ -1426,6 +1615,7 @@ function renderFrame(t) {
     }
     ctx.restore();
   }
+  drawVideoOverlays(t,cw,ch);
   ctx.restore();
 }
 
@@ -1801,6 +1991,7 @@ for(const id of ['clipLabelAlign','clipTitleAlign','clipLabelSize','clipTop','cl
   });
 }
 refreshClipControls();
+syncOverlayEditor();
 
 $('title').oninput = e => { state.title = e.target.value; lastRenderedKey = ''; renderFrame(playheadSec); };
 $('subtitle').oninput = e => { state.subtitle = e.target.value; lastRenderedKey = ''; renderFrame(playheadSec); };
@@ -1814,8 +2005,9 @@ $('hold').onchange = e => { state.hold = Number(e.target.value); lastRenderedKey
 $('fade').onchange = e => { state.fade = Number(e.target.value); lastRenderedKey = ''; renderFrame(playheadSec); };
 $('audioCutFade').onchange = e => {state.audioCutFade=Number(e.target.value);updateCutAudioGain(playheadSec);};
 
-$('btnToggleRatio').onclick = () => {
-  state.ratio = state.ratio === '9:16' ? '16:9' : '9:16';
+$('aspectRatio').onchange = () => {
+  rememberBeforeEdit();
+  state.ratio=$('aspectRatio').value;
   applyRatioUI();
 };
 
@@ -1982,7 +2174,10 @@ function pushDownloadLink(blob, filename) {
 $('exportCover').onclick = async () => {
   if (!clips.length) { setStatus('먼저 영상을 업로드해 주세요.'); return; }
   await seekPreviewTo(playheadSec, true);
+  const wasSelected=selectedOverlayId;
+  selectedOverlayId=null;lastRenderedKey='';renderFrame(playheadSec);
   canvas.toBlob(blob => {
+    selectedOverlayId=wasSelected;lastRenderedKey='';renderFrame(playheadSec);
     if (!blob) { setStatus('썸네일 생성에 실패했습니다.'); return; }
     pushDownloadLink(blob, buildExportFileName('png'));
     setStatus('썸네일 PNG를 저장했습니다.');
