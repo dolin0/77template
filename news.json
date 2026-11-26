@@ -1,6 +1,20 @@
 {
-  "updated_at": "2026-11-26T13:45:22.603514+00:00",
+  "updated_at": "2026-11-26T15:25:36.772391+00:00",
   "articles": [
+    {
+      "title": "아이즈원 데뷔 뺏겼던 한초원…지금은 이 정도라고?",
+      "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5Yb1JDWV9zVm9vMmFiQWRZT21HMkp6eVViSElMeGo0bFFaRlliYXZraThDM2RDLTV0T242V2ZaeGh0ZGRaZUptSHRucXZrT203bWxXUENaNXFVdVliMjc2OWxHWGY?oc=5",
+      "category": "variety",
+      "source": "파이트타임즈",
+      "published": "2026-11-26T15:14:21+00:00"
+    },
+    {
+      "title": "2026년 말 개봉 예정인 영화들: 베트남 관객들이 가장 기대하는 영화는 무엇일까요?",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNUnlBbWtHeTJrcjBHMjJ1T3ExSjJpdFV2eEgwUklCd1RzRllnMGJ1LUpNd21TaUV2enhSOG1NUEFvUGJQMUsyVzJKV0h6OThXOTBsdEZJQmdPTXB6TjhTZHdDeUVOU2JiU2htY0JELUVtbjNDcHNGVThYOUtBbEU5ZUtKbXpSTzlCQUgtTlBpaGRjX00yMnJHM0pDOG5KOWpxUlE?oc=5",
+      "category": "drama",
+      "source": "Vietnam.vn",
+      "published": "2026-11-26T12:50:23+00:00"
+    },
     {
       "title": "사실혼 25년만 깜짝 웨딩 화보…반전 촬영 비화 밝힌 '여자 연예인'",
       "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5tbDI3SFJfcndNRjIwLWRxVy0tN0ppTGZ1VFZmTmNzUmtmZzBnV1NXV3d2S1hrLXZPNHFDS3AtZGZEekNGN3AwSVFMMWRxTnZHOUpURFJR?oc=5",
@@ -30,6 +44,13 @@
       "published": "2026-11-26T10:02:02+00:00"
     },
     {
+      "title": "그래미상 5회 수상에 빛나는 음악 슈퍼스타 마이클 부블레가 2026년 빈퓨처 어워드에서 공연할 예정입니다.",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNazM0cDk5VG5jQ09aQ1UwRnpiWWVKWTFLallUd0pUamZDYy1Ob1YweWFfbkdvSGcySkZFc0tDM2xmUUxxWGJEMUhUdzZUSlljM1JmcFY2bnVCRWN5OElKLXNtRWxUaG92S1pqS2FYWVI4dEtEd3R5dWtPek1KcWhBaEZwa2FMcHBsa3ExaW5tQ0hnZDhHbUNpYWduWEFjMmFrQWFCOXlKT1VWMEctVmN5dFU4WlFScktyajBCd3BFVEl3Zw?oc=5",
+      "category": "issue",
+      "source": "Vietnam.vn",
+      "published": "2026-11-26T09:52:02+00:00"
+    },
+    {
       "title": "영화 '죽은 자의 어머니'의 여주인공이 시사회에서 눈물을 쏟았다.",
       "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE13M3JyZWhweVdHbVJ5YjZnVTZxSzNRc3dqc3dFSmhlR0dIZFM0VzVfWDF0TnhkSVZJRmhyV2dGcGEweU1RRWY1Qk4wWG5kcmVMWTJ5OVVQUnVtZzVJek5iUk9YTFotRFhmVWh2a2J2ajJJamZNakxLOFlsZmpKQQ?oc=5",
       "category": "drama",
@@ -49,6 +70,20 @@
       "category": "idol",
       "source": "한국경제",
       "published": "2026-11-26T09:14:16+00:00"
+    },
+    {
+      "title": "“한지민은 갱년기 중년女”…‘막말’ 구설수 오른 이서진",
+      "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9VaHF4VDUwajNHSk1OM1V6OGdWYllNdHFTcjdMbUwtSW5aSUtVYk9IZ3ZKeU5GeW1VUkVFMlVMWWRvQkFVSVJrcmY4VUpELVdpNUZHbW93?oc=5",
+      "category": "variety",
+      "source": "헤럴드경제",
+      "published": "2026-11-26T09:13:36+00:00"
+    },
+    {
+      "title": "김용빈, ′당신뿐입니다′ 열풍 연말까지...음악·예능 ′쌍끌이′",
+      "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9iNGVmQVpDMUx3dUFWUkVuYXFTcTdDbE51bmpBcTNYRlFhWTdMNWpoLVhuN0RwcW4yUkI1NFFwSVY1VE1mMDg2UVR5NzRHdDRZcjZBcVB0ZXd1N1E5VUJFa2xUSnk3b0hTaXp0NtIBbEFVX3lxTE9iNGVmQVpDMUx3dUFWUkVuYXFTcTdDbE51bmpBcTNYRlFhWTdMNWpoLVhuN0RwcW4yUkI1NFFwSVY1VE1mMDg2UVR5NzRHdDRZcjZBcVB0ZXd1N1E5VUJFa2xUSnk3b0hTaXp0Ng?oc=5",
+      "category": "variety",
+      "source": "소셜밸류",
+      "published": "2026-11-26T09:07:32+00:00"
     },
     {
       "title": "\"호텔서 곡 만들어요\" K팝 아이돌, 1년 중 절반을 해외에서…컴백 쉼 없는 비결은 [TEN스타필드]",
@@ -73,10 +108,17 @@
     },
     {
       "title": "[캐스타 배우 인터뷰] 연극 〈죽여주는 이야기〉 이은솔, “일상적인 호흡으로 살아 숨 쉬는 ‘팔색조’ 배우 될 것”",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBSRkZYTmxrRjBQbXUtWE4tbXJrc0pneGdNSkZPVEhjUElWdVUzU2NndXl3ZHhUOWY3dm55WHA5eEVtdUJLWXNzS1J0ZXZDdW5tUGFB?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9ZTDVZSGdOc2xVQW54SWY5S0VmSHVrOUdFRTgwRGg3R0Jkbm9MTnJZaEZWQVZKTExqRzJlY0l3eXVFeGFQZlBzbzBndmE?oc=5",
       "category": "actor",
-      "source": "유스연합",
+      "source": "한국IT산업뉴스",
       "published": "2026-11-26T08:32:12+00:00"
+    },
+    {
+      "title": "최재림, 박칼린 말벌 사고에 무릎 꿇고 사과한 사연",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1GYml3YmdKd0cwZFBRVmRUdkxrWlJISk1uaDdieERLOVBwclRMTTFWQW9uU0IzclFFSUFSWThiNmVBUG5uUXUydEhYN3BGNWhZQmxJMVVKSERrUEt3TGJUX2w3dkN3bGctTHNfWUphRkxnQkgz0gF0QVVfeXFMTUZiaXdiZ0p3RzBkUFFWZFR2TGtaUkhKTW5oN2J4REs5UHByVExNMVZBb25TQjNyUUVJQVJZOGI2ZUFQbm5RdTJ0SFg3cEY1aFlCbEkxVUpIRGtQS3dMYlRfbDd2Q3dsZy1Mc19ZSmFGTGdCSDM?oc=5",
+      "category": "variety",
+      "source": "팩트인뉴스",
+      "published": "2026-11-26T08:25:10+00:00"
     },
     {
       "title": "이틀은 부족해..NCT WISH, 첫 고척돔 콘서트 1회 추가 결정",
@@ -89,14 +131,14 @@
       "title": "코드 쿤스트 새 앨범에 '글로벌 아이돌' BTS 정국 참여",
       "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNaXRyWXFqdXc4SWZfaS13ZExSc0xKVUNxUEswNVYwNk9CbHpXR3Y0RlpXXzFuc3BiZ20zRjg4Mnl5Q1lvNGdJYzI2ZTZNZmhTbEtlWlJXaXI4Y2dRSk5UMzY2Ty1acGc3UGVKWGRJNXZIWVI3WHJhMkJoYWpBQU1ENA?oc=5",
       "category": "idol",
-      "source": "m.edaily.co.kr",
+      "source": "이데일리",
       "published": "2026-11-26T08:24:05+00:00"
     },
     {
       "title": "[캐스타 배우 인터뷰] 배우 이충훈, 남우주연상 품은 ‘날 것의 연기’…“10년, 20년 넘게 기억에 머무는 연기자 될 것”",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1zS3phckZRc1FjcEY5clVyRnBVaW5pY2R3ZEJfZHpCUUV1N29LVlR6UWZjTnFQT05xOTQtNGpaNmhKcC1HcUVTN09SeDY1SnB6SHM4?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9xeG9ZMmdfQml5TFNJM09pTXlYNG5oYWJoTEVWSVMzZzBNaC1nQ1AzVkcybWFPOGRiNGdtTFYwazQwb0hNOUwxbThRQjVyaE1lWG04?oc=5",
       "category": "actor",
-      "source": "패트론타임스",
+      "source": "유스연합",
       "published": "2026-11-26T08:14:58+00:00"
     },
     {
@@ -196,6 +238,20 @@
       "category": "idol",
       "source": "더쎈뉴스",
       "published": "2026-11-26T07:29:31+00:00"
+    },
+    {
+      "title": "라잇썸 챌린지에 日 인기 아이돌도 빠졌다…이코러브 리더까지 동참",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBVSnFBMnZDVW1zc1ZuUGNiX1FXSEVjMnJJZTdwanpfd2s1OVBfUDBYVXVpdTZyNjdZSjFVRHhMaGdaQUxFd3ZyOGNwMkFwREp6LTJFUnhkR3hTd3diVU9CTVE4MUNYSmIxU21V?oc=5",
+      "category": "idol",
+      "source": "티브이데일리",
+      "published": "2026-11-26T07:28:49+00:00"
+    },
+    {
+      "title": "1600만 장항준·나홍진·연상호 다 제쳤다…윤가은, 청룡 최초 여성 감독상 > 뉴스포커스",
+      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1NWmZyZDJCNVNPZ1VBOGRTTlVKYUhpdGF6dDRTS1lCMGVOc3ZEMHlYeHg4VWtjWXc0XzJGOEgzLTN6eGNCZnRsWDFOaTY?oc=5",
+      "category": "drama",
+      "source": "SeattleN",
+      "published": "2026-11-26T07:21:30+00:00"
     },
     {
       "title": "30대 女배우, 불륜 의혹→4개월 만에 근황…파격 시스루 드레스 소화 [MHN:글로벌]",
@@ -317,6 +373,13 @@
       "published": "2026-11-26T06:08:42+00:00"
     },
     {
+      "title": "겨울의 낭만을 함께하고 싶은 지드래곤",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE5yWEp0OHlzdnVQWWowVjZkMkRXMWNhUkxCM2N3cFlMZkxZTmlTMXVvZ3BCT3ZoU1RrZnlUWks1cTdabE9aS3FtdG1XZ3FjZmlSUVktMV9JVDVmS1cwOEd6alBTelFkaXVwZjFfbkMwS002dw?oc=5",
+      "category": "variety",
+      "source": "포브스코리아",
+      "published": "2026-11-26T06:03:32+00:00"
+    },
+    {
       "title": "[캐스타 배우 인터뷰] 배우 김수아, 패션모델 넘어 연기로 넓힌 무대…“직접 경험한 현장의 감정이 연기 힘",
       "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9xczZpc0hmaDV0SnR2Zm9NQmN5Q3U0SXlKZVZZc0t2V1ExeldxdkdPYjBIaUQzV2RPYUhvMENsYlBtU2l3ZXoyTjIxbDdGWXc?oc=5",
       "category": "actor",
@@ -359,6 +422,13 @@
       "published": "2026-11-26T05:42:37+00:00"
     },
     {
+      "title": "박정수, 예능에서 만나요[★포토]",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOTURSNW0ybXduQ0I0ZmpvVnN3U243LU1qUlllYmtWbThzd0lfZ3hGNnNyOS00ZEJYRHY4V2JPTlNTY3ZZMWZTMl92LWt4dnh1bnRJWWFfc2VEWDFIMEFqR1NPajhVeXk3b2xKRXBnRTViakFYT3ZxSzBQOEZ2S0xqUg?oc=5",
+      "category": "variety",
+      "source": "스타뉴스",
+      "published": "2026-11-26T05:37:39+00:00"
+    },
+    {
       "title": "[공식] '韓 스타쉽-日 아뮤즈 합작' 아이돌 컴백..AEN, 내년 1월 13일 첫 싱글",
       "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9LVGxCYzZDWFBubnJaMWVuM1ljUGFpeHVXUzBjcVZ5Z041Ulp4SHNsU3ZhSnVXSGlKZ056d0w0TktxcGcxdlBNaG5YZXVXVmdfdjZieWR0Sk1uN2dTUjA4ejEtOXdUZnhLSjZIcUNBd3JaNTUx?oc=5",
       "category": "idol",
@@ -385,6 +455,20 @@
       "category": "actor",
       "source": "조선일보",
       "published": "2026-11-26T05:27:00+00:00"
+    },
+    {
+      "title": "정연 ‘예능 출연’ [MK포토]",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFB0Tnp6c01xQmtkYks0UzJYRXJUT1B2bnQyUUx3YUlvaU45QzBkWld0YXROVXliT2pnMXoxUnJaRTRSMDhZNU5VQkh1NThNWXBVeDBZcnBTQQ?oc=5",
+      "category": "variety",
+      "source": "매일경제",
+      "published": "2026-11-26T05:26:42+00:00"
+    },
+    {
+      "title": "‘공황장애’ 정현규, 트라우마 고백…”전 국민한테 욕 먹어 칩거” [MHN:픽]",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE96RU9sUWp2bFpjY2REUWhqVkRhT1VublUxTE9JcXozdFZ2bEdJZ0REdXNZZmN0N3R1elRTOEJIYUw3QWZHdllsclQ4WXZycEN4djhydEJsRUlMbDdlQVg5OE1Fbw?oc=5",
+      "category": "variety",
+      "source": "MHN스포츠",
+      "published": "2026-11-26T05:22:36+00:00"
     },
     {
       "title": "까미노엔터, 영화 ‘귀향’ 개봉 10주년 특별 상영회… 가수 이재영·강예영, 재능 기부 동참",
@@ -576,18 +660,18 @@
       "published": "2026-11-26T02:26:50+00:00"
     },
     {
+      "title": "청룡 첫 여성 감독상 탄생까지 63년... 윤가은이 서고 김미조가 잇다",
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE5NUjR6dGVGZ185aF84aHh6dmYxRFVRWjZUd2ZvYTZxZlJOcXhldUlEbl9iUjRKMkZBMF9WWDZ0eTVneTNZaTU5NEVPYzV1aG9DNUFxUl91cU9KT21waWZxbmoyTWppWjRvTTV1c3hNY25oMXfSAXNBVV95cUxOTVI0enRlRmdfOWhfOGh4enZmMURVUVo2VHdmb2E2cWZSTnF4ZXVJRG5fYlI0SjJGQTBfVlg2dHk1Z3kzWWk1OTRFT2M1dWhvQzVBcVJfdXFPSk9tcGlmcW5qMk1qaVo0b001dXN4TWNuaDF3?oc=5",
+      "category": "drama",
+      "source": "여성신문",
+      "published": "2026-11-26T02:22:55+00:00"
+    },
+    {
       "title": "'청룡 2관왕' 박지훈, 아일릿 축하 무대서 '아이돌 본능'…'호루라기 안무' 완벽 소화",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPQVY5Z3RwN2JyOUhfX2ZLNlVjXy1MTjBJS2RVZjh6MFVEazhaTkowSVNrTGZTOWNQMlptcUIwVl8tdDRiUWVlZjI4a2ZENzR2ZDFxT3drb0NjQUJ5S0dyVUh3TUV6YTlad3ZOaVZ1bXhOTEtFNGhLRzdJZHd1VndZZ0pncks?oc=5",
       "category": "idol",
       "source": "스포츠조선",
       "published": "2026-11-26T02:20:22+00:00"
-    },
-    {
-      "title": "청룡 첫 여성 감독상 탄생까지 63년... 윤가은이 서고 김미조가 잇다",
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBNUXo0NmFwRGVTLXR2ZDNDUk1RMzFQTkhWQkFvQ1h2ZzhTVC1JeFJEMWNSV1lEaTd4cF9hVWljRmRRVkxReWhGOTRjdXNRN05XeEpEYVM2d3VYLVlqNlF1MDRqRXF6LWprdmg5bHdhVdIBc0FVX3lxTE5NUjR6dGVGZ185aF84aHh6dmYxRFVRWjZUd2ZvYTZxZlJOcXhldUlEbl9iUjRKMkZBMF9WWDZ0eTVneTNZaTU5NEVPYzV1aG9DNUFxUl91cU9KT21waWZxbmoyTWppWjRvTTV1c3hNY25oMXc?oc=5",
-      "category": "drama",
-      "source": "여성신문",
-      "published": "2026-11-26T02:16:25+00:00"
     },
     {
       "title": "블루 드래곤 2026: 영화 '희망'이 작품상 수상, 박지훈 배우가 2관왕을 거머쥐었다.",
@@ -623,6 +707,13 @@
       "category": "drama",
       "source": "매일경제",
       "published": "2026-11-26T01:45:33+00:00"
+    },
+    {
+      "title": "낫 킴 안을 비롯한 아름답고 용감한 여성들이 레드카펫을 빛냈다.",
+      "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNSC1fWnR6c2VYRFhGOVc0QnMwMmZfV2F3U25lSHRHZzJEYzQ2YkhCVVBDZUFEMGtmNFNDcklPOFh6ZWs1M2xNZ0xKdWlKM1hRQVF5NGkxR1Q0SkJjcHhqeUlpQTJQTnJXSVB1a1NTa0dDVVVha255Q2g1UExOYTN3Zkc5OWJubFRGb0E?oc=5",
+      "category": "drama",
+      "source": "Vietnam.vn",
+      "published": "2026-11-26T01:44:17+00:00"
     },
     {
       "title": "이정재, \\'소속사 논란\\' 속 공식석상 올랐다…故 안성기 추모하다 \\'울컥\\'",
@@ -765,6 +856,13 @@
       "published": "2026-11-26T00:50:00+00:00"
     },
     {
+      "title": "극한 공포에서 극단의 코미디로, 대세 김혜윤의 도발",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE0tZjZISVdFbnhnYWNsTUZYZjRtUjNuZk1HQ0RlSWl5VHdSSEd3NDZXMVlDNk9aWEJvWnZVQVMxRzhVa084U2NXVFB5eWNfUDdBYi1kODBXMFDSAVhBVV95cUxNLWY2SElXRW54Z2FjbE1GWGY0bVIzbmZNR0NEZUlpeVR3UkhHdzQ2VzFZQzZPWlhCb1p2VUFTMUc4VWtPOFNjV1RQeXljX1A3QWItZDgwVzBQ?oc=5",
+      "category": "drama",
+      "source": "미디어펜",
+      "published": "2026-11-26T00:49:09+00:00"
+    },
+    {
       "title": "김혜윤, 영화 '고딩형사'서 첫 코믹 액션…내년 1월 개봉",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBnanFJbnd0QVJ0b1lGTlBLMzVHcXJWN2xEOTdIaFZkV0RUTlZ6NUdXRE1FTG9zcTRGMnI2b084NWt0eDRyUFpNd050cGhGRHBCT3lWN2o4bkRPR2lNQzBJQkFOaFM5bVFnUk00?oc=5",
       "category": "drama",
@@ -835,6 +933,13 @@
       "published": "2026-11-26T00:30:22+00:00"
     },
     {
+      "title": "\"큰일 났다\"…장항준·나홍진 제친 '청룡 최초' 여성 감독상의 첫마디 - 머니투데이",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5mSEQ5NU9VQmc2aUotTzR2MTAweEZJbl9NUExkSVRvcEJfVmtzMXdBMmZUVkFPVG1IeWk4WmJ6WTJ3clF0U0Y1by1JMnVlNmw0RWY1Ynd5ZG5kUWViVjhaUnR2ZzE3N3FMcUhfeTdRQUhtSm9RSElTV9IBeEFVX3lxTE5mSEQ5NU9VQmc2aUotTzR2MTAweEZJbl9NUExkSVRvcEJfVmtzMXdBMmZUVkFPVG1IeWk4WmJ6WTJ3clF0U0Y1by1JMnVlNmw0RWY1Ynd5ZG5kUWViVjhaUnR2ZzE3N3FMcUhfeTdRQUhtSm9RSElTVw?oc=5",
+      "category": "drama",
+      "source": "머니투데이",
+      "published": "2026-11-26T00:23:54+00:00"
+    },
+    {
       "title": "1400만 관객 모은 '국제시장' 속편 제작…내년 설 개봉 확정",
       "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE4tcmx0Y21KV043TXkyOXRVMDM2cTN4WHFMSUNlenJfQmpnV3VrNTFqSTA4M2RSbDBFVTg1YUxOMDRaZ1doeXFlWnlISS1aMFBZSGZyNHJHU2lBRm03YXRYRU5tb19BeWEzVzhlWC1jN2lOdw?oc=5",
       "category": "drama",
@@ -867,6 +972,13 @@
       "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFBYa1k2T2NLUzdmaU9KOXZzQ0FSRmFUUkFzRnc0ekFob0pJVzM3VUU5X0MzZjh1VmVFb1FCejVTc25wcC0zcmZxSmRLUGp1YjhjUzJHYzhubzBkSXJtbjZZenQ5TdIBY0FVX3lxTFBYa1k2T2NLUzdmaU9KOXZzQ0FSRmFUUkFzRnc0ekFob0pJVzM3VUU5X0MzZjh1VmVFb1FCejVTc25wcC0zcmZxSmRLUGp1YjhjUzJHYzhubzBkSXJtbjZZenQ5TQ?oc=5",
       "category": "actor",
       "source": "스포츠경향",
+      "published": "2026-11-26T00:11:00+00:00"
+    },
+    {
+      "title": "김혜윤, '고딩형사'로 첫 코믹 액션 도전…얼굴은 고딩·나이는 서른",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1rNU45dDRyb1hhQVZzQ0lycmVvOUhFYTl4bHZNWUtZMFZwVXFDOXhic2NnTlJ4V2NhdWN1WmFLNXFTS21oeGhHTkNRVk9UeWg3UkVhZw?oc=5",
+      "category": "drama",
+      "source": "iMBC 연예",
       "published": "2026-11-26T00:11:00+00:00"
     },
     {
@@ -1011,7 +1123,7 @@
     },
     {
       "title": "영화 ‘암살자’ 후보였는데…‘수상 불발’ 배우 이민호가 남긴 한마디",
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBKS2dRZWlRMm1adFB6SkNUMmlGT0RFOEs2SWtFMzdVSm9QTTd4SzlTd3RXaWhXOVdfSEZmNFVGSUhqNHVRRU0teWRtcFJnYXF1Umx1MQ?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE1QRF9ZdlVQWEdFdkNyMmJJZnZWWDRoYWVPRXhPVzVYUHZucjByalJWQTJid3hYNTRQaWF0b0hXNEplWEVfWVE?oc=5",
       "category": "actor",
       "source": "매일경제",
       "published": "2026-11-25T23:02:58+00:00"
@@ -1039,9 +1151,9 @@
     },
     {
       "title": "스윙스, 배우 활동 겹경사 \"마동석 제작 영화 합류…해외 진출도\" [소셜in]",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBMcFgyWGRFMlNSdUlqSkVLb0xfa2dXNHg3WHRLdDlfSnlVNTY0UkFXYjhxYV9Pa3g4RXNLb2RfSGJpUUFvbkNZUnhsZm5USlpETDl3WU9PdGRtZWcycEtjQTc4UF9mRmMtMjFOa0oyQzVYTkFw?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1CTlpqYmFockJTSmlWaGc5blppdEY1aGV3cjZIMVB5YWlXVmlZUXVlNm1lMW5CR1M4S3Y5RFUzMzF3cDgzRko0cXp5Z0wxWUJfM2E2dw?oc=5",
       "category": "drama",
-      "source": "파이낸셜포스트",
+      "source": "iMBC 연예",
       "published": "2026-11-25T22:45:00+00:00"
     },
     {
@@ -1311,6 +1423,20 @@
       "published": "2026-11-25T13:01:00+00:00"
     },
     {
+      "title": "방송국 공개홀엔 키 재기가 있다",
+      "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE5PN2NrbzZtNHhHNDRyb0xkcWFsa3lzc0tncmxuRXlsaE1IcmdhYXVZblhNY0dPUnhpWkRYMldrMFViRXBFdXdDUC1R?oc=5",
+      "category": "variety",
+      "source": "브런치",
+      "published": "2026-11-25T12:31:06+00:00"
+    },
+    {
+      "title": "거미, 출산한 지 채 1년 안 돼…\"둘째 딸, 이제 9개월\"",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1RT3VlYjc1c0VCaG1Lc2pUR1V0UUxDVmJOaFcybUhndkFIYnRpTGx4R2V4X2hjb285TS1kNTlsRWdMTXJVY09HcXF4bm9MOGZBc1VV?oc=5",
+      "category": "variety",
+      "source": "네이트",
+      "published": "2026-11-25T11:32:00+00:00"
+    },
+    {
       "title": "강민경, 뉴욕에서 화끈한 민소매 드레스로 변신",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQaGF4WnVTRU9XMVVtbDdUUEdBWWlXYUtoWTFHNnl5M0ZlTXZiYV9pN1F0bDhqMWs5VFNVQ1Y3VUg1WmU0ZVJ2Qk5fTl9XSW9qT0s5RTBPRXBqUjczWjBjMVZlaE1Ic000LWFTX0cwUkJxMWlFdDlTNnlid1puaDhrUTZpcWQ0dzk3RlM4UGtDM2lrY1nSAacBQVVfeXFMUDRVNWVUUXpuVlczZ3VYaFEtbjhDUHMzN0s5ZkJnLXNGUmdybmI1NXctNHVieWNDdFZuZlRLMkpLd1VEbzQybEdOeHlvejktVjRkN1hVcTlZRkpHamx0UTVnUHctcXhvYXlEcVRSMUh2SVdKb25QWmRBYVlBN3VKQmlORVZlUXo2aWJzRTF2cVRZU3F1b3NLSGFlSzFCb1hKa1RlMFlBLUk?oc=5",
       "category": "actor",
@@ -1382,9 +1508,9 @@
     },
     {
       "title": "[캐스타 배우 인터뷰] 배우 박나연, ‘깨끗한 도화지’ 같은 흡수력…“진짜 거기 있는 사람처럼 연기하고파”",
-      "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE0zSldUeXprc0Z0Rnk4dXE0MFJoU2tISGEwdjJMVGp1S0NGUWJlTTh1Z0dHYXpnTnhQQWFCODdxSzE5MHpZYl8zdnhZS0s?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1KY1VkTUduREN0SWlYUlR2ZENHOFdMZmRyVk5vN25VcXJLbjRndkxEc00zX1A2NFFxM1N1NjJsQ295TUtvY0JPWTFSd0tOSmRZcllr?oc=5",
       "category": "actor",
-      "source": "한국IT산업뉴스",
+      "source": "유스연합",
       "published": "2026-11-25T09:48:38+00:00"
     },
     {
@@ -1417,7 +1543,7 @@
     },
     {
       "title": "피프티피프티 문샤넬, ‘아이돌스 테이블’ 사로잡은 럭키 푸드 선보여",
-      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTFB3dXRDMndUd2RpWjJXYThUMWVOUEFFa0VUQWZjMUEzMHgyOWxzU1g3UW8tYVIyX21HRmtQd0tGV3Jadm9GYkZ1SlVUdW1TS2xmMXNjUWd4YVpaaUx2Vm1uUGhiQdIBY0FVX3lxTFB3dXRDMndUd2RpWjJXYThUMWVOUEFFa0VUQWZjMUEzMHgyOWxzU1g3UW8tYVIyX21HRmtQd0tGV3Jadm9GYkZ1SlVUdW1TS2xmMXNjUWd4YVpaaUx2Vm1uUGhiQQ?oc=5",
+      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1NMXZPNkFXVm1GR3pqNEtzQmQzbTdYVjBicEtoWmlSQy1KSHUxVWNvS05DZlFfd3RrZ2llTXpRWWdLei1uekRhRXJkcVc2c3E2bldtd1NXT24tR21KcnfSAWNBVV95cUxQd3V0QzJ3VHdkaVoyV2E4VDFlTlBBRWtFVEFmYzFBMzB4Mjlsc1NYN1FvLWFSMl9tR0ZrUHdLRldyWnZvRmJGdUpVVHVtU0tsZjFzY1FneGFaWmlMdlZtblBoYkE?oc=5",
       "category": "variety",
       "source": "스포츠경향",
       "published": "2026-11-25T09:27:00+00:00"
@@ -1540,146 +1666,6 @@
       "category": "drama",
       "source": "뉴스핌",
       "published": "2026-11-25T08:25:00+00:00"
-    },
-    {
-      "title": "미드폼 '복병산 아리랑' 첫선.. \"100년 전 부산에서 영화 시작\"",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9BajFoSUZjLUFGWVdMM3NhUlV3SXN0UUwyaFl1R29VZHRBSlFLMy1ZWVZ5WUszbFlrWWFMemFRSXJTVHhrZFJ1MmpXY25na0pBOUVoN3B1WWpja254OHIwdFl3aG5pZUkw?oc=5",
-      "category": "drama",
-      "source": "가야일보",
-      "published": "2026-11-25T08:23:00+00:00"
-    },
-    {
-      "title": "‘버추얼 그룹’ 비그릿츠, 첫 싱글 ‘X도’ 27일 발매…매월 자작곡도",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBmSGw1dDMwNFhPa2tidUZtSzFMUHlVeC1sV2ZiUTZrb1hYemV6Qm91MllXcl81UjhnMkVGaHVJWGZmWkdMem1kcWVrRl9sNXpCY1dJ?oc=5",
-      "category": "idol",
-      "source": "매일경제",
-      "published": "2026-11-25T08:21:05+00:00"
-    },
-    {
-      "title": "[인터뷰③]손석구 “인간적 매력 넘어, 관찰력으로 승부하는 배우 되고파”",
-      "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9iRjlMUVBwbHNRZTRjR3pycWxUN0hRUjBET3oxWmJma25GbXV0OE9nWTdWanlzQlQyNzBscUdaUUdFSEYwTnhGLUxpVzktOWVtSW42OHlUQzBGdFBvNTA0NS1nM3JxQQ?oc=5",
-      "category": "actor",
-      "source": "싱글리스트",
-      "published": "2026-11-25T08:14:21+00:00"
-    },
-    {
-      "title": "카라 허영지, 데뷔 소속사로 돌아간다⋯DSP미디어와 전속계약",
-      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBfTDNJOWpkMjRaNERPRzBjLXdnLURwQUlpRFdOM1dUMUJtdnRiM21FLTZZYjEtMjdyZG9lZEFZOTVoNTBveW43RWRBVF9yaDYxT3JQRQ?oc=5",
-      "category": "actor",
-      "source": "이투데이",
-      "published": "2026-11-25T08:10:00+00:00"
-    },
-    {
-      "title": "원팩트, ‘대한민국 문화연예대상’서 케이팝 가수상 수상",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9SeG5wckt0cURhekRzTXdtaEtpQ0RjQkJNX2RTTXhLa0NjTFpYeVcxZl9aNi1RNGdaM0xCbm5kWkdYejV0ZFh5XzhBT2lkSGhkSnVEXzVCZ0xPeXBwSXk2cERwVi1mbEhteUZ2THFQY0hOd9IBdEFVX3lxTE8xdloyRTR3TXdhc1VPSE5jdnZGNDcwRjRmaC0wUXdxZ3BrajhMYnd0SE5ockwwcmxab2ZtTDI4dVg0SXNVa0lzNXAyNHQyLWNCajlQb0NCYmN0MUIySjh6YjEtWW5qVDJteUNpQ25xa3ljZmtl?oc=5",
-      "category": "issue",
-      "source": "이뉴스투데이",
-      "published": "2026-11-25T08:10:00+00:00"
-    },
-    {
-      "title": "기억 잃어도 꿈은 그대로… 미라클, 신곡 ‘동상동몽’ 오늘 발매",
-      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQMHpzTkEwdTlybmpOWXY3UEJ0d2FyY1VTb3QyYXVneko2aUlPTlpHeFJwaFE3STU4SEJhYml0aldnXzBQT2tCZjI4SjFScVpzN0s2NXhsT05yZlJ3YWx1OE9VaXVHdkNXa0dMalJHUVUxZDcwSzBTUTkxOUJLbHVCdQ?oc=5",
-      "category": "idol",
-      "source": "이데일리",
-      "published": "2026-11-25T08:02:38+00:00"
-    },
-    {
-      "title": "한국 네티즌들은 이도현과 임지연의 결별 소식 이후 그의 행보에 주목하고 있다. 그는 여전히 상심한 것일까, 아니면 단순한 우연일까?",
-      "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQcjBtVG5DVERkQS1zaUVVaVhBRHdjSHlSV3kzZXpOd203UXdZRTYtSEw3V2F5UnZxZ2pTbUsyemI3ZHZNMFZyTnZoU3A0N1lua0VPd045NjJoMjFqN01UUlI0aFdhQXl3T3NHN2o4UFNQWGxNaW0xSVJXR1FmaVl3YWt4UjNBTGpVUjY3R3Q0S0M2NjBOMnNySVo4TExUVU16YjIwRU1uenc0ajA1QlE?oc=5",
-      "category": "actor",
-      "source": "Vietnam.vn",
-      "published": "2026-11-25T07:56:11+00:00"
-    },
-    {
-      "title": "'버추얼 아이돌' 미라클, 25일 신곡 '동상동몽' 발매…새 챕터 연다",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTFAteTBCLVBickFaVE9zZWdPNVJ5cTZTQmdaU29NcTlrX0h5YXh0VDYwVG9zM3U0Z1d1YzFwaDZDM21GUlRDSjczd21DWkg2cTQ2T3Mxb3Qycw?oc=5",
-      "category": "idol",
-      "source": "뉴스1",
-      "published": "2026-11-25T07:56:10+00:00"
-    },
-    {
-      "title": "'턱 부상' 육성재, 마스크 쓰고 '나인 투 식스' 제작발표회 참석…\"기립성 저혈압 무섭더라\"",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQdFV5VVFrdFhCbERzVlFVYzhkdjlBWEx6SlhTcWc2b1lGZE9ZTWZjZmt2V2RQYldzd0dCZzhQazRCdGFGTFJnelIyZmp2QUlDbHdDSnBPU2V5NF9mdjc3cGIzakZ2eXFnRWhkYURzSF9MVHNFMVBGVk1pRjVfeFEtYU1pV1l3dw?oc=5",
-      "category": "drama",
-      "source": "news.sbs.co.kr",
-      "published": "2026-11-25T07:55:26+00:00"
-    },
-    {
-      "title": "[공식] 2년 만에 새 출발 한다…박상하, 아이돌 출신에서 배우로 본격 행보",
-      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE4zNDZqdS1EU3F2NXR2X2ZTU3VOYkd0dHNRbDNrOUt0dlF6SWNfeHdFRDJ0QWJFYzlUQW9Mb3U0dkUxQ2RkcXpORW5BcXplTHZtbGFqVzNkNzEtZGs?oc=5",
-      "category": "actor",
-      "source": "텐아시아",
-      "published": "2026-11-25T07:54:00+00:00"
-    },
-    {
-      "title": "돌아온 ‘어벤져스’·‘듄’... 개봉 전부터 신기록 대결",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1XLXlxeFowMXdQN3VQdDE0RlBIT1B6cXU2U3Z0d0lWbHBjOEUwcjZJWWtCQkluZHU0YXVxSktINFh6RjlZSFM3RUlvTHN0c19xcWRaYndSYWRZSEdHR0xKQXZxaXc3UFZYNnRna19pcDE?oc=5",
-      "category": "drama",
-      "source": "여성신문",
-      "published": "2026-11-25T07:53:37+00:00"
-    },
-    {
-      "title": "종영 앞둔 ‘100일의 거짓말’ 적수가 없다 5주 연속 티빙 차트 1위",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5HWjNIQlo3eUU1d0s4bWw5N1RVUld6RkZZTlp4VjFPQmVqNHY0T2plTGFfdVpqTmx3R0Y5U0IxLTNaT3M1ZDNjWEZ1d0hJZ2FqV3pFcVhFMDRWRnhOV2tZSVBEU2xORXRE?oc=5",
-      "category": "drama",
-      "source": "뉴스엔",
-      "published": "2026-11-25T07:53:33+00:00"
-    },
-    {
-      "title": "베스티 강혜연, 이상형 공개…아이돌 시절 소환에 팬들 반색 [하반기 결선]",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1BLTNSOUhMaWpTM19SeFZGWWR3TE5mREh2WHhzNDFmbFRvbFhYZVJYMGc2VjBRNV9xNnBiTExSbjJTS0xQTC1sdlh1Z3Rwa0wtSldtcGEzQUFXVmo3SnFpWm41TVhsaU1a?oc=5",
-      "category": "idol",
-      "source": "CBC뉴스",
-      "published": "2026-11-25T07:50:39+00:00"
-    },
-    {
-      "title": "‘버추얼 아이돌’ 비그릿츠, 매달 신곡 낸다…27일 첫 싱글 공개",
-      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1QLWtGMzJpQTZRTW1jVnhyREV3dlRFTC1PUkU4TGRvMV85cDI0ZF9Ma3FsaFVlalNOVlVzRXNFNy1ORFNkQnhDMHRBMHNGanlUcTZWUG1YQQ?oc=5",
-      "category": "idol",
-      "source": "매일경제",
-      "published": "2026-11-25T07:46:23+00:00"
-    },
-    {
-      "title": "4인조 버추얼 보이그룹 윙스, 오늘 데뷔…첫 싱글 '헤일로'",
-      "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9LNFB6bVZvTVJTcGctd1dCZkN4Zy1IZmNoVUdhYWRPWjBTSm1wSlNHcFdjQ3BTczhCbXJjS1FkdHhPMU1JQ0EtbnRwc09Cd0FPTHRJSEJ1bTlrN3RyZFMtLdIBYEFVX3lxTE9LNFB6bVZvTVJTcGctd1dCZkN4Zy1IZmNoVUdhYWRPWjBTSm1wSlNHcFdjQ3BTczhCbXJjS1FkdHhPMU1JQ0EtbnRwc09Cd0FPTHRJSEJ1bTlrN3RyZFMtLQ?oc=5",
-      "category": "idol",
-      "source": "연합뉴스",
-      "published": "2026-11-25T07:43:06+00:00"
-    },
-    {
-      "title": "이프아이, 제34회 대한민국 문화연예대상 케이팝 가수상 수상",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFB4S0JhSVkzVzI0X25iOEJ1V2tSMVJOc3p4S1BPd0hwSFZySXlPMDB3R3REZHptZmNxS0ZGZ0MycDNaeXQ3c1JXenhmVWt0MUVxV1h3UTJlRkZOYldrcFY2UzFob1ROOUt6MWljZFdHNXpGREdi0gF0QVVfeXFMUHhLQmFJWTNXMjRfbmI4QnVXa1IxUk5zenhLUE93SHBIVnJJeU8wMHdHdERkem1mY3FLRkZnQzJwM1p5dDdzUld6eGZVa3QxRXFXWHdRMmVGRk5iV2twVjZTMWhvVE45S3oxaWNkV0c1ekZER2I?oc=5",
-      "category": "issue",
-      "source": "이뉴스투데이",
-      "published": "2026-11-25T07:33:48+00:00"
-    },
-    {
-      "title": "피프티피프티 문샤넬, 토크부터 요리까지…키나 지원사격",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBaVTBOSkU3SmdNa09jWWJnbXdkUnpVbmNVWXpISUhWZ2JqSEp1WGRjaVJlYlotbXZndHYzN2xrbE53eWpnZkdhVlpSUEk0aXJCaE1CVFhOT0RZcG5sOTJJc2JjTUtyN0pY?oc=5",
-      "category": "variety",
-      "source": "뉴스엔",
-      "published": "2026-11-25T07:33:44+00:00"
-    },
-    {
-      "title": "남해준 ‘나의 유죄인간’ 300:1 경쟁률 뚫었다 “영원한 시작으로 기억될 것”",
-      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBzUTVXTTRLMERwZV9Dc212VHBDcUduNjZULUhLRnh5T1FSNGd0UzFLOHNHbEFRM20zWlNqeVNYRUxmanpFNExmT2pRLUlsaUZBZDZ0T3FkWEFTcEttVHl5M3UtMkh5OXlJ?oc=5",
-      "category": "actor",
-      "source": "뉴스엔",
-      "published": "2026-11-25T07:31:39+00:00"
-    },
-    {
-      "title": "[공식] 차태현, 연말 앞두고 기쁜 소식…'절친' 장혁과 러닝 예능 합류 ('런 투게더')",
-      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBUVEdaOWkwdjZ5eWRMSmozLTR0bXd2MXpTX2h2bGhaU0xJMmpaWjRSdmdqLWJIbjItejc1UmZDUUxrcHpXcmktWW1LWjZoLV9yRWpLR2lhNkRvZm8?oc=5",
-      "category": "variety",
-      "source": "텐아시아",
-      "published": "2026-11-25T07:30:00+00:00"
-    },
-    {
-      "title": "MBC 새 금토극에 BH 소속 배우만 3명 출연…한효주→공명·전소영 활약 예고 ('그라운드')",
-      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE1iSzU5QXoxVFd6QW5ZYU9GOUREVnE5YzByTnc2eEJIdXhXNWIwcGZKY1B5Y2pSbFhMVzhRYTVwQWNyTmNoWDJMdDl3YWsyaEppdndmR3ZlMGtORHc?oc=5",
-      "category": "actor",
-      "source": "텐아시아",
-      "published": "2026-11-25T07:29:00+00:00"
     }
   ]
 }
