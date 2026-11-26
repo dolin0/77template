@@ -165,7 +165,7 @@ input[type=file]{display:none}
 </head>
 <body>
 <header>
-  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="4:5 카드뉴스 · 자막 · 사진 스티커" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.1.0</span></small></div>
+  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="4:5 글자 찌그러짐 수정 · 자막 · 사진 스티커" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.1.1</span></small></div>
   <nav>
     <a href="./index.html">사진 편집기</a>
     <a href="./news.html">연예 뉴스</a>
@@ -1490,7 +1490,10 @@ function renderFrame(t) {
     const s = cw / 1080;
     ctx.save();
     ctx.globalAlpha = alpha;
-    ctx.scale(s, s * (state.ratio==='4:5'?1350/1920:1));
+    // Never scale typography non-uniformly: 4:5 changes the visible layout,
+    // not the letter proportions. Shift the 9:16 lower-third upward instead.
+    ctx.scale(s, s);
+    if (state.ratio === '4:5') ctx.translate(0, -(1920 - 1350));
 
     const grad = ctx.createLinearGradient(0, 900, 0, 1920);
     grad.addColorStop(0, 'rgba(0,0,0,0)');
@@ -1503,7 +1506,7 @@ function renderFrame(t) {
       const lw = state.cat === 'classic' ? 76 : 112;
       const lh = (lw * logoImg.naturalHeight) / logoImg.naturalWidth;
       const lx = state.cat === 'classic' ? 540 - lw / 2 : 64;
-      const ly = state.cat === 'classic' ? 1775 : 62;
+      const ly = state.cat === 'classic' ? 1775 : (state.ratio === '4:5' ? 62 + (1920 - 1350) : 62);
       ctx.drawImage(logoImg, lx, ly, lw, lh);
     }
 
