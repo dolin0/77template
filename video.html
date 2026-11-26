@@ -165,7 +165,7 @@ input[type=file]{display:none}
 </head>
 <body>
 <header>
-  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="4:5 글자 찌그러짐 수정 · 자막 · 사진 스티커" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.1.1</span></small></div>
+  <div class="brand">77 MAGAZINE STUDIO<small>VIDEO · 릴스 템플릿 연동 <span title="썸네일 템플릿 합성 저장 · 4:5 · 자막 · 사진 스티커" style="color:#969dae;font-size:10px;font-weight:500;margin-left:5px">v1.1.2</span></small></div>
   <nav>
     <a href="./index.html">사진 편집기</a>
     <a href="./news.html">연예 뉴스</a>
@@ -443,7 +443,18 @@ input[type=file]{display:none}
 
           <label class="check"><input type="checkbox" id="includeAudio" checked> 원본 영상 소리 포함</label>
           <button class="btn primary" type="button" id="exportVideo" style="width:100%;margin-top:8px">⬇ 편집 영상 내보내기</button>
-          <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:8px">⬇ 썸네일 PNG 저장</button>
+          <div style="margin-top:14px;padding:12px;background:#21252e;border:1px solid #3d4350;border-radius:10px">
+            <strong style="font-size:13px">릴스 썸네일 만들기</strong>
+            <p class="small" style="margin:6px 0 9px">타임라인에서 원하는 영상 장면으로 이동한 뒤 저장하세요. 화면 비율에 맞는 PNG로 저장됩니다.</p>
+            <label for="coverMode">썸네일 구성</label>
+            <select id="coverMode">
+              <option value="template" selected>현재 영상 장면 + 77 템플릿 (제목·라벨·로고 항상 표시)</option>
+              <option value="current">현재 재생 화면 그대로 (타이틀 페이드 반영)</option>
+              <option value="frame">영상 장면만 (77 그래픽 없이)</option>
+            </select>
+            <button class="btn" type="button" id="exportCover" style="width:100%;margin-top:10px">⬇ 현재 장면 썸네일 PNG 저장</button>
+            <p class="small" style="margin:8px 0 0">기존 77 릴스 디자인과 같은 캔버스를 사용하므로 사진 편집기로 옮길 필요 없이 바로 저장할 수 있어요.</p>
+          </div>
           <div class="small" id="exportProgress" style="margin-top:6px"></div>
           <div class="download-box" id="downloadLinks"></div>
         </div>
@@ -1423,6 +1434,8 @@ canvas.addEventListener('pointermove',e=>{
 const endOverlayPointer=()=>overlayPointer=null;
 canvas.addEventListener('pointerup',endOverlayPointer);canvas.addEventListener('pointercancel',endOverlayPointer);
 
+// Only used during a single thumbnail capture; regular preview/export remains unchanged.
+let coverRenderMode = 'normal';
 function renderFrame(t) {
   const cw = canvas.width;
   const ch = canvas.height;
@@ -1439,7 +1452,7 @@ function renderFrame(t) {
     state.layoutMode, state.clipLabelAlign, state.clipTitleAlign, state.clipLabelSize,
     state.clipTop, state.clipGap, state.clipVideoY, state.clipVideoH, state.clipVideoZoom,
     state.clipLogoY, state.clipSafeGuide,
-    JSON.stringify(state.overlays),selectedOverlayId
+    JSON.stringify(state.overlays),selectedOverlayId,coverRenderMode
   ].join('|');
 
   if (key === lastRenderedKey) return;
@@ -1456,7 +1469,7 @@ function renderFrame(t) {
   ctx.fillStyle = '#0c0d10';
   ctx.fillRect(0, 0, cw, ch);
 
-  if (state.layoutMode === 'clip' && state.ratio !== '4:5') {
+  if (coverRenderMode !== 'frame' && state.layoutMode === 'clip' && state.ratio !== '4:5') {
     drawClipLayout(clip, cw, ch);
     drawVideoOverlays(t,cw,ch);
     ctx.restore();
@@ -1481,10 +1494,14 @@ function renderFrame(t) {
     ctx.restore();
   }
 
+  // Frame-only thumbnail: apply the existing crop/scale/rotation, not editorial graphics.
+  if (coverRenderMode === 'frame') { ctx.restore(); return; }
+
   const elapsedInClip = Math.max(0, t); // One intro per finished video, not once per cut.
   const hold = Number(state.hold) || 3.5;
   const fade = Math.max(0.1, Number(state.fade) || 0.6);
-  const alpha = elapsedInClip <= hold ? 1 : elapsedInClip >= hold + fade ? 0 : Math.max(0, 1 - (elapsedInClip - hold) / fade);
+  const alpha = coverRenderMode === 'template' ? 1 :
+    (elapsedInClip <= hold ? 1 : elapsedInClip >= hold + fade ? 0 : Math.max(0, 1 - (elapsedInClip - hold) / fade));
 
   if (alpha > 0) {
     const s = cw / 1080;
@@ -2176,15 +2193,49 @@ function pushDownloadLink(blob, filename) {
 
 $('exportCover').onclick = async () => {
   if (!clips.length) { setStatus('먼저 영상을 업로드해 주세요.'); return; }
-  await seekPreviewTo(playheadSec, true);
-  const wasSelected=selectedOverlayId;
-  selectedOverlayId=null;lastRenderedKey='';renderFrame(playheadSec);
-  canvas.toBlob(blob => {
-    selectedOverlayId=wasSelected;lastRenderedKey='';renderFrame(playheadSec);
-    if (!blob) { setStatus('썸네일 생성에 실패했습니다.'); return; }
-    pushDownloadLink(blob, buildExportFileName('png'));
-    setStatus('썸네일 PNG를 저장했습니다.');
-  }, 'image/png');
+  if (isExporting) { setStatus('영상 내보내기가 끝난 뒤 썸네일을 저장해 주세요.'); return; }
+  const button = $('exportCover');
+  button.disabled = true;
+  const target = playheadSec;
+  const previousSelection = selectedOverlayId;
+  const previousMode = coverRenderMode;
+  try {
+    // Pause and seek to ensure the still is the selected decoded video frame.
+    isPlaying = false;
+    video.pause();
+    await seekPreviewTo(target, true);
+    if (video.seeking || video.readyState < 2) {
+      await new Promise(resolve => {
+        let done = false;
+        const finish = () => { if (done) return; done = true; video.removeEventListener('seeked',finish); video.removeEventListener('loadeddata',finish); resolve(); };
+        video.addEventListener('seeked',finish,{once:true});
+        video.addEventListener('loadeddata',finish,{once:true});
+        setTimeout(finish,1200);
+      });
+    }
+    coverRenderMode = $('coverMode').value;
+    selectedOverlayId = null;
+    // Export-only flag hides editing outlines and the CLIP safe-area guide.
+    isExporting = true;
+    lastRenderedKey = '';
+    renderFrame(target);
+    const blob = await new Promise(resolve => canvas.toBlob(resolve,'image/png'));
+    if (!blob) throw new Error('PNG 생성 실패');
+    const name = buildExportFileName('png').replace(/\.png$/i,'_cover.png');
+    pushDownloadLink(blob, name);
+    setStatus('현재 영상 장면으로 77 썸네일을 저장했어요.');
+  } catch(err) {
+    setStatus('썸네일 생성에 실패했습니다: '+(err?.message||err));
+  } finally {
+    coverRenderMode = previousMode;
+    isExporting = false;
+    selectedOverlayId = previousSelection;
+    lastRenderedKey = '';
+    renderFrame(playheadSec);
+    button.disabled = false;
+    // Playback stays paused so the selected thumbnail frame is preserved.
+    syncPreviewControls();
+  }
 };
 
 function pickSupportedMime() {
