@@ -1,6 +1,41 @@
 {
-  "updated_at": "2026-11-27T22:31:35.311307+00:00",
+  "updated_at": "2026-11-28T01:54:41.764842+00:00",
   "videos": [
+    {
+      "id": "_K6VkdU8aSw",
+      "title": "[K-Fancam 8K] 장민호 직캠 '산, 삶' (JANG MIN HO Choreography) @MusicBank 261127",
+      "channel": "KBS Kpop",
+      "url": "https://www.youtube.com/watch?v=_K6VkdU8aSw",
+      "published": "2026-11-28T01:04:08+00:00"
+    },
+    {
+      "id": "9XvzSlFqkdU",
+      "title": "[K-Choreo 8K] A2O SOUL 직캠 'Dancing in the Dark' (A2O SOUL Choreography) @MusicBank 261127",
+      "channel": "KBS Kpop",
+      "url": "https://www.youtube.com/watch?v=9XvzSlFqkdU",
+      "published": "2026-11-28T01:03:14+00:00"
+    },
+    {
+      "id": "36i3D6MNFG0",
+      "title": "[K-Choreo 8K] 키라스 직캠 'OVER U' (KIIRAS Choreography) @MusicBank 261127",
+      "channel": "KBS Kpop",
+      "url": "https://www.youtube.com/watch?v=36i3D6MNFG0",
+      "published": "2026-11-28T01:02:03+00:00"
+    },
+    {
+      "id": "CfO_TYKGaWw",
+      "title": "[K-Fancam 8K] 이예지 직캠 'Critical Love' (Lee YeJi Fancam) @MusicBank 261127",
+      "channel": "KBS Kpop",
+      "url": "https://www.youtube.com/watch?v=CfO_TYKGaWw",
+      "published": "2026-11-28T01:01:18+00:00"
+    },
+    {
+      "id": "33vjYyo4R5U",
+      "title": "[K-Fancam 8K] 썸데이 직캠 '알고있나요 (2026 ver.)' (SOMEDAY Choreography) @MusicBank 261127",
+      "channel": "KBS Kpop",
+      "url": "https://www.youtube.com/watch?v=33vjYyo4R5U",
+      "published": "2026-11-28T01:00:05+00:00"
+    },
     {
       "id": "G0bW8GW70qE",
       "title": "[미방분] 웬디(WENDY) - Written In The Stars [더 시즌즈-성시경의 고막남친] | KBS 261127 방송",
@@ -1225,41 +1260,6 @@
       "channel": "JYP Entertainment",
       "url": "https://www.youtube.com/watch?v=xf69Bbj3uVs",
       "published": "2026-11-24T06:00:15+00:00"
-    },
-    {
-      "id": "8AC74VqwetY",
-      "title": "인생이여, 영원하라 김하온 신곡 Viva La Vida  [더 시즌즈-성시경의 고막남친] | KBS 방송",
-      "channel": "KBS Kpop",
-      "url": "https://www.youtube.com/watch?v=8AC74VqwetY",
-      "published": "2026-11-24T05:01:16+00:00"
-    },
-    {
-      "id": "qqXt0o-pgOU",
-      "title": "윤보미🩷라도 신혼 애칭 대공개 ㅋㅋㅋ [더 시즌즈-성시경의 고막남친] | KBS 방송",
-      "channel": "KBS Kpop",
-      "url": "https://www.youtube.com/watch?v=qqXt0o-pgOU",
-      "published": "2026-11-24T05:01:14+00:00"
-    },
-    {
-      "id": "j_oLe1BFQVo",
-      "title": "SMTOWN RUN CLUB 26 | Recap Video",
-      "channel": "SMTOWN",
-      "url": "https://www.youtube.com/watch?v=j_oLe1BFQVo",
-      "published": "2026-11-24T05:00:26+00:00"
-    },
-    {
-      "id": "fd5LqmvNnYQ",
-      "title": "[JYP 4 EARTH] NEXZ 나무 친구 절찬리 모집 중!",
-      "channel": "JYP Entertainment",
-      "url": "https://www.youtube.com/watch?v=fd5LqmvNnYQ",
-      "published": "2026-11-24T05:00:22+00:00"
-    },
-    {
-      "id": "ZdfyhBNw8uA",
-      "title": "우정으로 지키는 나무 l NEXZ l \"우리 오늘부터 1일!\" 열정 만렙 신입들의 우당탕탕 클럽 적응기",
-      "channel": "JYP Entertainment",
-      "url": "https://www.youtube.com/watch?v=ZdfyhBNw8uA",
-      "published": "2026-11-24T05:00:10+00:00"
     }
   ]
 }
